@@ -18,6 +18,7 @@ const VendorSchema = new mongoose.Schema({
     geoLocation: "Point",
     url: String,
     description: String,
+    status: [String],
     items: [{
         name: {
             type: String,
