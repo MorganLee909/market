@@ -3,5 +3,16 @@
   "version": "1.0.0",
   "main": "app.js",
   "author": "Lee Morgan <Morgan.LeeR@protonmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-session": "^1.4.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11"
+  }
 }
