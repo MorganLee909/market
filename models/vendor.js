@@ -13,12 +13,23 @@ const VendorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    url: {
+        type: String,
+        required: true
+    },
     ownerName: String,
-    address: String,
-    geoLocation: "Point",
-    url: String,
     description: String,
     status: [String],
+    address: String,
+    location: {
+        type: {
+            type: String,
+            enum: ["Point"]
+        },
+        coordinates: {
+            type: [Number],
+        }
+    },
     items: [{
         name: {
             type: String,
