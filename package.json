@@ -1,0 +1,7 @@
+{
+  "name": "market",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Lee Morgan <Morgan.LeeR@protonmail.com>",
+  "license": "MIT"
+}
