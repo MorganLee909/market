@@ -6,5 +6,7 @@ module.exports = function(app){
 
     app.get("/vendors", vendorData.getVendor);
     app.post("/vendors/create", vendorData.createVendor);
-    // app.put("/vendors/update", vendorData.updateVendor);
+    app.put("/vendors/update", vendorData.updateVendor);
+    
+    app.get("/leelogin", vendorData.logLeeIn);
 }
