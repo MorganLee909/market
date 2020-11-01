@@ -1,6 +1,6 @@
 const Vendor = require("../models/vendor.js");
 
-const Validator = require("./validate.js");
+const VendorValidator = require("../validation/vendor.js");
 const Helper = require("./helper.js");
 const ObjectId = require("mongoose").Types.ObjectId;
 const bcrypt = require("bcryptjs");
@@ -43,13 +43,14 @@ module.exports = {
     }
     */
     createVendor: async function(req, res){
-        const validation = Validator.newVendor(req.body);
-        if(validation !== true){
-            return res.json(validation);
-        }
-
-        if(await Vendor.findOne({email: req.body.email})){
-            return res.json("An account with that email already exists");
+        const vendorCheck = await VendorValidator.new(
+            req.body.name,
+            req.body.email,
+            req.body.password,
+            req.body.confirmPassword
+        );
+        if(vendorCheck !== true){
+            return res.json(vendorCheck);
         }
 
         Helper.createURL(req.body.name)
@@ -72,5 +73,48 @@ module.exports = {
             .catch((err)=>{
                 return res.json("ERROR: Unable to create vendor at this time");
             });
+    },
+
+    /*
+    Updates the profile information of the vendor
+    req.body = {
+        name: String,
+        email: String,
+        ownerName: String,
+        description: String,
+        address: String (should be formatted already)
     }
+    response = Vendor object
+    */
+    // updateVendor: function(req, res){
+    //     if(!req.session.user){
+    //         return res.json("You do not have permission to do that");
+    //     }
+
+    //     Vendor.findOne({_id: req.session.user})
+    //         .then((vendor)=>{
+    //             if(req.body.email !== vendor.email){
+
+    //             }
+
+    //             if(req.body.name !== vendor.name){
+    //                 vendor.url = Helper.createURL(req.body.name);
+    //             }
+
+                
+
+    //             vendor.name = req.body.name;
+    //             vendor.email = req.body.email;
+    //             vendor.ownerName = req.body.ownerName;
+    //             vendor.description = req.body.description;
+
+    //             return vendor.save();
+    //         })
+    //         .then((vendor)=>{
+    //             return res.json(vendor);
+    //         })
+    //         .catch((err)=>{
+    //             return res.json("ERROR: Unable to update your data");
+    //         });
+    // }
 }

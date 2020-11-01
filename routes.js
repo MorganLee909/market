@@ -4,6 +4,7 @@ const vendorData = require("./controllers/vendorData.js");
 module.exports = function(app){
     app.get("/", renderer.home);
 
-    app.get("/vendor", vendorData.getVendor);
-    app.post("/vendor/create", vendorData.createVendor);
+    app.get("/vendors", vendorData.getVendor);
+    app.post("/vendors/create", vendorData.createVendor);
+    // app.put("/vendors/update", vendorData.updateVendor);
 }
