@@ -15,7 +15,7 @@ module.exports = {
     getVendor: function(req, res){
         Vendor.aggregate([
             {$match: {
-                _id: ObjectId(req.session.user)
+                _id: ObjectId(req.params.id)
             }},
             {$project: {
                 _id: 0,
@@ -36,6 +36,14 @@ module.exports = {
     },
 
     /*
+    Gets all vendors in the area
+    output = [Vendor]
+    */
+    getVendors: function(req, res){
+
+    },
+
+    /*
     Creates a single vendor
     req.body = {
         name: name of the business,
@@ -45,6 +53,7 @@ module.exports = {
     }
     */
     createVendor: async function(req, res){
+        console.log(req.body);
         const vendorCheck = await VendorValidator.new(
             req.body.name,
             req.body.email,
@@ -104,19 +113,32 @@ module.exports = {
                     vendor.email = req.body.email;
                 }
 
+
                 //Update address and coordinates of vendor
-                if(req.body.address !== vendor.address){
-                    const apiUrl = "https://maps.googleapis.com/maps/api/geocode/json";
+                if(req.body.address !== vendor.address.full){
+                    const apiUrl = "https://api.geocod.io/v1.6/geocode";
                     const address = req.body.address.replace(/ /g, "+");
-                    const fullUrl = `${apiUrl}?address=${address}&key=${process.env.MARKET_GEOENCODE_KEY}`;
+                    const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
 
                     try{
                         const geoData = await axios.get(fullUrl);
-                        const lat = geoData.data.results[0].geometry.location.lat;
-                        const long = geoData.data.results[0].geometry.location.lng;
+                        const result = geoData.data.results[0];
+                        const lat = result.location.lat;
+                        const lng = result.location.lng;
                         
-                        vendor.location.coordinates = [lat, long];
-                        vendor.address = req.body.address;
+                        vendor.location.coordinates = [lat, lng];
+
+                        const comps = result.address_components;
+                        vendor.address = {
+                            streetNumber: comps.number,
+                            road: comps.formatted_street,
+                            city: comps.city,
+                            county: comps.county,
+                            state: comps.state,
+                            country: comps.country,
+                            zipCode: comps.zip,
+                            full: result.formatted_address
+                        }
                     }catch(err){
                         return err;
                     }

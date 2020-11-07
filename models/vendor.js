@@ -20,7 +20,15 @@ const VendorSchema = new mongoose.Schema({
     ownerName: String,
     description: String,
     status: [String],
-    address: String,
+    address: {
+        streetNumber: String,
+        road: String,
+        town: String,
+        county: String,
+        state: String,
+        country: String,
+        zipCode: String
+    },
     location: {
         type: {
             type: String,
