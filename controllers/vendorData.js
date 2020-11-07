@@ -40,7 +40,41 @@ module.exports = {
     output = [Vendor]
     */
     getVendors: function(req, res){
+        const apiUrl = "https://api.geocod.io/v1.6/geocode";
+        const address = req.query.address;
+        const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
 
+        axios.get(fullUrl)
+            .then((response)=>{
+                const location = [response.data.results[0].location.lat, response.data.results[0].location.lng];
+                const distance = parseFloat(req.query.distance) * 1609.344;
+
+                return Vendor.find(
+                    {
+                        location: {
+                            $nearSphere: {
+                                $maxDistance: distance,
+                                $geometry: {
+                                    type: "Point",
+                                    coordinates: location
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 1,
+                        email: 1,
+                        description: 1,
+                        items: 1
+                    }
+                );
+            })
+            .then((vendors)=>{
+                return res.json(vendors);
+            })
+            .catch((err)=>{
+                return res.json("ERROR: Unable to perform search");
+            });
     },
 
     /*
@@ -53,7 +87,6 @@ module.exports = {
     }
     */
     createVendor: async function(req, res){
-        console.log(req.body);
         const vendorCheck = await VendorValidator.new(
             req.body.name,
             req.body.email,
@@ -126,7 +159,10 @@ module.exports = {
                         const lat = result.location.lat;
                         const lng = result.location.lng;
                         
-                        vendor.location.coordinates = [lat, lng];
+                        vendor.location = {
+                            type: "Point",
+                            coordinates: [lat, lng]
+                        }
 
                         const comps = result.address_components;
                         vendor.address = {

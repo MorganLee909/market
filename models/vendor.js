@@ -23,20 +23,16 @@ const VendorSchema = new mongoose.Schema({
     address: {
         streetNumber: String,
         road: String,
-        town: String,
+        city: String,
         county: String,
         state: String,
         country: String,
-        zipCode: String
+        zipCode: String,
+        full: String
     },
     location: {
-        type: {
-            type: String,
-            enum: ["Point"]
-        },
-        coordinates: {
-            type: [Number],
-        }
+        type: {type: "String"},
+        coordinates: []
     },
     items: [{
         name: {
@@ -53,5 +49,7 @@ const VendorSchema = new mongoose.Schema({
         }
     }]
 });
+
+VendorSchema.index({location: "2dsphere"});
 
 module.exports = mongoose.model("Vendor", VendorSchema);
