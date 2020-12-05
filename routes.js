@@ -1,5 +1,6 @@
 const renderer = require("./controllers/renderer.js");
 const vendorData = require("./controllers/vendorData.js");
+const userData = require("./controllers/userData.js");
 
 module.exports = function(app){
     app.get("/", renderer.home);
@@ -11,4 +12,6 @@ module.exports = function(app){
     app.delete("/vendors/:id", vendorData.removeVendor);
     
     app.get("/leelogin", vendorData.logLeeIn);
+
+    app.post("/users", userData.createUser);
 }

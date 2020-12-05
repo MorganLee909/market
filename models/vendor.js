@@ -5,7 +5,7 @@ const isSanitary = (str)=>{
 
     for(let i = 0; i < str.length; i++){
         for(let j = 0; j < disallowed.length; j++){
-            if(str[i] === disallowed[i]){
+            if(str[i] === disallowed[j]){
                 return false;
             }
         }

@@ -4,7 +4,6 @@ const helper = require("./helper.js");
 
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
-const { db } = require("../models/vendor.js");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
