@@ -4,12 +4,13 @@ const helper = require("./helper.js");
 
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
+const { db } = require("../models/vendor.js");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
     /*
-    Gets a single vendor
-    output = Vendor
+    GET: Gets a single vendor
+    response = Vendor
     */
     getVendor: function(req, res){
         //TODO: this should not be an aggregate for a single vendor (findOne)
@@ -36,8 +37,8 @@ module.exports = {
     },
 
     /*
-    Gets all vendors in the area
-    output = [Vendor]
+    GET: Gets all vendors in the area
+    response = [Vendor]
     */
     getVendors: function(req, res){
         const apiUrl = "https://api.geocod.io/v1.6/geocode";
@@ -78,20 +79,20 @@ module.exports = {
     },
 
     /*
-    Creates a single vendor
+    POST: Creates a single vendor
     req.body = {
         name: name of the business,
         email: email of the business,
         password: password for the vendor,
         confirmPassword: confirmation of password,
     }
+    response = Vendor
     */
     createVendor: async function(req, res){
         const email = req.body.email.toLowerCase();
         const vendor = await Vendor.findOne({email: email});
         if(vendor !== null){
-            req.session.error = "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
-            return res.redirect("/");
+            return res.json("VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS");
         }
 
         helper.createURL(req.body.name)
@@ -123,7 +124,7 @@ module.exports = {
     },
 
     /*
-    Updates the profile information of the vendor
+    PUT: Updates the profile information of the vendor
     req.body: {
         name: String,
         email: String,
@@ -131,11 +132,11 @@ module.exports = {
         description: String,
         address: String (should be formatted already)
     }
-    response = Vendor object
+    response = Vendor
     */
     updateVendor: function(req, res){
         if(!req.session.user){
-            return res.json("You do not have permission to do that");
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
         Vendor.findOne({_id: req.session.user})
@@ -206,6 +207,26 @@ module.exports = {
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");
+            });
+    },
+
+    /*
+    DELETE: remove a single vendor
+    */
+    removeVendor: function(req, res){
+        console.log("thing");
+        if(req.params.id !== req.session.user){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        }
+        console.log("something");
+
+        Vendor.deleteOne({_id: req.session.user})
+            .then((response)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                console.log(err);
+                return res.json("ERROR: UNABLE TO DELETE VENDOR");
             });
     },
 
