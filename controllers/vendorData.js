@@ -1,11 +1,10 @@
+const Vendor = require("../models/vendor.js");
+
+const helper = require("./helper.js");
+
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const ObjectId = require("mongoose").Types.ObjectId;
-
-const Vendor = require("../models/vendor.js");
-
-const VendorValidator = require("../validation/vendor.js");
-const Helper = require("./helper.js");
 
 module.exports = {
     /*
@@ -13,6 +12,7 @@ module.exports = {
     output = Vendor
     */
     getVendor: function(req, res){
+        //TODO: this should not be an aggregate for a single vendor (findOne)
         Vendor.aggregate([
             {$match: {
                 _id: ObjectId(req.params.id)
@@ -87,24 +87,21 @@ module.exports = {
     }
     */
     createVendor: async function(req, res){
-        const vendorCheck = await VendorValidator.new(
-            req.body.name,
-            req.body.email,
-            req.body.password,
-            req.body.confirmPassword
-        );
-        if(vendorCheck !== true){
-            return res.json(vendorCheck);
+        const email = req.body.email.toLowerCase();
+        const vendor = await Vendor.findOne({email: email});
+        if(vendor !== null){
+            req.session.error = "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
+            return res.redirect("/");
         }
 
-        Helper.createURL(req.body.name)
+        helper.createURL(req.body.name)
             .then((url)=>{
                 const salt = bcrypt.genSaltSync(10);
                 const hash = bcrypt.hashSync(req.body.password, salt);
 
                 let newVendor = new Vendor({
                     name: req.body.name,
-                    email: req.body.email,
+                    email: email,
                     password: hash,
                     url: url
                 });
@@ -112,10 +109,16 @@ module.exports = {
                 return newVendor.save();
             })
             .then((vendor)=>{
-                return res.json({});
+                return res.json(vendor);
             })
             .catch((err)=>{
-                return res.json("ERROR: Unable to create vendor at this time");
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                if(err.name === "ValidationError"){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
+                }
+                return res.json("ERROR: VENDOR CREATION FAILED");
             });
     },
 
@@ -138,12 +141,13 @@ module.exports = {
         Vendor.findOne({_id: req.session.user})
             .then(async (vendor)=>{
                 //Validate and update email
-                if(req.body.email !== vendor.email){
-                    const emailCheck = await VendorValidator.email(req.body.email);
-                    if(emailCheck !== true){
-                        return res.json(emailCheck);
+                const email = req.body.email.toLowerCase();
+                if(email !== vendor.email){
+                    const vendor = await Vendor.findOne({email: email});
+                    if(vendor){
+                        throw "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
                     }
-                    vendor.email = req.body.email;
+                    vendor.email = email;
                 }
 
 
@@ -182,31 +186,12 @@ module.exports = {
 
                 //Validate name and update name/url
                 if(req.body.name !== vendor.name){
-                    const nameCheck = VendorValidator.name(req.body.name);
-                    if(nameCheck !== true){
-                        return res.json(nameCheck);
-                    }
                     vendor.name = req.body.name;
-                    vendor.url = Helper.createURL(req.body.name);
+                    vendor.url = await helper.createURL(req.body.name);
                 }
 
-                //Validate and update ownerName
-                if(req.body.ownerName !== vendor.ownerName){
-                    const ownerNameCheck = VendorValidator.ownerName(req.body.ownerName);
-                    if(ownerNameCheck !== true){
-                        return res.json(ownerNameCheck);
-                    }
-                    vendor.ownerName = req.body.ownerName;
-                }
-
-                //Validate and update description
-                if(req.body.description !== vendor.description){
-                    const descriptionCheck = VendorValidator.description(req.body.description);
-                    if(descriptionCheck !== true){
-                        return res.json(descriptionCheck);
-                    }
-                    vendor.description = req.body.description;
-                }
+                vendor.ownerName = req.body.ownerName;
+                vendor.description = req.body.description;
 
                 return vendor.save();
             })
@@ -214,16 +199,24 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
-                return res.json("ERROR: Unable to update your data");
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                if(err.name === "ValidationError"){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
+                }
+                return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");
             });
     },
 
     logLeeIn: function(req, res){
-        Vendor.findOne({email: "bobby@mail.com"})
+        Vendor.findOne({email: "morgan.leer@protonmail.com"})
             .then((vendor)=>{
                 req.session.user = vendor._id;
                 return res.json("OK");
             })
-            .catch((err)=>{});
+            .catch((err)=>{
+                return res.json(err);
+            });
     }
 }
