@@ -214,18 +214,15 @@ module.exports = {
     DELETE: remove a single vendor
     */
     removeVendor: function(req, res){
-        console.log("thing");
         if(req.params.id !== req.session.user){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
-        console.log("something");
 
         Vendor.deleteOne({_id: req.session.user})
             .then((response)=>{
                 return res.json({});
             })
             .catch((err)=>{
-                console.log(err);
                 return res.json("ERROR: UNABLE TO DELETE VENDOR");
             });
     },
