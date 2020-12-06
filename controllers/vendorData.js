@@ -109,6 +109,8 @@ module.exports = {
                 return newVendor.save();
             })
             .then((vendor)=>{
+                vendor.status = undefined;
+                vendor.password = undefined;
                 return res.json(vendor);
             })
             .catch((err)=>{
@@ -135,11 +137,11 @@ module.exports = {
     response = Vendor
     */
     updateVendor: function(req, res){
-        if(!req.session.user){
+        if(req.session.vendor !== req.params.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        Vendor.findOne({_id: req.session.user})
+        Vendor.findOne({_id: req.session.vendor})
             .then(async (vendor)=>{
                 //Validate and update email
                 const email = req.body.email.toLowerCase();
@@ -197,9 +199,12 @@ module.exports = {
                 return vendor.save();
             })
             .then((vendor)=>{
+                vendor.password = undefined;
+                vendor.status = undefined;
                 return res.json(vendor);
             })
             .catch((err)=>{
+                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
@@ -214,11 +219,11 @@ module.exports = {
     DELETE: remove a single vendor
     */
     removeVendor: function(req, res){
-        if(req.params.id !== req.session.user){
+        if(req.params.id !== req.session.vendor){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        Vendor.deleteOne({_id: req.session.user})
+        Vendor.deleteOne({_id: req.session.vendor})
             .then((response)=>{
                 return res.json({});
             })
@@ -230,7 +235,7 @@ module.exports = {
     logLeeIn: function(req, res){
         Vendor.findOne({email: "morgan.leer@protonmail.com"})
             .then((vendor)=>{
-                req.session.user = vendor._id;
+                req.session.vendor = vendor._id;
                 return res.json("OK");
             })
             .catch((err)=>{

@@ -40,6 +40,7 @@ module.exports = {
                 }).save();
             })
             .then((user)=>{
+                user.password = undefined;
                 return res.json(user);
             })
             .catch((err)=>{
@@ -85,6 +86,7 @@ module.exports = {
                 return user.save();
             })
             .then((user)=>{
+                user.password = undefined;
                 return res.json(user);
             })
             .catch((err)=>{
