@@ -8,13 +8,13 @@ module.exports = function(app){
     app.get("/vendors/search*", vendorData.getVendors);
     app.get("/vendors/:id", vendorData.getVendor);
     app.post("/vendors", vendorData.createVendor);
-    app.put("/vendors/:id", vendorData.updateVendor);
+    app.put("/vendors", vendorData.updateVendor);
     app.delete("/vendors/:id", vendorData.removeVendor);
     
     app.get("/leelogin", vendorData.logLeeIn);
 
     app.post("/users", userData.createUser);
-    app.put("/users", userData.updateUser);
+    app.put("/users/", userData.updateUser);
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
 

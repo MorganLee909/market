@@ -128,6 +128,7 @@ module.exports = {
     TODO: id should be sent in the body and checked against the session
     PUT: Updates the profile information of the vendor
     req.body: {
+        id: String,
         name: String,
         email: String,
         ownerName: String,
@@ -137,7 +138,7 @@ module.exports = {
     response = Vendor
     */
     updateVendor: function(req, res){
-        if(req.session.vendor !== req.params.id){
+        if(req.session.vendor !== req.body.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
