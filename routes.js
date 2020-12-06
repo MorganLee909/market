@@ -15,6 +15,7 @@ module.exports = function(app){
 
     app.post("/users", userData.createUser);
     app.put("/users", userData.updateUser);
+    app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
 
     app.get("/leelogin2", userData.logLeeIn);

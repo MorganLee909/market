@@ -102,12 +102,27 @@ module.exports = {
         if(req.session.user !== req.params.id){
             return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
         }
+
         User.findOne({_id: req.session.user}, {password: 0})
             .then((user)=>{
                 return res.json(user);
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
+            });
+    },
+
+    removeUser: function(req, res){
+        if( req.session.user !== req.params.id){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        }
+
+        User.deleteOne({_id: req.session.user})
+            .then((user)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                return res.json("ERROR: USER DELETION FAILED");
             });
     },
     
