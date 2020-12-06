@@ -63,9 +63,6 @@ module.exports = {
     response = User
     */
     updateUser: function(req, res){
-        console.log(req.session.user);
-        console.log(req.body.id);
-        console.log(req.body);
         if(req.session.user !== req.body.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
@@ -91,7 +88,6 @@ module.exports = {
                 return res.json(user);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
@@ -99,6 +95,19 @@ module.exports = {
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: USER UPDATE FAILED");
+            });
+    },
+
+    getUser: function(req, res){
+        if(req.session.user !== req.params.id){
+            return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
+        }
+        User.findOne({_id: req.session.user}, {password: 0})
+            .then((user)=>{
+                return res.json(user);
+            })
+            .catch((err)=>{
+                return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
             });
     },
     
@@ -111,6 +120,6 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json(err);
-            })
+            });
     }
 }
