@@ -104,6 +104,41 @@ module.exports = {
     },
 
     /*
+    POST: add vendors to the markets list of vendors
+    req.body = [vendor id]
+    */
+    addVendors: function(req, res){
+        if(req.session.vendor === undefined){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        }
+
+        Market.findOne({_id: req.params.id})
+            .then((market)=>{
+                if(market.owner.toString() !== req.session.vendor){
+                    throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
+                }
+
+                for(let i = 0; i < req.body.length; i++){
+                    market.vendors.push(req.body[i]);
+                }
+
+                return market.save();
+            })
+            .then((market)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                if(err instanceof ValidationErro){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
+                }
+                return res.json("ERROR: ADDING VENDORS TO MARKET FAILED");
+            });
+    },
+
+    /*
     GET: Gets a list of all markets in the area
     queries:
         address = address to search from
@@ -183,6 +218,9 @@ module.exports = {
                 return res.json({});
             })
             .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
                 return res.json("ERROR: UNABLE TO DELETE VENDOR");
             });
     }

@@ -13,6 +13,7 @@ module.exports = function(app){
     app.post("/vendors", vendorData.createVendor);
     app.put("/vendors", vendorData.updateVendor);
     app.delete("/vendors/:id", vendorData.removeVendor);
+    //TODO: add ability to add items
     
     app.get("/leeloginvendor", vendorData.logLeeIn);
 
@@ -28,6 +29,8 @@ module.exports = function(app){
     app.post("/markets", marketData.createMarket);
     app.put("/markets", marketData.updateMarket);
     app.get("/markets/search?*", marketData.getMarkets);
+    app.post("/markets/:id/vendors", marketData.addVendors);
     app.get("/markets/:id", marketData.getMarket);
     app.delete("/markets/:id", marketData.removeMarket);
+    
 }
