@@ -1,22 +1,6 @@
+const validation = require("./validation.js");
+
 const mongoose = require("mongoose");
-
-const isSanitary = (str)=>{
-    let disallowed = ["\\", "<", ">", "$", "{", "}", "(", ")"];
-
-    for(let i = 0; i < str.length; i++){
-        for(let j = 0; j < disallowed.length; j++){
-            if(str[i] === disallowed[j]){
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-const validEmail = (email)=>{
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-}
 
 const VendorSchema = new mongoose.Schema({
     name: {
@@ -24,7 +8,7 @@ const VendorSchema = new mongoose.Schema({
         required: [true, "VENDOR NAME IS REQUIRED"],
         minlength: [3, "VENDOR NAME MUST CONTAIN AT LEAST 3 CHARACTERS"],
         validate: {
-            validator: isSanitary,
+            validator: validation.isSanitary,
             message: "VENDOR NAME CONTAINS ILLEGAL CHARACTERS"
         }
     },
@@ -32,7 +16,7 @@ const VendorSchema = new mongoose.Schema({
         type: String,
         required: [true, "VENDOR EMAIL IS REQUIRED"],
         validate: {
-            validator: validEmail,
+            validator: validation.validEmail,
             message: "MUST ENTER A VALID EMAIL ADDRESS"
         }
     },
@@ -46,7 +30,7 @@ const VendorSchema = new mongoose.Schema({
         required: false,
         minlength: [2, "OWNER NAME MUST CONTAIN AT LEAST 2 CHARACTERS"],
         validate: {
-            validator: isSanitary,
+            validator: validation.isSanitary,
             message: "OWNER NAME CONTAINS ILLEGAL CHARACTERS"
         }
     },
@@ -54,7 +38,7 @@ const VendorSchema = new mongoose.Schema({
         type: String,
         required: false,
         validate: {
-            validator: isSanitary,
+            validator: validation.isSanitary,
             message: "VENDOR DESCRIPTION CONTAINS ILLEGAL CHARACTERS"
         }
     },
@@ -79,7 +63,7 @@ const VendorSchema = new mongoose.Schema({
             required: [true, "ITEM NAME IS REQUIRED"],
             minlength: [3, "ITEM NAME MUST CONTAIN AT LEAST 3 CHARACTERS"],
             validate: {
-                validator: isSanitary,
+                validator: validation.isSanitary,
                 message: "ITEM NAME CONTAINS ILLEGAL CHARACTERS"
             }
         },
@@ -91,7 +75,7 @@ const VendorSchema = new mongoose.Schema({
             type: String,
             required: [true, "UNIT OF MEASUREMENT FOR THE ITEM IS REQUIRED"],
             validate: {
-                validator: isSanitary,
+                validator: validation.isSanitary,
                 message: "UNIT CONTAINS ILLEGAL CHARACTERS"
             }
         }
