@@ -104,6 +104,43 @@ module.exports = {
     },
 
     /*
+    GET: Gets a list of all markets in the area
+    queries:
+        address = address to search from
+        distance = the distance(in miles) in miles, from the address, to search
+    response = [Market]
+    */
+    getMarkets: function(req, res){
+        const apiUrl = "https://api.geocod.io/v1.6/geocode";
+        const address = req.query.address;
+        const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
+
+        axios.get(fullUrl)
+            .then((response)=>{
+                const location = [response.data.results[0].location.lat, response.data.results[0].location.lng];
+                const distance = parseFloat(req.query.distance) * 1609.344;
+
+                return Market.find({
+                    location: {
+                        $nearSphere: {
+                            $maxDistance: distance,
+                            $geometry: {
+                                type: "Point",
+                                coordinates: location
+                            }
+                        }
+                    }
+                });
+            })
+            .then((markets)=>{
+                return res.json(markets);
+            })
+            .catch((err)=>{
+                return res.json("ERROR: UNABLE TO PERFORM SEARCH");
+            });
+    },
+
+    /*
     GET - get the data for a single market
     */
     getMarket: function(req, res){

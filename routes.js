@@ -26,5 +26,6 @@ module.exports = function(app){
     //Markets
     app.post("/markets", marketData.createMarket);
     app.put("/markets", marketData.updateMarket);
+    app.get("/markets/search?*", marketData.getMarkets);
     app.get("/markets/:id", marketData.getMarket);
 }

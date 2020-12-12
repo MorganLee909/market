@@ -38,6 +38,9 @@ module.exports = {
 
     /*
     GET: Gets all vendors in the area
+    queries:
+        address = address to search from
+        distance = the distance(in miles) in miles, from the address, to search
     response = [Vendor]
     */
     getVendors: function(req, res){
@@ -74,7 +77,7 @@ module.exports = {
                 return res.json(vendors);
             })
             .catch((err)=>{
-                return res.json("ERROR: Unable to perform search");
+                return res.json("ERROR: UNABLE TO PERFORM SEARCH");
             });
     },
 
