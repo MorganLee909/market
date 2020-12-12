@@ -117,7 +117,7 @@ module.exports = {
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err.name === "ValidatorError"){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: VENDOR CREATION FAILED");
@@ -205,11 +205,10 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err.name === "ValidatorError"){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");

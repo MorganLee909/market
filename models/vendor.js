@@ -55,7 +55,8 @@ const VendorSchema = new mongoose.Schema({
     },
     location: {
         type: {type: "String"},
-        coordinates: []
+        coordinates: [],
+        required: false
     },
     items: [{
         name: {
