@@ -142,6 +142,7 @@ module.exports = {
 
     /*
     GET - get the data for a single market
+    response = Market
     */
     getMarket: function(req, res){
         Market.findOne({_id: req.params.id})
@@ -156,6 +157,33 @@ module.exports = {
                     return res.json(err);
                 }
                 return res.json("ERROR: UNABLE TO SEARCH FOR THE MARKET");
+            });
+    },
+
+    /*
+    DELETE: remove a market from the database
+    params:
+        id = id of market to remove
+    repsonse = {}
+    */
+    removeMarket: function(req, res){
+        if(req.session.vendor === undefined){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        }
+
+        Market.findOne({_id: req.params.id})
+            .then((market)=>{
+                if(market.owner.toString() !== req.session.vendor){
+                    throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
+                }
+
+                return Market.deleteOne({_id: req.params.id});
+            })
+            .then((response)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                return res.json("ERROR: UNABLE TO DELETE VENDOR");
             });
     }
 }

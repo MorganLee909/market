@@ -28,4 +28,5 @@ module.exports = function(app){
     app.put("/markets", marketData.updateMarket);
     app.get("/markets/search?*", marketData.getMarkets);
     app.get("/markets/:id", marketData.getMarket);
+    app.delete("/markets/:id", marketData.removeMarket);
 }
