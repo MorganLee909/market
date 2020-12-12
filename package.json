@@ -5,15 +5,19 @@
   "author": "Lee Morgan <Morgan.LeeR@protonmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon app.js"
+    "buildApp": "watchify ./views/index.js -o ./views/bundle.js",
+    "nodemon": "nodemon app.js",
+    "dev": "npm run buildApp | npm run nodemon"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
+    "browserify": "^17.0.0",
     "compression": "^1.7.4",
     "cookie-session": "^1.4.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "mongoose": "^5.10.11"
+    "mongoose": "^5.10.11",
+    "watchify": "^3.11.1"
   }
 }
