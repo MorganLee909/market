@@ -1,6 +1,7 @@
 const User = require("../models/user.js");
 
 const bcrypt = require("bcryptjs");
+const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
@@ -47,7 +48,7 @@ module.exports = {
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: NEW USER CREATION FAILED");
@@ -93,7 +94,7 @@ module.exports = {
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: USER UPDATE FAILED");

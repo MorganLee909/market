@@ -1,5 +1,7 @@
 const Market = require("../models/market.js");
 
+const ValidationError = require("mongoose").Error.ValidationError;
+
 module.exports = {
     /*
     POST - Creates a new market
@@ -23,8 +25,12 @@ module.exports = {
                 return res.json(market);
             })
             .catch((err)=>{
+                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
+                }
+                if(err instanceof ValidationError){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: MARKET CREATION FAILED");
             });

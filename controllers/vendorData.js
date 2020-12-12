@@ -5,6 +5,7 @@ const helper = require("./helper.js");
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const ObjectId = require("mongoose").Types.ObjectId;
+const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
@@ -117,7 +118,7 @@ module.exports = {
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidatorError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: VENDOR CREATION FAILED");
@@ -208,7 +209,7 @@ module.exports = {
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidatorError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");
