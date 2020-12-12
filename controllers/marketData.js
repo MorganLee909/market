@@ -181,10 +181,17 @@ module.exports = {
     */
     getMarket: function(req, res){
         Market.findOne({_id: req.params.id})
+            .populate("vendors")
             .then((market)=>{
                 if(market === null){
                     throw "UNABLE TO FIND THAT MARKET";
                 }
+
+                for(let i = 0; i < market.vendors.length; i++){
+                    market.vendors[i].password === undefined;
+                    market.vendors[i].address === undefined;
+                }
+
                 return res.json(market);
             })
             .catch((err)=>{

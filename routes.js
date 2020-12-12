@@ -6,6 +6,7 @@ const marketData = require("./controllers/marketData.js");
 module.exports = function(app){
     app.get("/", renderer.home);
     app.get("/logout", renderer.logout);
+    //TODO: add login
 
     //Vendors
     app.get("/vendors/search*", vendorData.getVendors);
