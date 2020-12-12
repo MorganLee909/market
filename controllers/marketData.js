@@ -37,7 +37,7 @@ module.exports = {
     },
 
     /*
-    PUT - Updates a markets data
+    PUT - Updates a market's data
     req.body = {
         id: String // id of the market
         name: String // name of the market,
@@ -100,6 +100,25 @@ module.exports = {
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: UNABLE TO UPDATE MARKET DATA");
+            });
+    },
+
+    /*
+    GET - get the data for a single market
+    */
+    getMarket: function(req, res){
+        Market.findOne({_id: req.params.id})
+            .then((market)=>{
+                if(market === null){
+                    throw "UNABLE TO FIND THAT MARKET";
+                }
+                return res.json(market);
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO SEARCH FOR THE MARKET");
             });
     }
 }
