@@ -22,6 +22,16 @@ const MarketSchema = new mongoose.Schema({
         ref: "Vendor",
         required: false
     }],
+    address: {
+        streetNumber: String,
+        road: String,
+        city: String,
+        county: String,
+        state: String,
+        country: String,
+        zipCode: String,
+        full: String
+    },
     location: {
         type: {type: "String"},
         coordinates: [],

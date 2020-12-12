@@ -17,7 +17,7 @@ module.exports = function(app){
 
     //Users
     app.post("/users", userData.createUser);
-    app.put("/users/", userData.updateUser);
+    app.put("/users", userData.updateUser);
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
 
@@ -25,4 +25,5 @@ module.exports = function(app){
 
     //Markets
     app.post("/markets", marketData.createMarket);
+    app.put("/markets", marketData.updateMarket);
 }
