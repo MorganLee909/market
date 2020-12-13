@@ -6,12 +6,12 @@ const marketData = require("./controllers/marketData.js");
 module.exports = function(app){
     app.get("/", renderer.home);
     app.get("/logout", renderer.logout);
-    //TODO: add login
 
     //Vendors
     app.get("/vendors/search*", vendorData.getVendors);
     app.get("/vendors/:id", vendorData.getVendor);
     app.post("/vendors", vendorData.createVendor);
+    app.post("/vendors/login", vendorData.vendorLogin);
     app.put("/vendors", vendorData.updateVendor);
     app.delete("/vendors/:id", vendorData.removeVendor);
     //TODO: add ability to add items

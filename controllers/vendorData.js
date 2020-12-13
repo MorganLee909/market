@@ -129,6 +129,38 @@ module.exports = {
     },
 
     /*
+    GET: logs in the vendor
+    req.body = {
+        email: String // vendor email
+        password: String // vendor password
+    }
+    response = {} (returns a string if the login failed)
+    */
+    vendorLogin: function(req, res){
+        Vendor.findOne({email: req.body.email.toLowerCase()})
+            .then((vendor)=>{
+                if(vendor === undefined){
+                    throw "INCORRECT EMAIL OR PASSWORD";
+                }
+
+                bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
+                    if(result === true){
+                        req.session.vendor = vendor._id;
+                        return res.json({})
+                    }
+
+                    throw "ERROR: UNABLE TO VALIDATE PASSWORD";
+                });
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO VALIDATE PASSWORD");
+            })
+    },
+
+    /*
     TODO: id should be sent in the body and checked against the session
     PUT: Updates the profile information of the vendor
     req.body: {
