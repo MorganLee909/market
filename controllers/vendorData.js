@@ -153,7 +153,6 @@ module.exports = {
     },
 
     /*
-    TODO: id should be sent in the body and checked against the session
     PUT: Updates the profile information of the vendor
     req.body: {
         id: String,
