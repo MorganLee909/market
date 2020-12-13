@@ -13,26 +13,18 @@ module.exports = {
     response = Vendor
     */
     getVendor: function(req, res){
-        //TODO: this should not be an aggregate for a single vendor (findOne)
-        Vendor.aggregate([
-            {$match: {
-                _id: ObjectId(req.params.id)
-            }},
-            {$project: {
-                _id: 0,
-                name: 1,
-                url: 1,
-                description: 1,
-                status: 1,
-                items: 1
-            }}
-        ])
+        Vendor.findOne({_id: req.params.id}, {
+            _id: 0,
+            name: 1,
+            url: 1,
+            description: 1,
+            items: 1
+        })
             .then((vendor)=>{
-                vendor[0].status = undefined;
-                return res.json(vendor[0]);
+                return res.json(vendor);
             })
             .catch((err)=>{
-                return res.json("ERROR: Unable to find vendor");
+                return res.json("ERROR: UNABLE TO FIND VENDOR");
             });
     },
 

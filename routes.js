@@ -14,8 +14,7 @@ module.exports = function(app){
     app.post("/vendors/login", vendorData.vendorLogin);
     app.put("/vendors", vendorData.updateVendor);
     app.delete("/vendors/:id", vendorData.removeVendor);
-    //TODO: add ability to add items
-    
+        
     //Users
     app.post("/users", userData.createUser);
     app.put("/users", userData.updateUser);
