@@ -159,17 +159,5 @@ module.exports = {
             .catch((err)=>{
                 return res.json("ERROR: USER DELETION FAILED");
             });
-    },
-    
-    //Logs Lee in
-    logLeeIn: function(req, res){
-        User.findOne({email: "morgan.leer@protonmail.com"})
-            .then((user)=>{
-                req.session.user = user._id;
-                return res.json("OK");
-            })
-            .catch((err)=>{
-                return res.json(err);
-            });
     }
 }

@@ -16,8 +16,6 @@ module.exports = function(app){
     app.delete("/vendors/:id", vendorData.removeVendor);
     //TODO: add ability to add items
     
-    app.get("/leeloginvendor", vendorData.logLeeIn);
-
     //Users
     app.post("/users", userData.createUser);
     app.put("/users", userData.updateUser);
@@ -25,7 +23,6 @@ module.exports = function(app){
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
 
-    app.get("/leeloginuser", userData.logLeeIn);
 
     //Markets
     app.post("/markets", marketData.createMarket);
@@ -33,6 +30,5 @@ module.exports = function(app){
     app.get("/markets/search?*", marketData.getMarkets);
     app.post("/markets/:id/vendors", marketData.addVendors);
     app.get("/markets/:id", marketData.getMarket);
-    app.delete("/markets/:id", marketData.removeMarket);
-    
+    app.delete("/markets/:id", marketData.removeMarket); 
 }

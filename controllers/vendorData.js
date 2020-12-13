@@ -131,8 +131,8 @@ module.exports = {
     /*
     GET: logs in the vendor
     req.body = {
-        email: String // vendor email
-        password: String // vendor password
+        email: String (vendor email)
+        password: String (vendor password)
     }
     response = {} (returns a string if the login failed)
     */
@@ -265,17 +265,6 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO DELETE VENDOR");
-            });
-    },
-
-    logLeeIn: function(req, res){
-        Vendor.findOne({email: "morgan.leer@protonmail.com"})
-            .then((vendor)=>{
-                req.session.vendor = vendor._id;
-                return res.json("OK");
-            })
-            .catch((err)=>{
-                return res.json(err);
             });
     }
 }
