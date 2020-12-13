@@ -101,6 +101,38 @@ module.exports = {
             });
     },
 
+    /*
+    GET: logs in the user
+    req.body = {
+        email: String (user email),
+        password: String (user password)
+    }
+    response = {} (return a string if the login failed)
+    */
+    userLogin: function(req, res){
+        User.findOne({email: req.body.email.toLowerCase()})
+            .then((user)=>{
+                if(user === null){
+                    throw "INCORRECT EMAIL OR PASSWORD";
+                }
+
+                return bcrypt.compare(req.body.password, user.password, (err, result)=>{
+                    if(result === true){
+                        req.session.user = user._id;
+                        return res.json({});
+                    }
+
+                    return res.json("INCORRECT EMAIL OR PASSWORD");
+                });
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO VALIDATE PASSWORD");
+            });
+    },
+
     getUser: function(req, res){
         if(req.session.user !== req.params.id){
             return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");

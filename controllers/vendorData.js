@@ -139,18 +139,18 @@ module.exports = {
     vendorLogin: function(req, res){
         Vendor.findOne({email: req.body.email.toLowerCase()})
             .then((vendor)=>{
-                if(vendor === undefined){
+                if(vendor === null){
                     throw "INCORRECT EMAIL OR PASSWORD";
                 }
 
-                bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
+                return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
                         req.session.vendor = vendor._id;
                         return res.json({})
                     }
 
-                    throw "ERROR: UNABLE TO VALIDATE PASSWORD";
-                });
+                    return res.json("INCORRECT EMAIL OR PASSWORD");
+                }); 
             })
             .catch((err)=>{
                 if(typeof(err) === "string"){

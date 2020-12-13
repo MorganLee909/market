@@ -21,6 +21,7 @@ module.exports = function(app){
     //Users
     app.post("/users", userData.createUser);
     app.put("/users", userData.updateUser);
+    app.post("/users/login", userData.userLogin);
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
 
