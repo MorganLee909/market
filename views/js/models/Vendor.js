@@ -5,7 +5,7 @@ class Vendor {
         this._email = email;
         this._description = description;
         this._items = [];
-        //items will be another class - Items
+
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
                items[i].id, 
