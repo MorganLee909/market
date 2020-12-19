@@ -17,5 +17,3 @@ class Vendor {
         }
     }
 }
-
-let newClass = new Vendor( );
