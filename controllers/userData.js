@@ -12,11 +12,7 @@ module.exports = {
         password: String,
         confirmPassword: String
     }
-    response = User{
-        _id: String,
-        name: String,
-        email: String
-    }
+    response = User (returns private data)
     */
     createUser: function(req, res){
         const email = req.body.email.toLowerCase();
@@ -67,11 +63,7 @@ module.exports = {
         name: String,
         email: String
     }
-    response = User{
-        _id: String,
-        name: String,
-        email: String
-    }
+    response = User (returns private data)
     */
     updateUser: function(req, res){
         if(req.session.user !== req.body.id){
@@ -117,11 +109,9 @@ module.exports = {
         email: String (user email),
         password: String (user password)
     }
-    response = {
-        _id: String
-        name: String,
-        email: String
-    } (return a string if the login failed)
+    response = User
+        (returns private data)
+        (return a string if the login failed)
     */
     userLogin: function(req, res){
         User.findOne({email: req.body.email.toLowerCase()})
@@ -171,14 +161,9 @@ module.exports = {
 
     /*
     GET: retrieves a single user
-    User must be logged in to get their data
     params:
         id: Id of the user
-    response = User{
-        _id: String,
-        name: String,
-        email: String
-    }
+    response = User (returns private data)
     */
     getUser: function(req, res){
         if(req.session.user !== req.params.id){

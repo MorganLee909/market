@@ -2,7 +2,9 @@ const validation = require("./validation.js");
 
 const mongoose = require("mongoose");
 
+//All user data is private
 const UserSchema = new mongoose.Schema({
+    //PRIVATE: name of the user
     name: {
         type: String,
         required: [true, "USER NAME IS REQUIRED"],
@@ -12,6 +14,8 @@ const UserSchema = new mongoose.Schema({
             message: "USER NAME CONTAINS ILLEGAL CHARACTERS"
         }
     },
+
+    //PRIVATE: email address of the user
     email: {
         type: String,
         required: [true, "USER EMAIL IS REQUIRED"],
@@ -20,6 +24,8 @@ const UserSchema = new mongoose.Schema({
             message: "MUST ENTER A VALID EMAIL ADDRESS"
         }
     },
+
+    //BACKEND: hashed password for authentication
     password: {
         type: String,
         required: [true, "USER PASSWORD IS REQUIRED"]
