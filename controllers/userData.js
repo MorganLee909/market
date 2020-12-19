@@ -12,7 +12,7 @@ module.exports = {
         password: String,
         confirmPassword: String
     }
-    response = User
+    response = User (returns private data)
     */
     createUser: function(req, res){
         const email = req.body.email.toLowerCase();
@@ -42,6 +42,7 @@ module.exports = {
             })
             .then((user)=>{
                 user.password = undefined;
+
                 return res.json(user);
             })
             .catch((err)=>{
@@ -62,7 +63,7 @@ module.exports = {
         name: String,
         email: String
     }
-    response = User
+    response = User (returns private data)
     */
     updateUser: function(req, res){
         if(req.session.user !== req.body.id){
@@ -88,6 +89,7 @@ module.exports = {
             })
             .then((user)=>{
                 user.password = undefined;
+
                 return res.json(user);
             })
             .catch((err)=>{
@@ -107,7 +109,9 @@ module.exports = {
         email: String (user email),
         password: String (user password)
     }
-    response = {} (return a string if the login failed)
+    response = User
+        (returns private data)
+        (return a string if the login failed)
     */
     userLogin: function(req, res){
         User.findOne({email: req.body.email.toLowerCase()})
@@ -118,8 +122,10 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, user.password, (err, result)=>{
                     if(result === true){
+                        user.password = undefined;
+
                         req.session.user = user._id;
-                        return res.json({});
+                        return res.json(user);
                     }
 
                     return res.json("INCORRECT EMAIL OR PASSWORD");
@@ -133,20 +139,12 @@ module.exports = {
             });
     },
 
-    getUser: function(req, res){
-        if(req.session.user !== req.params.id){
-            return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
-        }
-
-        User.findOne({_id: req.session.user}, {password: 0})
-            .then((user)=>{
-                return res.json(user);
-            })
-            .catch((err)=>{
-                return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
-            });
-    },
-
+    /*
+    DELETE: Removes a user from the database
+    params: 
+        id = Id of the user to remove
+    response = {}
+    */
     removeUser: function(req, res){
         if( req.session.user !== req.params.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
@@ -158,6 +156,28 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json("ERROR: USER DELETION FAILED");
+            });
+    },
+
+    /*
+    GET: retrieves a single user
+    params:
+        id: Id of the user
+    response = User (returns private data)
+    */
+    getUser: function(req, res){
+        if(req.session.user !== req.params.id){
+            return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
+        }
+
+        User.findOne({_id: req.session.user}, {password: 0})
+            .then((user)=>{
+                user.password = undefined;
+
+                return res.json(user);
+            })
+            .catch((err)=>{
+                return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
             });
     }
 }

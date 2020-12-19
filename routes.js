@@ -1,5 +1,6 @@
 const renderer = require("./controllers/renderer.js");
 const vendorData = require("./controllers/vendorData.js");
+const itemData = require("./controllers/itemData.js");
 const userData = require("./controllers/userData.js");
 const marketData = require("./controllers/marketData.js");
 
@@ -14,6 +15,11 @@ module.exports = function(app){
     app.post("/vendors/login", vendorData.vendorLogin);
     app.put("/vendors", vendorData.updateVendor);
     app.delete("/vendors/:id", vendorData.removeVendor);
+
+    //Vendor items
+    app.post("/vendors/items", itemData.addItems);
+    app.delete("/vendors/items/:id", itemData.removeItem);
+    app.put("/vendors/items", itemData.updateItems);
         
     //Users
     app.post("/users", userData.createUser);
@@ -21,7 +27,6 @@ module.exports = function(app){
     app.post("/users/login", userData.userLogin);
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
-
 
     //Markets
     app.post("/markets", marketData.createMarket);

@@ -44,6 +44,7 @@ module.exports = {
         address: String // address of the place where the market is held (empty if none),
         description: String, // description of the market
     }
+    response = Market
     */
     updateMarket: function(req, res){
         Market.findOne({_id: req.body.id})
@@ -103,40 +104,7 @@ module.exports = {
             });
     },
 
-    /*
-    POST: add vendors to the markets list of vendors
-    req.body = [vendor id]
-    */
-    addVendors: function(req, res){
-        if(req.session.vendor === undefined){
-            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
-        }
-
-        Market.findOne({_id: req.params.id})
-            .then((market)=>{
-                if(market.owner.toString() !== req.session.vendor){
-                    throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
-                }
-
-                for(let i = 0; i < req.body.length; i++){
-                    market.vendors.push(req.body[i]);
-                }
-
-                return market.save();
-            })
-            .then((market)=>{
-                return res.json({});
-            })
-            .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
-                if(err instanceof ValidationErro){
-                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
-                }
-                return res.json("ERROR: ADDING VENDORS TO MARKET FAILED");
-            });
-    },
+    
 
     /*
     GET: Gets a list of all markets in the area
@@ -176,20 +144,53 @@ module.exports = {
     },
 
     /*
-    GET - get the data for a single market
+    POST: add Vendors to the Market's list of Vendors
+    req.body = [String (Vendor ids)]
     response = Market
+    */
+    addVendors: function(req, res){
+        if(req.session.vendor === undefined){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        }
+
+        Market.findOne({_id: req.params.id})
+            .then((market)=>{
+                if(market.owner.toString() !== req.session.vendor){
+                    throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
+                }
+
+                for(let i = 0; i < req.body.length; i++){
+                    market.vendors.push(req.body[i]);
+                }
+
+                return market.save();
+            })
+            .then((market)=>{
+                return res.json(market);
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                if(err instanceof ValidationError){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
+                }
+                return res.json("ERROR: ADDING VENDORS TO MARKET FAILED");
+            });
+    },
+
+    /*
+    GET - get the data for a single market
+    params: Market id
+    response = Market (owner/vendors populated)
     */
     getMarket: function(req, res){
         Market.findOne({_id: req.params.id})
-            .populate("vendors")
+            .populate("vendor", "name url description items")
+            .populate("vendors", "name url description items")
             .then((market)=>{
                 if(market === null){
                     throw "UNABLE TO FIND THAT MARKET";
-                }
-
-                for(let i = 0; i < market.vendors.length; i++){
-                    market.vendors[i].password === undefined;
-                    market.vendors[i].address === undefined;
                 }
 
                 return res.json(market);

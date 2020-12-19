@@ -4,35 +4,14 @@ const helper = require("./helper.js");
 
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
-const ObjectId = require("mongoose").Types.ObjectId;
 const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
-    GET: Gets a single vendor
-    response = Vendor
-    */
-    getVendor: function(req, res){
-        Vendor.findOne({_id: req.params.id}, {
-            _id: 0,
-            name: 1,
-            url: 1,
-            description: 1,
-            items: 1
-        })
-            .then((vendor)=>{
-                return res.json(vendor);
-            })
-            .catch((err)=>{
-                return res.json("ERROR: UNABLE TO FIND VENDOR");
-            });
-    },
-
-    /*
     GET: Gets all vendors in the area
     queries:
         address = address to search from
-        distance = the distance(in miles) in miles, from the address, to search
+        distance = the distance (in miles) from the address, to search
     response = [Vendor]
     */
     getVendors: function(req, res){
@@ -59,8 +38,8 @@ module.exports = {
                     },
                     {
                         name: 1,
-                        email: 1,
                         description: 1,
+                        url: 1,
                         items: 1
                     }
                 );
@@ -70,6 +49,34 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO PERFORM SEARCH");
+            });
+    },
+
+    /*
+    GET: Gets a single vendor
+    params: 
+        id: id of the vendor to retrieve
+    response = Vendor
+    */
+    getVendor: function(req, res){
+        Vendor.findOne({_id: req.params.id}, {
+            name: 1,
+            url: 1,
+            description: 1,
+            items: 1
+        })
+            .then((vendor)=>{
+                if(vendor === null){
+                    throw "THIS VENDOR DOES NOT EXIST";
+                }
+
+                return res.json(vendor);
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO FIND VENDOR");
             });
     },
 
@@ -107,6 +114,8 @@ module.exports = {
             .then((vendor)=>{
                 vendor.status = undefined;
                 vendor.password = undefined;
+                vendor.email = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
@@ -126,7 +135,7 @@ module.exports = {
         email: String (vendor email)
         password: String (vendor password)
     }
-    response = {} (returns a string if the login failed)
+    response = Vendor (returns private data)
     */
     vendorLogin: function(req, res){
         Vendor.findOne({email: req.body.email.toLowerCase()})
@@ -137,8 +146,11 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
+                        vendor.status = undefined;
+                        vendor.password = undefined;
+
                         req.session.vendor = vendor._id;
-                        return res.json({})
+                        return res.json(vendor);
                     }
 
                     return res.json("INCORRECT EMAIL OR PASSWORD");
@@ -160,9 +172,9 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String (should be formatted already)
+        address: String
     }
-    response = Vendor
+    response = Vendor (returns private data)
     */
     updateVendor: function(req, res){
         if(req.session.vendor !== req.body.id){
@@ -229,6 +241,7 @@ module.exports = {
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
@@ -244,6 +257,7 @@ module.exports = {
 
     /*
     DELETE: remove a single vendor
+    response = {}
     */
     removeVendor: function(req, res){
         if(req.params.id !== req.session.vendor){

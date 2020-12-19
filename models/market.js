@@ -2,7 +2,9 @@ const validation = require("./validation.js");
 
 const mongoose = require("mongoose");
 
+//All market data is public
 const MarketSchema = new mongoose.Schema({
+    //PUBLIC: name of the market
     name: {
         type: String,
         required: [true, "MARKET NAME IS REQUIRED"],
@@ -12,16 +14,23 @@ const MarketSchema = new mongoose.Schema({
             message: "MARKET NAME CONTAINS ILLEGAL CHARACTERS"
         }
     },
+
+    //PUBLIC: reference to the owner (Vendor) of the market
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Vendor",
         required: [true, "MARKET MUST HAVE AN OWNER"]
     },
+
+    //PUBLIC: list of all vendors that are a part of the market
+    //NOTE: See Vendor Schema for public/private on each individual Vendor
     vendors: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Vendor",
         required: false
     }],
+
+    //PUBLIC: address of market broken down into seperate components
     address: {
         streetNumber: String,
         road: String,
@@ -32,11 +41,15 @@ const MarketSchema = new mongoose.Schema({
         zipCode: String,
         full: String
     },
+
+    //PUBLIC: coordinates of the market
     location: {
         type: {type: "String"},
         coordinates: [],
         required: false
     },
+    
+    //PUBLIC: description of the market
     description: {
         type: String,
         required: false,
