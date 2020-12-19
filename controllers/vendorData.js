@@ -9,31 +9,16 @@ const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
-    GET: Gets a single vendor
-    response = Vendor
-    */
-    getVendor: function(req, res){
-        Vendor.findOne({_id: req.params.id}, {
-            _id: 0,
-            name: 1,
-            url: 1,
-            description: 1,
-            items: 1
-        })
-            .then((vendor)=>{
-                return res.json(vendor);
-            })
-            .catch((err)=>{
-                return res.json("ERROR: UNABLE TO FIND VENDOR");
-            });
-    },
-
-    /*
     GET: Gets all vendors in the area
     queries:
         address = address to search from
-        distance = the distance(in miles) in miles, from the address, to search
-    response = [Vendor]
+        distance = the distance (in miles) from the address, to search
+    response = [Vendor {
+        name: String,
+        description: String (optional),
+        url: String,
+        items: [Object]
+    }]
     */
     getVendors: function(req, res){
         const apiUrl = "https://api.geocod.io/v1.6/geocode";
@@ -59,8 +44,8 @@ module.exports = {
                     },
                     {
                         name: 1,
-                        email: 1,
                         description: 1,
+                        url: 1,
                         items: 1
                     }
                 );
@@ -74,6 +59,38 @@ module.exports = {
     },
 
     /*
+    GET: Gets a single vendor
+    response = Vendor {
+        _id: String,
+        name: String,
+        url: String,
+        description: String (optional),
+        items: [Object]
+    }
+    */
+    getVendor: function(req, res){
+        Vendor.findOne({_id: req.params.id}, {
+            name: 1,
+            url: 1,
+            description: 1,
+            items: 1
+        })
+            .then((vendor)=>{
+                if(vendor === null){
+                    throw "THIS VENDOR DOES NOT EXIST";
+                }
+
+                return res.json(vendor);
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO FIND VENDOR");
+            });
+    },
+
+    /*
     POST: Creates a single vendor
     req.body = {
         name: name of the business,
@@ -81,7 +98,12 @@ module.exports = {
         password: password for the vendor,
         confirmPassword: confirmation of password,
     }
-    response = Vendor
+    response = Vendor{
+        _id: String
+        name: String,
+        url: String,
+        items: []
+    }
     */
     createVendor: async function(req, res){
         const email = req.body.email.toLowerCase();
@@ -107,6 +129,8 @@ module.exports = {
             .then((vendor)=>{
                 vendor.status = undefined;
                 vendor.password = undefined;
+                vendor.email = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
@@ -126,7 +150,20 @@ module.exports = {
         email: String (vendor email)
         password: String (vendor password)
     }
-    response = {} (returns a string if the login failed)
+    response = Vendor{
+        _id: String,
+        name: String,
+        ownerName: String (optional),
+        email: String,
+        url: String,
+        description: String (optional),
+        address: Object (optional),
+        location: {
+            type: "Point",
+            coordinates: [Number, Number]
+        } (optional)
+        items: [Object]
+    } (returns a string if the login failed)
     */
     vendorLogin: function(req, res){
         Vendor.findOne({email: req.body.email.toLowerCase()})
@@ -137,8 +174,11 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
+                        vendor.status = undefined;
+                        vendor.password = undefined;
+
                         req.session.vendor = vendor._id;
-                        return res.json({})
+                        return res.json(vendor);
                     }
 
                     return res.json("INCORRECT EMAIL OR PASSWORD");
@@ -160,9 +200,22 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String (should be formatted already)
+        address: String
     }
-    response = Vendor
+    response = Vendor{
+        _id: String,
+        name: String,
+        email: String,
+        ownerName: String (optional),
+        url: String,
+        description: String (optional),
+        address: Object (optional),
+        location: {
+            type: "Point",
+            coordinates: [Number, Number]
+        } (optional)
+        items: [Object]
+    }
     */
     updateVendor: function(req, res){
         if(req.session.vendor !== req.body.id){
@@ -229,6 +282,7 @@ module.exports = {
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
@@ -244,6 +298,7 @@ module.exports = {
 
     /*
     DELETE: remove a single vendor
+    response = {}
     */
     removeVendor: function(req, res){
         if(req.params.id !== req.session.vendor){
