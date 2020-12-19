@@ -92,7 +92,7 @@ const VendorSchema = new mongoose.Schema({
 
         //PUBLIC: quantity of the item available
         quantity: {
-            type: String,
+            type: Number,
             required: [true, "ITEM QUANTITY IS REQUIRED"]
         },
 

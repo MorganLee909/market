@@ -19,6 +19,7 @@ module.exports = function(app){
     //Vendor items
     app.post("/vendors/items", itemData.addItems);
     app.delete("/vendors/items/:id", itemData.removeItem);
+    app.put("/vendors/items", itemData.updateItems);
         
     //Users
     app.post("/users", userData.createUser);
