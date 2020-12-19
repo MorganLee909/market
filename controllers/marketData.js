@@ -169,7 +169,6 @@ module.exports = {
                 return res.json(market);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }

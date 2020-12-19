@@ -37,5 +37,43 @@ module.exports = {
                 }
                 return res.json("ERROR: UNABLE TO ADD YOUR ITEMS");
             });
+    },
+
+    /*
+    DELETE: removes a single item from a vendor's list of items
+    params:
+        id: id of the item to remove
+    response = {}
+    */
+    removeItem: function(req, res){
+        if(req.session.vendor === undefined){
+            return "YOU DO NOT HAVE PERMISSION TO DO THAT";
+        }
+
+        Vendor.findOne({_id: req.session.vendor})
+            .then((vendor)=>{
+                let exists = false;
+                for(let i = 0; i < vendor.items.length; i++){
+                    if(vendor.items[i]._id.toString() === req.params.id){
+                        vendor.items.splice(i, 1);
+                        exists = true;
+                    }
+                }
+
+                if(exists === false){
+                    throw "UNABLE TO FIND THAT ITEM";
+                }
+
+                return vendor.save();
+            })
+            .then((vendor)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO DELETE YOUR ITEM");
+            });
     }
 }
