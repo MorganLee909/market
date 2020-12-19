@@ -12,12 +12,7 @@ module.exports = {
     queries:
         address = address to search from
         distance = the distance (in miles) from the address, to search
-    response = [Vendor {
-        name: String,
-        description: String (optional),
-        url: String,
-        items: [Object]
-    }]
+    response = [Vendor]
     */
     getVendors: function(req, res){
         const apiUrl = "https://api.geocod.io/v1.6/geocode";
@@ -59,13 +54,9 @@ module.exports = {
 
     /*
     GET: Gets a single vendor
-    response = Vendor {
-        _id: String,
-        name: String,
-        url: String,
-        description: String (optional),
-        items: [Object]
-    }
+    params: 
+        id: id of the vendor to retrieve
+    response = Vendor
     */
     getVendor: function(req, res){
         Vendor.findOne({_id: req.params.id}, {
@@ -97,12 +88,7 @@ module.exports = {
         password: password for the vendor,
         confirmPassword: confirmation of password,
     }
-    response = Vendor{
-        _id: String
-        name: String,
-        url: String,
-        items: []
-    }
+    response = Vendor
     */
     createVendor: async function(req, res){
         const email = req.body.email.toLowerCase();
@@ -149,20 +135,7 @@ module.exports = {
         email: String (vendor email)
         password: String (vendor password)
     }
-    response = Vendor{
-        _id: String,
-        name: String,
-        ownerName: String (optional),
-        email: String,
-        url: String,
-        description: String (optional),
-        address: Object (optional),
-        location: {
-            type: "Point",
-            coordinates: [Number, Number]
-        } (optional)
-        items: [Object]
-    } (returns a string if the login failed)
+    response = Vendor (returns private data)
     */
     vendorLogin: function(req, res){
         Vendor.findOne({email: req.body.email.toLowerCase()})
@@ -201,20 +174,7 @@ module.exports = {
         description: String,
         address: String
     }
-    response = Vendor{
-        _id: String,
-        name: String,
-        email: String,
-        ownerName: String (optional),
-        url: String,
-        description: String (optional),
-        address: Object (optional),
-        location: {
-            type: "Point",
-            coordinates: [Number, Number]
-        } (optional)
-        items: [Object]
-    }
+    response = Vendor (returns private data)
     */
     updateVendor: function(req, res){
         if(req.session.vendor !== req.body.id){
