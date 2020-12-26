@@ -105,7 +105,21 @@ const VendorSchema = new mongoose.Schema({
                 message: "UNIT CONTAINS ILLEGAL CHARACTERS"
             }
         }
-    }]
+    }],
+
+    //PUBLIC: determines whether the vendor shares their address or not
+    sharesLocation: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+
+    //PUBLIC: determines whether the vendor shares their name or not
+    sharesOwnerName: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 });
 
 VendorSchema.index({location: "2dsphere"});
