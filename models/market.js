@@ -30,6 +30,9 @@ const MarketSchema = new mongoose.Schema({
         required: false
     }],
 
+    //PUBLIC: url for visiting the market
+    url: String,
+
     //PUBLIC: address of market broken down into seperate components
     address: {
         streetNumber: String,

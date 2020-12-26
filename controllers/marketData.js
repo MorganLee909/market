@@ -1,5 +1,7 @@
 const Market = require("../models/market.js");
 
+const helper = require("./helper.js");
+
 const ValidationError = require("mongoose").Error.ValidationError;
 const axios = require("axios");
 
@@ -11,14 +13,15 @@ module.exports = {
     }
     response = Market
     */
-    createMarket: function(req, res){
+    createMarket: async function(req, res){
         if(req.session.vendor === undefined){
             return res.json("YOU MUST HAVE A VENDOR ACCOUNT TO CREATE A MARKET");
         }
 
         let market = new Market({
             name: req.body.name,
-            owner: req.session.vendor
+            owner: req.session.vendor,
+            url: await helper.createMarketURL(req.body.name)
         });
 
         market.save()
