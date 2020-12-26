@@ -40,11 +40,20 @@ module.exports = {
                         name: 1,
                         description: 1,
                         url: 1,
-                        items: 1
+                        items: 1,
+                        ownerName: 1,
+                        address: 1,
+                        sharesAddress: 1,
+                        sharesOwnerName: 1
                     }
                 );
             })
             .then((vendors)=>{
+                for(let i = 0; i < vendors.length; i++){
+                    if(vendors[i].sharesAddress === false) vendors[i].address = undefined;
+                    if(vendors[i].sharesOwnerName === false) vendors[i].ownerName = undefined;
+                }
+
                 return res.json(vendors);
             })
             .catch((err)=>{
@@ -63,12 +72,19 @@ module.exports = {
             name: 1,
             url: 1,
             description: 1,
-            items: 1
+            items: 1,
+            address: 1,
+            ownerName: 1,
+            sharesAddress: 1,
+            sharesOwnerName: 1
         })
             .then((vendor)=>{
                 if(vendor === null){
                     throw "THIS VENDOR DOES NOT EXIST";
                 }
+
+                if(vendor.sharesAddress === false) vendor.address = undefined;
+                if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
 
                 return res.json(vendor);
             })
