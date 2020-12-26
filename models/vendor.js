@@ -108,7 +108,7 @@ const VendorSchema = new mongoose.Schema({
     }],
 
     //PUBLIC: determines whether the vendor shares their address or not
-    sharesLocation: {
+    sharesAddress: {
         type: Boolean,
         required: true,
         default: false

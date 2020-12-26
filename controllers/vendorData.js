@@ -172,7 +172,9 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String
+        address: String,
+        sharesAddress: Boolean,
+        sharesOwnerName: Boolean
     }
     response = Vendor (returns private data)
     */
@@ -192,7 +194,6 @@ module.exports = {
                     }
                     vendor.email = email;
                 }
-
 
                 //Update address and coordinates of vendor
                 if(req.body.address !== vendor.address.full){
@@ -235,6 +236,8 @@ module.exports = {
 
                 vendor.ownerName = req.body.ownerName;
                 vendor.description = req.body.description;
+                vendor.sharesAddress = req.body.sharesAddress;
+                vendor.sharesOwnerName = req.body.sharesOwnerName;
 
                 return vendor.save();
             })
