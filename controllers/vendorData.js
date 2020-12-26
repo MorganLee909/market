@@ -68,23 +68,21 @@ module.exports = {
     response = Vendor
     */
     getVendor: function(req, res){
-        Vendor.findOne({_id: req.params.id}, {
-            name: 1,
-            url: 1,
-            description: 1,
-            items: 1,
-            address: 1,
-            ownerName: 1,
-            sharesAddress: 1,
-            sharesOwnerName: 1
-        })
+        Vendor.findOne({_id: req.params.id})
             .then((vendor)=>{
                 if(vendor === null){
                     throw "THIS VENDOR DOES NOT EXIST";
                 }
 
-                if(vendor.sharesAddress === false) vendor.address = undefined;
-                if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
+                if(vendor._id.toString() !== req.session.vendor){
+                    vendor.email = undefined;
+                    if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
+                    vendor.status = undefined;
+                    if(vendor.sharesAddress === false) vendor.address = undefined;
+                    vendor.location = undefined;
+                }
+
+                vendor.password = undefined;
 
                 return res.json(vendor);
             })
