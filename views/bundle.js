@@ -4,6 +4,9 @@ const Vendor = require("./js/models/Vendor.js");
 const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
+const landingPage = require("./js/pages/landing.js");
+const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
+
 controller = {
     openPage: function( page ) {
         let pages = document.querySelectorAll( '.page' );
@@ -12,10 +15,20 @@ controller = {
             pages[i].style.display = 'none';
         }
 
+        switch( page ) {
+            case 'landingPage':
+                landingPage.display();
+                break;
+
+            case 'vendorRegistrationPage':
+                vendorRegistrationPage.display();
+                break;    
+        }
+
         document.getElementById( page ).style.display = "flex";
     }
 };
-},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5}],2:[function(require,module,exports){
+},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/landing.js":6,"./js/pages/vendorRegistration.js":7}],2:[function(require,module,exports){
 class Item {
     constructor( id, name, quantity, unit ){
         this._id = id;
@@ -84,4 +97,22 @@ class Vendor {
         }
     }
 }
+},{}],6:[function(require,module,exports){
+let landingPage = {
+    display: function(){
+        console.log( 'This is display function ');
+
+    }
+}
+
+module.exports = landingPage;
+},{}],7:[function(require,module,exports){
+let vendorRegistrationPage = {
+    display: function(){
+        console.log( 'This is Vendor Registration Function ');
+
+    }
+}
+
+module.exports = vendorRegistrationPage;
 },{}]},{},[1]);
