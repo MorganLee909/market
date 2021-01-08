@@ -5,11 +5,24 @@ const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
+const createVendorPage = require("./js/pages/createVendor.js"); 
 
-const controller = {};
+controller = {
+    openPage: function( page ){
+        console.log( page );
+        
+        let pages = document.querySelectorAll('.page');
+
+        for( let i=0; i < pages.length; i++){
+            pages[i].style.display = 'none';
+        }
+
+        document.getElementById(page).style.display = 'flex';
+    }
+};
 
 landingPage.display();
-},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/landing.js":6}],2:[function(require,module,exports){
+},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/createVendor.js":6,"./js/pages/landing.js":7}],2:[function(require,module,exports){
 class Item {
     constructor( id, name, quantity, unit ){
         this._id = id;
@@ -79,10 +92,19 @@ class Vendor {
     }
 }
 },{}],6:[function(require,module,exports){
+let createVendorPage = {
+    display: function(){
+        document.getElementById('createVendorPage').style.display = 'flex';
+        document.getElementById('openLanding').addEventListener( 'click', () => {controller.openPage( 'landingPage')});
+    }
+};
+
+module.exports = createVendorPage;
+},{}],7:[function(require,module,exports){
 let landingPage = {
     display: function(){
         document.getElementById('landingPage').style.display = 'flex';
-        console.log("this is landing function");
+        document.getElementById('openCreateVendor').addEventListener( 'click', () => {controller.openPage( 'createVendorPage')});
     }
 };
 

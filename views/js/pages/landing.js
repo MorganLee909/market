@@ -1,7 +1,7 @@
 let landingPage = {
     display: function(){
         document.getElementById('landingPage').style.display = 'flex';
-        console.log("this is landing function");
+        document.getElementById('openCreateVendor').addEventListener( 'click', () => {controller.openPage( 'createVendorPage')});
     }
 };
 
