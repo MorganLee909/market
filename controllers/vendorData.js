@@ -146,11 +146,16 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
+<<<<<<< HEAD
                         vendor.status = undefined;
                         vendor.password = undefined;
 
                         req.session.vendor = vendor._id;
                         return res.json(vendor);
+=======
+                        req.session.vendor = vendor._id; 
+                        return res.json({})
+>>>>>>> 3bed9f80d121d1024c45807a21ff7b606f2a1370
                     }
 
                     return res.json("INCORRECT EMAIL OR PASSWORD");
