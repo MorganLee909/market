@@ -4,39 +4,14 @@ const helper = require("./helper.js");
 
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
-const ObjectId = require("mongoose").Types.ObjectId;
+const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
-    GET: Gets a single vendor
-    response = Vendor
-    */
-    getVendor: function(req, res){
-        //TODO: this should not be an aggregate for a single vendor (findOne)
-        Vendor.aggregate([
-            {$match: {
-                _id: ObjectId(req.params.id)
-            }},
-            {$project: {
-                _id: 0,
-                name: 1,
-                url: 1,
-                description: 1,
-                status: 1,
-                items: 1
-            }}
-        ])
-            .then((vendor)=>{
-                vendor[0].status = undefined;
-                return res.json(vendor[0]);
-            })
-            .catch((err)=>{
-                return res.json("ERROR: Unable to find vendor");
-            });
-    },
-
-    /*
     GET: Gets all vendors in the area
+    queries:
+        address = address to search from
+        distance = the distance (in miles) from the address, to search
     response = [Vendor]
     */
     getVendors: function(req, res){
@@ -63,17 +38,59 @@ module.exports = {
                     },
                     {
                         name: 1,
-                        email: 1,
                         description: 1,
-                        items: 1
+                        url: 1,
+                        items: 1,
+                        ownerName: 1,
+                        address: 1,
+                        sharesAddress: 1,
+                        sharesOwnerName: 1
                     }
                 );
             })
             .then((vendors)=>{
+                for(let i = 0; i < vendors.length; i++){
+                    if(vendors[i].sharesAddress === false) vendors[i].address = undefined;
+                    if(vendors[i].sharesOwnerName === false) vendors[i].ownerName = undefined;
+                }
+
                 return res.json(vendors);
             })
             .catch((err)=>{
-                return res.json("ERROR: Unable to perform search");
+                return res.json("ERROR: UNABLE TO PERFORM SEARCH");
+            });
+    },
+
+    /*
+    GET: Gets a single vendor
+    params: 
+        id: id of the vendor to retrieve
+    response = Vendor
+    */
+    getVendor: function(req, res){
+        Vendor.findOne({_id: req.params.id})
+            .then((vendor)=>{
+                if(vendor === null){
+                    throw "THIS VENDOR DOES NOT EXIST";
+                }
+
+                if(vendor._id.toString() !== req.session.vendor){
+                    vendor.email = undefined;
+                    if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
+                    vendor.status = undefined;
+                    if(vendor.sharesAddress === false) vendor.address = undefined;
+                    vendor.location = undefined;
+                }
+
+                vendor.password = undefined;
+
+                return res.json(vendor);
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO FIND VENDOR");
             });
     },
 
@@ -111,13 +128,15 @@ module.exports = {
             .then((vendor)=>{
                 vendor.status = undefined;
                 vendor.password = undefined;
+                vendor.email = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: VENDOR CREATION FAILED");
@@ -125,7 +144,41 @@ module.exports = {
     },
 
     /*
-    TODO: id should be sent in the body and checked against the session
+    GET: logs in the vendor
+    req.body = {
+        email: String (vendor email)
+        password: String (vendor password)
+    }
+    response = Vendor (returns private data)
+    */
+    vendorLogin: function(req, res){
+        Vendor.findOne({email: req.body.email.toLowerCase()})
+            .then((vendor)=>{
+                if(vendor === null){
+                    throw "INCORRECT EMAIL OR PASSWORD";
+                }
+
+                return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
+                    if(result === true){
+                        vendor.status = undefined;
+                        vendor.password = undefined;
+
+                        req.session.vendor = vendor._id;
+                        return res.json(vendor);
+                    }
+
+                    return res.json("INCORRECT EMAIL OR PASSWORD");
+                }); 
+            })
+            .catch((err)=>{
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO VALIDATE PASSWORD");
+            })
+    },
+
+    /*
     PUT: Updates the profile information of the vendor
     req.body: {
         id: String,
@@ -133,9 +186,11 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String (should be formatted already)
+        address: String,
+        sharesAddress: Boolean,
+        sharesOwnerName: Boolean
     }
-    response = Vendor
+    response = Vendor (returns private data)
     */
     updateVendor: function(req, res){
         if(req.session.vendor !== req.body.id){
@@ -153,7 +208,6 @@ module.exports = {
                     }
                     vendor.email = email;
                 }
-
 
                 //Update address and coordinates of vendor
                 if(req.body.address !== vendor.address.full){
@@ -196,20 +250,22 @@ module.exports = {
 
                 vendor.ownerName = req.body.ownerName;
                 vendor.description = req.body.description;
+                vendor.sharesAddress = req.body.sharesAddress;
+                vendor.sharesOwnerName = req.body.sharesOwnerName;
 
                 return vendor.save();
             })
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");
@@ -218,6 +274,7 @@ module.exports = {
 
     /*
     DELETE: remove a single vendor
+    response = {}
     */
     removeVendor: function(req, res){
         if(req.params.id !== req.session.vendor){
@@ -230,17 +287,6 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO DELETE VENDOR");
-            });
-    },
-
-    logLeeIn: function(req, res){
-        Vendor.findOne({email: "morgan.leer@protonmail.com"})
-            .then((vendor)=>{
-                req.session.vendor = vendor._id;
-                return res.json("OK");
-            })
-            .catch((err)=>{
-                return res.json(err);
             });
     }
 }

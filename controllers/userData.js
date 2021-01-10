@@ -1,6 +1,7 @@
 const User = require("../models/user.js");
 
 const bcrypt = require("bcryptjs");
+const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
@@ -11,7 +12,7 @@ module.exports = {
         password: String,
         confirmPassword: String
     }
-    response = User
+    response = User (returns private data)
     */
     createUser: function(req, res){
         const email = req.body.email.toLowerCase();
@@ -41,13 +42,14 @@ module.exports = {
             })
             .then((user)=>{
                 user.password = undefined;
+
                 return res.json(user);
             })
             .catch((err)=>{
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: NEW USER CREATION FAILED");
@@ -61,7 +63,7 @@ module.exports = {
         name: String,
         email: String
     }
-    response = User
+    response = User (returns private data)
     */
     updateUser: function(req, res){
         if(req.session.user !== req.body.id){
@@ -87,33 +89,62 @@ module.exports = {
             })
             .then((user)=>{
                 user.password = undefined;
+
                 return res.json(user);
             })
             .catch((err)=>{
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
-                if(err.name === "ValidationError"){
+                if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
                 return res.json("ERROR: USER UPDATE FAILED");
             });
     },
 
-    getUser: function(req, res){
-        if(req.session.user !== req.params.id){
-            return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
-        }
-
-        User.findOne({_id: req.session.user}, {password: 0})
+    /*
+    GET: logs in the user
+    req.body = {
+        email: String (user email),
+        password: String (user password)
+    }
+    response = User
+        (returns private data)
+        (return a string if the login failed)
+    */
+    userLogin: function(req, res){
+        User.findOne({email: req.body.email.toLowerCase()})
             .then((user)=>{
-                return res.json(user);
+                if(user === null){
+                    throw "INCORRECT EMAIL OR PASSWORD";
+                }
+
+                return bcrypt.compare(req.body.password, user.password, (err, result)=>{
+                    if(result === true){
+                        user.password = undefined;
+
+                        req.session.user = user._id;
+                        return res.json(user);
+                    }
+
+                    return res.json("INCORRECT EMAIL OR PASSWORD");
+                });
             })
             .catch((err)=>{
-                return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
+                if(typeof(err) === "string"){
+                    return res.json(err);
+                }
+                return res.json("ERROR: UNABLE TO VALIDATE PASSWORD");
             });
     },
 
+    /*
+    DELETE: Removes a user from the database
+    params: 
+        id = Id of the user to remove
+    response = {}
+    */
     removeUser: function(req, res){
         if( req.session.user !== req.params.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
@@ -127,16 +158,26 @@ module.exports = {
                 return res.json("ERROR: USER DELETION FAILED");
             });
     },
-    
-    //Logs Lee in
-    logLeeIn: function(req, res){
-        User.findOne({email: "morgan.leer@protonmail.com"})
+
+    /*
+    GET: retrieves a single user
+    params:
+        id: Id of the user
+    response = User (returns private data)
+    */
+    getUser: function(req, res){
+        if(req.session.user !== req.params.id){
+            return res.json("YOU DO NOT HAVE PERSMISSION TO DO THAT");
+        }
+
+        User.findOne({_id: req.session.user}, {password: 0})
             .then((user)=>{
-                req.session.user = user._id;
-                return res.json("OK");
+                user.password = undefined;
+
+                return res.json(user);
             })
             .catch((err)=>{
-                return res.json(err);
+                return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
             });
     }
 }
