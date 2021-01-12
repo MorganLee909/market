@@ -5,26 +5,6 @@ const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
-<<<<<<< HEAD
-const createVendorPage = require("./js/pages/createVendor.js"); 
-
-controller = {
-    openPage: function( page ){
-        console.log( page );
-        
-        let pages = document.querySelectorAll('.page');
-
-        for( let i=0; i < pages.length; i++){
-            pages[i].style.display = 'none';
-        }
-
-        document.getElementById(page).style.display = 'flex';
-    }
-};
-
-landingPage.display();
-},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/createVendor.js":6,"./js/pages/landing.js":7}],2:[function(require,module,exports){
-=======
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 
 controller = {
@@ -48,8 +28,9 @@ controller = {
         document.getElementById( page ).style.display = "flex";
     }
 };
+
+landingPage.display();
 },{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/landing.js":6,"./js/pages/vendorRegistration.js":7}],2:[function(require,module,exports){
->>>>>>> 3bed9f80d121d1024c45807a21ff7b606f2a1370
 class Item {
     constructor( id, name, quantity, unit ){
         this._id = id;
@@ -119,41 +100,27 @@ class Vendor {
     }
 }
 },{}],6:[function(require,module,exports){
-<<<<<<< HEAD
-let createVendorPage = {
-    display: function(){
-        document.getElementById('createVendorPage').style.display = 'flex';
-        document.getElementById('openLanding').addEventListener( 'click', () => {controller.openPage( 'landingPage')});
-    }
-};
-
-module.exports = createVendorPage;
-},{}],7:[function(require,module,exports){
 let landingPage = {
     display: function(){
         document.getElementById('landingPage').style.display = 'flex';
         document.getElementById('openCreateVendor').addEventListener( 'click', () => {controller.openPage( 'createVendorPage')});
     }
-};
-
-module.exports = landingPage;
-=======
-let landingPage = {
-    display: function(){
-        console.log( 'This is display function ');
-
-    }
+    
 }
 
 module.exports = landingPage;
 },{}],7:[function(require,module,exports){
 let vendorRegistrationPage = {
     display: function(){
-        console.log( 'This is Vendor Registration Function ');
+        if( state.vendorRegistrationPage.isPopulated === false ){
+            console.log("vendor reg page load");
+            let button = document.getElementById('openLandingPage');
+            button.onclick = () => {controller.openPage('landingPage')};
 
+            state.vendorRegistrationPage.isPopulated = true;
+        }
     }
 }
 
 module.exports = vendorRegistrationPage;
->>>>>>> 3bed9f80d121d1024c45807a21ff7b606f2a1370
 },{}]},{},[1]);
