@@ -5,6 +5,7 @@ const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
+const createVendorPage = require("./js/pages/createVendor.js");
 
 controller = {
     openPage: function( page ) {
@@ -21,11 +22,26 @@ controller = {
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display();
-                break;    
+                break; 
+                
+            case 'createVendorPage':
+                createVendorPage.display();
+                break;  
         }
-
         document.getElementById( page ).style.display = "flex";
     }
 };
 
+state = {
+    landingPage: {
+        isPopulated: false
+    },
+
+    vendorRegistrationPage: {
+        isPopulated: false
+    }
+
+}
+
 landingPage.display();
+

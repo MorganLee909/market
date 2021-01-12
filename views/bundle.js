@@ -6,6 +6,7 @@ const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
+const createVendorPage = require("./js/pages/createVendor.js");
 
 controller = {
     openPage: function( page ) {
@@ -22,15 +23,31 @@ controller = {
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display();
-                break;    
+                break; 
+                
+            case 'createVendorPage':
+                createVendorPage.display();
+                break;  
         }
-
         document.getElementById( page ).style.display = "flex";
     }
 };
 
+state = {
+    landingPage: {
+        isPopulated: false
+    },
+
+    vendorRegistrationPage: {
+        isPopulated: false
+    }
+
+}
+
 landingPage.display();
-},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/landing.js":6,"./js/pages/vendorRegistration.js":7}],2:[function(require,module,exports){
+
+
+},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/createVendor.js":6,"./js/pages/landing.js":7,"./js/pages/vendorRegistration.js":8}],2:[function(require,module,exports){
 class Item {
     constructor( id, name, quantity, unit ){
         this._id = id;
@@ -100,16 +117,23 @@ class Vendor {
     }
 }
 },{}],6:[function(require,module,exports){
+let createVendorPage = {
+    display: function(){
+        document.getElementById('createVendorPage').style.display = 'flex';
+        document.getElementById('openLanding').addEventListener( 'click', () => {controller.openPage( 'landingPage')});
+    }
+};
+
+module.exports = createVendorPage;
+},{}],7:[function(require,module,exports){
 let landingPage = {
     display: function(){
-        document.getElementById('landingPage').style.display = 'flex';
-        document.getElementById('openCreateVendor').addEventListener( 'click', () => {controller.openPage( 'createVendorPage')});
-    }
-    
+        document.getElementById('openVendorRegistration').addEventListener( 'click', () => {controller.openPage( 'vendorRegistrationPage')});
+    }    
 }
 
 module.exports = landingPage;
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 let vendorRegistrationPage = {
     display: function(){
         if( state.vendorRegistrationPage.isPopulated === false ){
