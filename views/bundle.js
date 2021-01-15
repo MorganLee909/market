@@ -5,6 +5,7 @@ const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
+const userRegistrationPage = require("./js/pages/userRegistration.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const createVendorPage = require("./js/pages/createVendor.js");
 
@@ -15,11 +16,16 @@ controller = {
         for( let i = 0; i < pages.length; i++){
             pages[i].style.display = 'none';
         }
-
+        console.log(page);
+        
         switch( page ) {
             case 'landingPage':
                 landingPage.display();
                 break;
+
+            case 'userRegistrationPage':
+                userRegistrationPage.display();
+                break;     
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display();
@@ -29,12 +35,17 @@ controller = {
                 createVendorPage.display();
                 break;  
         }
+        
         document.getElementById( page ).style.display = "flex";
     }
 };
 
 state = {
     landingPage: {
+        isPopulated: false
+    },
+
+    userRegistrationPage: {
         isPopulated: false
     },
 
@@ -47,7 +58,7 @@ state = {
 landingPage.display();
 
 
-},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/createVendor.js":6,"./js/pages/landing.js":7,"./js/pages/vendorRegistration.js":8}],2:[function(require,module,exports){
+},{"./js/models/Item.js":2,"./js/models/Market.js":3,"./js/models/User.js":4,"./js/models/Vendor.js":5,"./js/pages/createVendor.js":6,"./js/pages/landing.js":7,"./js/pages/userRegistration.js":8,"./js/pages/vendorRegistration.js":9}],2:[function(require,module,exports){
 class Item {
     constructor( id, name, quantity, unit ){
         this._id = id;
@@ -128,12 +139,35 @@ module.exports = createVendorPage;
 },{}],7:[function(require,module,exports){
 let landingPage = {
     display: function(){
-        document.getElementById('openVendorRegistration').addEventListener( 'click', () => {controller.openPage( 'vendorRegistrationPage')});
+        document.getElementById('openUserRegistration').addEventListener(
+            'click', 
+            () => {controller.openPage( 'userRegistrationPage')}
+        );
     }    
 }
 
 module.exports = landingPage;
+
+
 },{}],8:[function(require,module,exports){
+let userRegistrationPage = {
+    display: function(){
+        if( state.userRegistrationPage.isPopulated === false ){
+
+            console.log("user registration page load");
+
+            let button = document.getElementById('openLandingPage');
+            button.onclick = () => {controller.openPage('landingPage')};
+
+            state.userRegistrationPage.isPopulated = true;
+        }
+    }
+}
+
+module.exports = userRegistrationPage;
+
+
+},{}],9:[function(require,module,exports){
 let vendorRegistrationPage = {
     display: function(){
         if( state.vendorRegistrationPage.isPopulated === false ){

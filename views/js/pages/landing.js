@@ -1,7 +1,11 @@
 let landingPage = {
     display: function(){
-        document.getElementById('openVendorRegistration').addEventListener( 'click', () => {controller.openPage( 'vendorRegistrationPage')});
+        document.getElementById('openUserRegistration').addEventListener(
+            'click', 
+            () => {controller.openPage( 'userRegistrationPage')}
+        );
     }    
 }
 
 module.exports = landingPage;
+

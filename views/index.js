@@ -4,6 +4,7 @@ const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
 const landingPage = require("./js/pages/landing.js");
+const userRegistrationPage = require("./js/pages/userRegistration.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const createVendorPage = require("./js/pages/createVendor.js");
 
@@ -14,11 +15,16 @@ controller = {
         for( let i = 0; i < pages.length; i++){
             pages[i].style.display = 'none';
         }
-
+        console.log(page);
+        
         switch( page ) {
             case 'landingPage':
                 landingPage.display();
                 break;
+
+            case 'userRegistrationPage':
+                userRegistrationPage.display();
+                break;     
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display();
@@ -28,12 +34,17 @@ controller = {
                 createVendorPage.display();
                 break;  
         }
+        
         document.getElementById( page ).style.display = "flex";
     }
 };
 
 state = {
     landingPage: {
+        isPopulated: false
+    },
+
+    userRegistrationPage: {
         isPopulated: false
     },
 

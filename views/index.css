@@ -1,1 +1,11 @@
 *{margin:0;padding:0;}
+
+.cta_button{
+    margin-top: 40px;
+    margin-left: 40px;
+    width: 200px;
+    height: 50px;
+    background: green;
+    border: medium none;
+    display: flex;
+}
