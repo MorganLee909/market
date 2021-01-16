@@ -1,4 +1,36 @@
 <div id="vendorRegistrationPage" class="page" style="display:none"> 
+
     <h1>Vendor Registration Page</h1>
-    <button id='openLandingPage' onclick="controller.openPage('landingPage')"> Landing Page </button>
+    <button id='openLandingPage' onclick="controller.openPage('landingPage')"> Back to Landing Page </button>
+
+    <form id="vendorRegForm" class="sign-up-form">
+        <h1 class="vendor-reg-title"> Vendor Registration </h1>
+        
+        <label> Email 
+            <input id="vendorRegEmail" class="form-control" type="email" placeholder="Type your email" required>
+        </label>
+
+        <label> Password 
+            <input id="vendorRegPassword" class="form-control" type="password" placeholder="Your Password" required>
+        </label>
+
+        <label> Confirm Your Password 
+            <input id="vendorRegConfPassword" class="form-control" type="password" placeholder="Confirm Your Password" required>
+        </label>    
+
+        <input class="cta_button" type="submit" value="Continue">
+    </form>
+
 </div>
+
+
+<!-- /*
+POST: Creates a single vendor
+req.body = {
+    name: name of the business,
+    email: email of the business,
+    password: password for the vendor,
+    confirmPassword: confirmation of password
+}
+response = Vendor
+*/ -->

@@ -4,6 +4,11 @@ let landingPage = {
             'click', 
             () => {controller.openPage( 'userRegistrationPage')}
         );
+
+        document.getElementById('openVendorRegistration').addEventListener(
+            'click', 
+            () => {controller.openPage( 'vendorRegistrationPage')}
+        );
     }    
 }
 

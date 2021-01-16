@@ -86,7 +86,7 @@ module.exports = {
         name: name of the business,
         email: email of the business,
         password: password for the vendor,
-        confirmPassword: confirmation of password,
+        confirmPassword: confirmation of password
     }
     response = Vendor
     */
