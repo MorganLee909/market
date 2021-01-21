@@ -6,3 +6,5 @@ class Item {
         this._unit = unit;
     }
 }
+
+module.exports = Item;

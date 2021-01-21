@@ -3,10 +3,14 @@ const Vendor = require("./js/models/Vendor.js");
 const Item = require("./js/models/Item.js");
 const User = require("./js/models/User.js");
 
+const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const userRegistrationPage = require("./js/pages/userRegistration.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
-const createVendorPage = require("./js/pages/createVendor.js");
+const somePage = require("./js/pages/somePage.js");
+
+///Components Start///
+require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
@@ -15,9 +19,13 @@ controller = {
         for( let i = 0; i < pages.length; i++){
             pages[i].style.display = 'none';
         }
-        console.log(page);
         
         switch( page ) {
+
+            case 'vendorInfoPage':
+                vendorInfoPage.display();
+                break;  
+
             case 'landingPage':
                 landingPage.display();
                 break;
@@ -27,19 +35,24 @@ controller = {
                 break;     
 
             case 'vendorRegistrationPage':
-                vendorRegistrationPage.display();
-                break; 
-                
-            case 'createVendorPage':
-                createVendorPage.display();
+                vendorRegistrationPage.display( Vendor );
                 break;  
+
+            case 'somePage':
+                somePage.display();
+                break;     
         }
-        
         document.getElementById( page ).style.display = "flex";
     }
 };
 
 state = {
+    vendor: null,
+
+    vendorInfoPage: {
+        isPopulated: false
+    },
+
     landingPage: {
         isPopulated: false
     },
@@ -49,6 +62,14 @@ state = {
     },
 
     vendorRegistrationPage: {
+        isPopulated: false
+    },
+
+    createVendorPage: {
+        isPopulated: false,
+    },
+
+    somePage: {
         isPopulated: false
     }
 

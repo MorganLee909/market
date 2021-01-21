@@ -1,17 +1,17 @@
 let vendorRegistrationPage = {
-    display: function(){
+    display: function( Vendor ){
         if( state.vendorRegistrationPage.isPopulated === false ){
             let button = document.getElementById('openLandingPage');
             button.onclick = () => {controller.openPage('landingPage')};
 
             let form = document.getElementById('vendorRegForm');
-            form.onsubmit = () => {this.submitForm()};
+            form.onsubmit = () => {this.submitForm( Vendor )};
 
             state.vendorRegistrationPage.isPopulated = true;
         }
     },
 
-    submitForm: function() {
+    submitForm: function( Vendor ) {
         event.preventDefault();
 
         let data = {
@@ -32,12 +32,27 @@ let vendorRegistrationPage = {
         fetch( '/vendors', fetchOptions)
             .then(response => response.json())
             .then((response)=>{
-                console.log(response);
+                if( typeof(response) === "string" ) {
+                    throw response;
+                } 
+
+                let newVendor = new Vendor(
+                    response._id, 
+                    response.name, 
+                    response.email, 
+                    "", 
+                    response.items
+                );
+                
+                state.vendor = newVendor;
+                controller.openPage('vendorInfoPage');
             })
             .catch((err)=>{
                 console.log(err);
-            })
+            });
+
     }
 }
 
 module.exports = vendorRegistrationPage;
+

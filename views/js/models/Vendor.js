@@ -16,4 +16,10 @@ class Vendor {
             this._items.push( item );
         }
     }
+
+    get name(){
+        return this._name;
+    }
 }
+
+module.exports = Vendor;
