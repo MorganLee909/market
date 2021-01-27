@@ -1,9 +1,5 @@
 let landingPage = {
     display: function(){
-        document.getElementById('openUserRegistration').addEventListener(
-            'click', 
-            () => {controller.openPage( 'userRegistrationPage' )}
-        );
 
         document.getElementById('openVendorRegistration').addEventListener(
             'click', 
@@ -14,4 +10,5 @@ let landingPage = {
 }
 
 module.exports = landingPage;
+
 

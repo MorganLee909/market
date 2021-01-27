@@ -7,16 +7,18 @@ class HomeButton extends HTMLElement{
         super();
         this._shadow = this.attachShadow({mode: "open"});
 
-        let button = document.createElement("div");
-        button.addEventListener('click', () => {controller.openPage( 'landingPage' )});
+        let button = document.createElement("button");
+        button.onclick = ()=>{controller.openPage( 'landingPage' )};
+        button.innerText = "Go to Home Page";
+        //button.classList.add('name-of-class');
         
-        button.innerHTML = `
-            <button class="cta_button" id="openVendorRegistration">
-                Vendor Registration 
-            </button>
-        `
-        ;
-        
+        // Apply external styles to the shadow dom
+        const linkElem = document.createElement('link');
+        linkElem.setAttribute('rel', 'stylesheet');
+        linkElem.setAttribute('href', 'index.css');
+
+        this._shadow.appendChild(linkElem);
+
         this._shadow.appendChild(button);
     }
 
@@ -45,6 +47,13 @@ class VendorItem extends HTMLElement{
 
         let vendorItem = document.createElement("div");
         vendorItem.classList.add( "vendor-item" );
+
+        // Apply external styles to the shadow dom
+        const linkElem = document.createElement('link');
+        linkElem.setAttribute('rel', 'stylesheet');
+        linkElem.setAttribute('href', 'index.css');
+
+        this._shadow.appendChild(linkElem);
 
         vendorItem.innerHTML = `
             <h1 class="goodsTitle"> Tomato </h1>

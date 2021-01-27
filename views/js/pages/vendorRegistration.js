@@ -1,8 +1,7 @@
 let vendorRegistrationPage = {
     display: function( Vendor ){
+        console.log(state.vendorRegistrationPage.isPopulated);
         if( state.vendorRegistrationPage.isPopulated === false ){
-            let button = document.getElementById('openLandingPage');
-            button.onclick = () => {controller.openPage('landingPage')};
 
             let form = document.getElementById('vendorRegForm');
             form.onsubmit = () => {this.submitForm( Vendor )};

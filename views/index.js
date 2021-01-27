@@ -5,15 +5,14 @@ const User = require("./js/models/User.js");
 
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
-const userRegistrationPage = require("./js/pages/userRegistration.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
-const somePage = require("./js/pages/somePage.js");
 
 ///Components Start///
 require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
+        console.log(page);
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -28,20 +27,14 @@ controller = {
 
             case 'landingPage':
                 landingPage.display();
-                break;
-
-            case 'userRegistrationPage':
-                userRegistrationPage.display();
-                break;     
+                break;    
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display( Vendor );
                 break;  
 
-            case 'somePage':
-                somePage.display();
-                break;     
         }
+
         document.getElementById( page ).style.display = "flex";
     }
 };
@@ -57,22 +50,9 @@ state = {
         isPopulated: false
     },
 
-    userRegistrationPage: {
-        isPopulated: false
-    },
-
     vendorRegistrationPage: {
         isPopulated: false
-    },
-
-    createVendorPage: {
-        isPopulated: false,
-    },
-
-    somePage: {
-        isPopulated: false
     }
-
 }
 
 landingPage.display();
