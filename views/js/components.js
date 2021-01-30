@@ -10,7 +10,7 @@ class HomeButton extends HTMLElement{
         let button = document.createElement("button");
         button.onclick = ()=>{controller.openPage( 'landingPage' )};
         button.innerText = "Go to Home Page";
-        //button.classList.add('name-of-class');
+        button.classList.add('cta_button');
         
         // Apply external styles to the shadow dom
         const linkElem = document.createElement('link');

@@ -6,9 +6,12 @@ let landingPage = {
             () => {controller.openPage( 'vendorRegistrationPage' )}
         );
 
+        document.getElementById( 'landingToLoginBtn').addEventListener(
+            'click',
+            () => {controller.openPage( 'loginPage' )}
+        );
+
     }    
 }
 
 module.exports = landingPage;
-
-

@@ -6,13 +6,14 @@ const User = require("./js/models/User.js");
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
+const loginPage = require('./js/pages/login.js');
 
 ///Components Start///
 require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
-        console.log(page);
+
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -31,7 +32,11 @@ controller = {
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display( Vendor );
-                break;  
+                break; 
+            
+            case 'loginPage':
+                loginPage.display(Vendor);
+                break;
 
         }
 
@@ -51,6 +56,10 @@ state = {
     },
 
     vendorRegistrationPage: {
+        isPopulated: false
+    },
+
+    loginPage: {
         isPopulated: false
     }
 }

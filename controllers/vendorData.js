@@ -147,7 +147,7 @@ module.exports = {
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
                         req.session.vendor = vendor._id; 
-                        return res.json({})
+                        return res.json(vendor)
                     }
 
                     return res.json("INCORRECT EMAIL OR PASSWORD");

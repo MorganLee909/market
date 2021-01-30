@@ -7,13 +7,14 @@ const User = require("./js/models/User.js");
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
+const loginPage = require('./js/pages/login.js');
 
 ///Components Start///
 require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
-        console.log(page);
+
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -32,7 +33,11 @@ controller = {
 
             case 'vendorRegistrationPage':
                 vendorRegistrationPage.display( Vendor );
-                break;  
+                break; 
+            
+            case 'loginPage':
+                loginPage.display(Vendor);
+                break;
 
         }
 
@@ -53,13 +58,17 @@ state = {
 
     vendorRegistrationPage: {
         isPopulated: false
+    },
+
+    loginPage: {
+        isPopulated: false
     }
 }
 
 landingPage.display();
 
 
-},{"./js/components.js":2,"./js/models/Item.js":3,"./js/models/Market.js":4,"./js/models/User.js":5,"./js/models/Vendor.js":6,"./js/pages/landing.js":7,"./js/pages/vendorInfo.js":8,"./js/pages/vendorRegistration.js":9}],2:[function(require,module,exports){
+},{"./js/components.js":2,"./js/models/Item.js":3,"./js/models/Market.js":4,"./js/models/User.js":5,"./js/models/Vendor.js":6,"./js/pages/landing.js":7,"./js/pages/login.js":8,"./js/pages/vendorInfo.js":9,"./js/pages/vendorRegistration.js":10}],2:[function(require,module,exports){
 class HomeButton extends HTMLElement{
     static get observedAttributes(){
         return ["change", "other", "something", "gofuckyourself"];
@@ -72,7 +81,7 @@ class HomeButton extends HTMLElement{
         let button = document.createElement("button");
         button.onclick = ()=>{controller.openPage( 'landingPage' )};
         button.innerText = "Go to Home Page";
-        //button.classList.add('name-of-class');
+        button.classList.add('cta_button');
         
         // Apply external styles to the shadow dom
         const linkElem = document.createElement('link');
@@ -237,14 +246,62 @@ let landingPage = {
             () => {controller.openPage( 'vendorRegistrationPage' )}
         );
 
+        document.getElementById( 'landingToLoginBtn').addEventListener(
+            'click',
+            () => {controller.openPage( 'loginPage' )}
+        );
+
     }    
 }
 
 module.exports = landingPage;
-
-
-
 },{}],8:[function(require,module,exports){
+let loginPage ={
+    display: function (Vendor) {
+        if( state.loginPage.isPopulated === false ){
+
+            let form = document.getElementById('vendorLoginForm');
+            form.onsubmit = () => {this.submit(Vendor)};
+
+            state.loginPage.isPopulated = true;
+        }
+   
+    },
+
+    submit: function (Vendor) {
+        event.preventDefault();
+
+        let data = {
+            email: document.getElementById('vendorLoginEmail').value,
+            password: document.getElementById('vendorLoginPassword').value
+        }
+
+        fetch( '/vendors/login', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then((response) => {
+                state.vendor = new Vendor(
+                    response._id,
+                    response.name,
+                    response.email,
+                    response.description,
+                    response.items
+                );
+
+                controller.openPage('vendorInfoPage');
+            })
+            .catch((err) => {
+            });
+    }
+}
+
+module.exports = loginPage;
+},{}],9:[function(require,module,exports){
 let vendorInfoPage = {
     display: function(){
         document.getElementById('vendorInfoToLanding').addEventListener(
@@ -260,10 +317,10 @@ let vendorInfoPage = {
 module.exports = vendorInfoPage;
 
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 let vendorRegistrationPage = {
     display: function( Vendor ){
-        console.log(state.vendorRegistrationPage.isPopulated);
+
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
@@ -310,7 +367,6 @@ let vendorRegistrationPage = {
                 controller.openPage('vendorInfoPage');
             })
             .catch((err)=>{
-                console.log(err);
             });
 
     }

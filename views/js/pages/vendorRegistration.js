@@ -1,6 +1,6 @@
 let vendorRegistrationPage = {
     display: function( Vendor ){
-        console.log(state.vendorRegistrationPage.isPopulated);
+
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
@@ -47,7 +47,6 @@ let vendorRegistrationPage = {
                 controller.openPage('vendorInfoPage');
             })
             .catch((err)=>{
-                console.log(err);
             });
 
     }
