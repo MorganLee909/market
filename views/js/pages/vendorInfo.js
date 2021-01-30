@@ -1,14 +1,21 @@
 let vendorInfoPage = {
     display: function(){
-        document.getElementById('vendorInfoToLanding').addEventListener(
-            'click', 
-            () => {controller.openPage( 'landingPage')}
-        );
+        if(state.vendorInfoPage.isPopulated === false){
+            document.getElementById('vendorInfoToLanding').addEventListener(
+                'click', 
+                () => {controller.openPage( 'landingPage')}
+            );
+            
+            let goods = document.getElementById("goods");
 
-        state.vendorInfoPage.isPopulated = true;
+            for( let i = 0; i < state.vendor.items.length; i++ ){
+                let item = document.createElement('vendor-item');
+                goods.appendChild(item);
+            }
 
+            state.vendorInfoPage.isPopulated = true;
+        }
     }    
 }
 
 module.exports = vendorInfoPage;
-

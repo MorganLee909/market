@@ -38,6 +38,7 @@ let loginPage ={
                 controller.openPage('vendorInfoPage');
             })
             .catch((err) => {
+                console.log(err);
             });
     }
 }

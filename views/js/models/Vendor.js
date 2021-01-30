@@ -1,3 +1,5 @@
+const Item = require("./Item.js");
+
 class Vendor {
     constructor( id, name, email, description, items ){
         this._id = id;
@@ -19,6 +21,10 @@ class Vendor {
 
     get name(){
         return this._name;
+    }
+
+    get items(){
+        return this._items;
     }
 }
 
