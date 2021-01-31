@@ -246,7 +246,7 @@ let landingPage = {
             'click',
             () => {controller.openPage( 'loginPage' )}
         );
-    }    
+    }
 }
 
 module.exports = landingPage;
