@@ -14,7 +14,6 @@ require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
-
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -66,8 +65,6 @@ state = {
 }
 
 landingPage.display();
-
-
 },{"./js/components.js":2,"./js/models/Item.js":3,"./js/models/Market.js":4,"./js/models/User.js":5,"./js/models/Vendor.js":6,"./js/pages/landing.js":7,"./js/pages/login.js":8,"./js/pages/vendorInfo.js":9,"./js/pages/vendorRegistration.js":10}],2:[function(require,module,exports){
 class HomeButton extends HTMLElement{
     static get observedAttributes(){
@@ -240,7 +237,6 @@ module.exports = Vendor;
 },{}],7:[function(require,module,exports){
 let landingPage = {
     display: function(){
-
         document.getElementById('openVendorRegistration').addEventListener(
             'click', 
             () => {controller.openPage( 'vendorRegistrationPage' )}
@@ -250,8 +246,7 @@ let landingPage = {
             'click',
             () => {controller.openPage( 'loginPage' )}
         );
-
-    }    
+    }
 }
 
 module.exports = landingPage;
@@ -265,7 +260,6 @@ let loginPage ={
 
             state.loginPage.isPopulated = true;
         }
-   
     },
 
     submit: function (Vendor) {
@@ -310,7 +304,6 @@ let vendorInfoPage = {
         );
 
         state.vendorInfoPage.isPopulated = true;
-
     }    
 }
 
@@ -320,7 +313,6 @@ module.exports = vendorInfoPage;
 },{}],10:[function(require,module,exports){
 let vendorRegistrationPage = {
     display: function( Vendor ){
-
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
@@ -368,11 +360,8 @@ let vendorRegistrationPage = {
             })
             .catch((err)=>{
             });
-
     }
 }
 
 module.exports = vendorRegistrationPage;
-
-
 },{}]},{},[1]);

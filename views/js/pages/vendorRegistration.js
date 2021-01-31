@@ -1,6 +1,5 @@
 let vendorRegistrationPage = {
     display: function( Vendor ){
-
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
@@ -48,9 +47,7 @@ let vendorRegistrationPage = {
             })
             .catch((err)=>{
             });
-
     }
 }
 
 module.exports = vendorRegistrationPage;
-

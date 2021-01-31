@@ -13,7 +13,6 @@ require("./js/components.js");
 
 controller = {
     openPage: function( page ) {
-
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){

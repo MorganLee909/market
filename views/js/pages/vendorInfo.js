@@ -6,7 +6,6 @@ let vendorInfoPage = {
         );
 
         state.vendorInfoPage.isPopulated = true;
-
     }    
 }
 
