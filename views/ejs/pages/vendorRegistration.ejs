@@ -1,0 +1,38 @@
+<div id="vendorRegistrationPage" class="page" style="display:none"> 
+    <home-button></home-button>
+
+    <form id="vendorRegForm">
+        <h1> Vendor Registration </h1>
+
+        <label> Username 
+            <input id="vendorUsername" type="username" placeholder="Type your username" required/>
+        </label>
+        
+        <label> Email 
+            <input id="vendorRegEmail" type="email" placeholder="Type your email" required/>
+        </label>
+
+        <label> Password 
+            <input id="vendorRegPassword" type="password" placeholder="Your Password" required/>
+        </label>
+
+        <label> Confirm Your Password 
+            <input id="vendorRegConfPassword" type="password" placeholder="Confirm Your Password" required/>
+        </label>    
+
+        <input class="cta_button" type="submit" value="Continue">
+    </form>
+
+</div>
+
+
+<!-- /*
+POST: Creates a single vendor
+req.body = {
+    name: name of the business,
+    email: email of the business,
+    password: password for the vendor,
+    confirmPassword: confirmation of password
+}
+response = Vendor
+*/ -->
