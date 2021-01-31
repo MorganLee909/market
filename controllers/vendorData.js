@@ -40,11 +40,20 @@ module.exports = {
                         name: 1,
                         description: 1,
                         url: 1,
-                        items: 1
+                        items: 1,
+                        ownerName: 1,
+                        address: 1,
+                        sharesAddress: 1,
+                        sharesOwnerName: 1
                     }
                 );
             })
             .then((vendors)=>{
+                for(let i = 0; i < vendors.length; i++){
+                    if(vendors[i].sharesAddress === false) vendors[i].address = undefined;
+                    if(vendors[i].sharesOwnerName === false) vendors[i].ownerName = undefined;
+                }
+
                 return res.json(vendors);
             })
             .catch((err)=>{
@@ -59,16 +68,21 @@ module.exports = {
     response = Vendor
     */
     getVendor: function(req, res){
-        Vendor.findOne({_id: req.params.id}, {
-            name: 1,
-            url: 1,
-            description: 1,
-            items: 1
-        })
+        Vendor.findOne({_id: req.params.id})
             .then((vendor)=>{
                 if(vendor === null){
                     throw "THIS VENDOR DOES NOT EXIST";
                 }
+
+                if(vendor._id.toString() !== req.session.vendor){
+                    vendor.email = undefined;
+                    if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
+                    vendor.status = undefined;
+                    if(vendor.sharesAddress === false) vendor.address = undefined;
+                    vendor.location = undefined;
+                }
+
+                vendor.password = undefined;
 
                 return res.json(vendor);
             })
@@ -169,7 +183,9 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String
+        address: String,
+        sharesAddress: Boolean,
+        sharesOwnerName: Boolean
     }
     response = Vendor (returns private data)
     */
@@ -189,7 +205,6 @@ module.exports = {
                     }
                     vendor.email = email;
                 }
-
 
                 //Update address and coordinates of vendor
                 if(req.body.address !== vendor.address.full){
@@ -232,6 +247,8 @@ module.exports = {
 
                 vendor.ownerName = req.body.ownerName;
                 vendor.description = req.body.description;
+                vendor.sharesAddress = req.body.sharesAddress;
+                vendor.sharesOwnerName = req.body.sharesOwnerName;
 
                 return vendor.save();
             })

@@ -65,4 +65,3 @@ state = {
 }
 
 landingPage.display();
-
