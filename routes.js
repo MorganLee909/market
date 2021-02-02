@@ -4,8 +4,10 @@ const itemData = require("./controllers/itemData.js");
 const userData = require("./controllers/userData.js");
 const marketData = require("./controllers/marketData.js");
 
+const verifyVendor = require("./middleware.js").verifyVendor;
+
 module.exports = function(app){
-    app.get("/", renderer.home);
+    app.get("/", verifyVendor, renderer.home);
     app.get("/logout", renderer.logout);
 
     //Vendors
