@@ -12,12 +12,12 @@ module.exports = function(app){
 
     //Vendors
     app.get("/vendors/search*", vendorData.getVendors);
-    app.get("/vendors/:id", vendorData.getVendor);
     app.get("/vendors/session", verifyVendor, vendorData.checkSession);
+    app.get("/vendors/:id", verifyVendor, vendorData.getVendor);
     app.post("/vendors", vendorData.createVendor);
     app.post("/vendors/login", vendorData.vendorLogin);
-    app.put("/vendors", vendorData.updateVendor);
-    app.delete("/vendors/:id", vendorData.removeVendor);
+    app.put("/vendors", verifyVendor, vendorData.updateVendor);
+    app.delete("/vendors/:id", verifyVendor, vendorData.removeVendor);
 
     //Vendor items
     app.post("/vendors/items", verifyVendor, itemData.addItems);

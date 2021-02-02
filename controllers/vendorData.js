@@ -62,6 +62,14 @@ module.exports = {
     },
 
     /*
+    GET: Checks for a logged in user
+    response = Vendor || null
+    */
+    checkSession: function(req, res){
+        return res.json(res.locals.vendor);
+    },
+
+    /*
     GET: Gets a single vendor
     params: 
         id: id of the vendor to retrieve
@@ -74,7 +82,7 @@ module.exports = {
                     throw "THIS VENDOR DOES NOT EXIST";
                 }
 
-                if(vendor._id.toString() !== req.session.vendor){
+                if(vendor._id.toString() !== res.locals.vendor._id.toString()){
                     vendor.email = undefined;
                     if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
                     vendor.status = undefined;
@@ -87,19 +95,12 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
+                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
                 return res.json("ERROR: UNABLE TO FIND VENDOR");
             });
-    },
-
-    /*
-    GET: Checks for a logged in user
-    response = Vendor || null
-    */
-    checkSession: function(req, res){
-        return res.json(res.locals.vendor);
     },
 
     /*
@@ -203,69 +204,66 @@ module.exports = {
     }
     response = Vendor (returns private data)
     */
-    updateVendor: function(req, res){
-        if(req.session.vendor !== req.body.id){
+    updateVendor: async function(req, res){
+        if(res.locals.vendor._id.toString() !== req.body.id){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        Vendor.findOne({_id: req.session.vendor})
-            .then(async (vendor)=>{
-                //Validate and update email
-                const email = req.body.email.toLowerCase();
-                if(email !== vendor.email){
-                    const vendor = await Vendor.findOne({email: email});
-                    if(vendor){
-                        throw "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
-                    }
-                    vendor.email = email;
+        //Validate and update email
+        const email = req.body.email.toLowerCase();
+        if(email !== res.locals.vendor.email){
+            const vendor = await Vendor.findOne({email: email});
+            if(vendor){
+                throw "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
+            }
+            res.locals.vendor.email = email;
+        }
+
+        //Update address and coordinates of vendor
+        if(req.body.address !== res.locals.vendor.address.full){
+            const apiUrl = "https://api.geocod.io/v1.6/geocode";
+            const address = req.body.address.replace(/ /g, "+");
+            const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
+
+            try{
+                const geoData = await axios.get(fullUrl);
+                const result = geoData.data.results[0];
+                const lat = result.location.lat;
+                const lng = result.location.lng;
+                
+                res.locals.vendor.location = {
+                    type: "Point",
+                    coordinates: [lat, lng]
                 }
 
-                //Update address and coordinates of vendor
-                if(req.body.address !== vendor.address.full){
-                    const apiUrl = "https://api.geocod.io/v1.6/geocode";
-                    const address = req.body.address.replace(/ /g, "+");
-                    const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
-
-                    try{
-                        const geoData = await axios.get(fullUrl);
-                        const result = geoData.data.results[0];
-                        const lat = result.location.lat;
-                        const lng = result.location.lng;
-                        
-                        vendor.location = {
-                            type: "Point",
-                            coordinates: [lat, lng]
-                        }
-
-                        const comps = result.address_components;
-                        vendor.address = {
-                            streetNumber: comps.number,
-                            road: comps.formatted_street,
-                            city: comps.city,
-                            county: comps.county,
-                            state: comps.state,
-                            country: comps.country,
-                            zipCode: comps.zip,
-                            full: result.formatted_address
-                        }
-                    }catch(err){
-                        return err;
-                    }
+                const comps = result.address_components;
+                res.locals.vendor.address = {
+                    streetNumber: comps.number,
+                    road: comps.formatted_street,
+                    city: comps.city,
+                    county: comps.county,
+                    state: comps.state,
+                    country: comps.country,
+                    zipCode: comps.zip,
+                    full: result.formatted_address
                 }
+            }catch(err){
+                return err;
+            }
+        }
 
-                //Validate name and update name/url
-                if(req.body.name !== vendor.name){
-                    vendor.name = req.body.name;
-                    vendor.url = await helper.createURL(req.body.name);
-                }
+        //Validate name and update name/url
+        if(req.body.name !== res.locals.vendor.name){
+            res.locals.vendor.name = req.body.name;
+            res.locals.vendor.url = await helper.createURL(req.body.name);
+        }
 
-                vendor.ownerName = req.body.ownerName;
-                vendor.description = req.body.description;
-                vendor.sharesAddress = req.body.sharesAddress;
-                vendor.sharesOwnerName = req.body.sharesOwnerName;
+        res.locals.vendor.ownerName = req.body.ownerName;
+        res.locals.vendor.description = req.body.description;
+        res.locals.vendor.sharesAddress = req.body.sharesAddress;
+        res.locals.vendor.sharesOwnerName = req.body.sharesOwnerName;
 
-                return vendor.save();
-            })
+        res.locals.vendor.save()
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
@@ -288,11 +286,11 @@ module.exports = {
     response = {}
     */
     removeVendor: function(req, res){
-        if(req.params.id !== req.session.vendor){
+        if(req.params.id !== res.locals.vendor._id.toString()){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        Vendor.deleteOne({_id: req.session.vendor})
+        Vendor.deleteOne({_id: req.params.id})
             .then((response)=>{
                 return res.json({});
             })
