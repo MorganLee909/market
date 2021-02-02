@@ -111,17 +111,6 @@ module.exports = {
             return res.json("VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS");
         }
 
-        let generateId = (length)=>{
-            let result = "";
-            let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for(let i = 0; i < length; i++){
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            
-            return result;
-        }
-
         let expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 90);
 
@@ -136,7 +125,7 @@ module.exports = {
                     password: hash,
                     url: url,
                     session: {
-                        sessionId: generateId(25),
+                        sessionId: helper.generateId(25),
                         expiration: expirationDate
                     }
                 });
