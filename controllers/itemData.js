@@ -1,5 +1,3 @@
-const Vendor = require("../models/vendor.js");
-
 const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
@@ -13,18 +11,15 @@ module.exports = {
     response = Vendor (returns private data)
     */
     addItems: function(req, res){
-        if(req.session.vendor === undefined){
-            return "YOU DO NOT HAVE PERMISSION TO DO THAT";
+        if(res.locals.vendor === null){
+            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        Vendor.findOne({_id: req.session.vendor})
-            .then((vendor)=>{
-                for(let i = 0; i < req.body.length; i++){
-                    vendor.items.push(req.body[i]);
-                }
+        for(let i = 0; i < req.body.length; i++){
+            res.locals.vendor.items.push(req.body[i]);
+        }
 
-                return vendor.save();
-            })
+        res.locals.vendor.save()
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
@@ -46,26 +41,23 @@ module.exports = {
     response = {}
     */
     removeItem: function(req, res){
-        if(req.session.vendor === undefined){
+        if(res.locals.vendor === null){
             return "YOU DO NOT HAVE PERMISSION TO DO THAT";
         }
 
-        Vendor.findOne({_id: req.session.vendor})
-            .then((vendor)=>{
-                let exists = false;
-                for(let i = 0; i < vendor.items.length; i++){
-                    if(vendor.items[i]._id.toString() === req.params.id){
-                        vendor.items.splice(i, 1);
-                        exists = true;
-                    }
-                }
+        let exists = false;
+        for(let i = 0; i < res.locals.vendor.items.length; i++){
+            if(res.locals.vendor.items[i]._id.toString() === req.params.id){
+                res.locals.vendor.items.splice(i, 1);
+                exists = true;
+            }
+        }
 
-                if(exists === false){
-                    throw "UNABLE TO FIND THAT ITEM";
-                }
+        if(exists === false){
+            throw "UNABLE TO FIND THAT ITEM";
+        }
 
-                return vendor.save();
-            })
+        res.locals.vendor.save()
             .then((vendor)=>{
                 return res.json({});
             })
@@ -85,34 +77,34 @@ module.exports = {
         quantity: Number,
         unit: String
     }]
-    response = Vendor (returns private data)
+    response = updated Vendor item
     */
     updateItems: function(req, res){
-        if(req.session.vendor === undefined){
+        if(res.locals.vendor === null){
             return "YOU DO NOT HAVE PERMISSION TO DO THAT";
         }
 
-        Vendor.findOne({_id: req.session.vendor})
-            .then((vendor)=>{
-                for(let i = 0; i < req.body.length; i++){
-                    for(let j = 0; j < vendor.items.length; j++){
-                        if(req.body[i].id === vendor.items[j]._id.toString()){
-                            vendor.items[j].name = req.body[i].name;
-                            vendor.items[j].quantity = req.body[i].quantity;
-                            vendor.items[j].unit = req.body[i].unit;
+        let item = {};
+        for(let i = 0; i < req.body.length; i++){
+            for(let j = 0; j < res.locals.vendor.items.length; j++){
+                if(req.body[i].id === res.locals.vendor.items[j]._id.toString()){
+                    res.locals.vendor.items[j].name = req.body[i].name;
+                    res.locals.vendor.items[j].quantity = req.body[i].quantity;
+                    res.locals.vendor.items[j].unit = req.body[i].unit;
 
-                            break;
-                        }
-                    }
+                    item = res.locals.vendor.items[j];
+
+                    break;
                 }
+            }
+        }
 
-                return vendor.save();
-            })
+        res.locals.vendor.save()
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
 
-                return res.json(vendor);
+                return res.json(item);
             })
             .catch((err)=>{
                 if(err instanceof ValidationError){

@@ -20,9 +20,9 @@ module.exports = function(app){
     app.delete("/vendors/:id", vendorData.removeVendor);
 
     //Vendor items
-    app.post("/vendors/items", itemData.addItems);
-    app.delete("/vendors/items/:id", itemData.removeItem);
-    app.put("/vendors/items", itemData.updateItems);
+    app.post("/vendors/items", verifyVendor, itemData.addItems);
+    app.delete("/vendors/items/:id", verifyVendor, itemData.removeItem);
+    app.put("/vendors/items", verifyVendor, itemData.updateItems);
         
     //Users
     app.post("/users", userData.createUser);

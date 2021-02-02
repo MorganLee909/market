@@ -6,15 +6,11 @@ module.exports = {
     verifyVendor: function(req, res, next){
         if(req.session.vendor === undefined){
             res.locals.vendor = null;
-            return;
+            return next();
         }
 
         Vendor.findOne({"session.sessionId": req.session.vendor})
             .then((vendor)=>{
-                if(vendor === null){
-                    throw "none";
-                }
-
                 if(vendor.session.date < new Date){
                     let newExpiration = new Date();
                     newExpiration.setDate(newExpiration.getDate() + 90);
@@ -23,11 +19,10 @@ module.exports = {
                     vender.session.expiration = newExpiration;
                     vendor.save();
                     res.locals.vendor = null;
-                    throw "login";
+                }else{
+                    res.locals.vendor = vendor;
+                    return next();
                 }
-
-                res.locals.vendor = vendor;
-                return next();
             })
             .catch((err)=>{
                 if(typeof(err) === "string"){

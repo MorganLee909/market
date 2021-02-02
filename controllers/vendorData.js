@@ -100,7 +100,7 @@ module.exports = {
     */
     checkSession: function(req, res){
         return res.json(res.locals.vendor);
-    }
+    },
 
     /*
     POST: Creates a single vendor
@@ -174,7 +174,7 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
-                        req.session.vendor = vendor._id; 
+                        req.session.vendor = vendor.session.sessionId; 
                         return res.json(vendor)
                     }
 
