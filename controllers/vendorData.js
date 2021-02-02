@@ -128,7 +128,6 @@ module.exports = {
             .then((vendor)=>{
                 vendor.status = undefined;
                 vendor.password = undefined;
-                vendor.email = undefined;
 
                 return res.json(vendor);
             })
