@@ -95,6 +95,14 @@ module.exports = {
     },
 
     /*
+    GET: Checks for a logged in user
+    response = Vendor || null
+    */
+    checkSession: function(req, res){
+        return res.json(res.locals.vendor);
+    }
+
+    /*
     POST: Creates a single vendor
     req.body = {
         name: name of the business,

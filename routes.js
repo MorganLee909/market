@@ -7,12 +7,13 @@ const marketData = require("./controllers/marketData.js");
 const verifyVendor = require("./middleware.js").verifyVendor;
 
 module.exports = function(app){
-    app.get("/", verifyVendor, renderer.home);
+    app.get("/", renderer.home);
     app.get("/logout", renderer.logout);
 
     //Vendors
     app.get("/vendors/search*", vendorData.getVendors);
     app.get("/vendors/:id", vendorData.getVendor);
+    app.get("/vendors/session", verifyVendor, vendorData.checkSession);
     app.post("/vendors", vendorData.createVendor);
     app.post("/vendors/login", vendorData.vendorLogin);
     app.put("/vendors", vendorData.updateVendor);

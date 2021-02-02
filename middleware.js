@@ -22,6 +22,7 @@ module.exports = {
                     vendor.session.sessionId = helper.generateId(25);
                     vender.session.expiration = newExpiration;
                     vendor.save();
+                    res.locals.vendor = null;
                     throw "login";
                 }
 
