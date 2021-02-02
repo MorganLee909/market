@@ -32,10 +32,10 @@ module.exports = function(app){
     app.get("/users/:id", userData.getUser);
 
     //Markets
-    app.post("/markets", marketData.createMarket);
-    app.put("/markets", marketData.updateMarket);
+    app.post("/markets", verifyVendor, marketData.createMarket);
+    app.put("/markets", verifyVendor, marketData.updateMarket);
     app.get("/markets/search?*", marketData.getMarkets);
-    app.post("/markets/:id/vendors", marketData.addVendors);
+    app.post("/markets/:id/vendors", verifyVendor, marketData.addVendors);
     app.get("/markets/:id", marketData.getMarket);
-    app.delete("/markets/:id", marketData.removeMarket); 
+    app.delete("/markets/:id", verifyVendor, marketData.removeMarket); 
 }
