@@ -111,6 +111,20 @@ module.exports = {
             return res.json("VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS");
         }
 
+        let generateId = (length)=>{
+            let result = "";
+            let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for(let i = 0; i < length; i++){
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            
+            return result;
+        }
+
+        let expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 90);
+
         helper.createURL(req.body.name)
             .then((url)=>{
                 const salt = bcrypt.genSaltSync(10);
@@ -120,7 +134,11 @@ module.exports = {
                     name: req.body.name,
                     email: email,
                     password: hash,
-                    url: url
+                    url: url,
+                    session: {
+                        sessionId: generateId(25),
+                        expiration: expirationDate
+                    }
                 });
 
                 return newVendor.save();
@@ -132,6 +150,7 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
+                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
