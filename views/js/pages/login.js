@@ -1,16 +1,18 @@
+const Vendor = require('../models/Vendor.js');
+
 let loginPage ={
-    display: function (Vendor) {
+    display: function () {
         if( state.loginPage.isPopulated === false ){
 
             let form = document.getElementById('vendorLoginForm');
-            form.onsubmit = () => {this.submit(Vendor)};
+            form.onsubmit = () => {this.submit()};
 
             state.loginPage.isPopulated = true;
         }
    
     },
 
-    submit: function (Vendor) {
+    submit: function () {
         event.preventDefault();
 
         let data = {

@@ -1,7 +1,3 @@
-const Market = require("./js/models/Market.js");
-const Vendor = require("./js/models/Vendor.js");
-const User = require("./js/models/User.js");
-
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
@@ -30,11 +26,11 @@ controller = {
                 break;    
 
             case 'vendorRegistrationPage':
-                vendorRegistrationPage.display( Vendor );
+                vendorRegistrationPage.display();
                 break; 
             
             case 'loginPage':
-                loginPage.display(Vendor);
+                loginPage.display();
                 break;
 
         }

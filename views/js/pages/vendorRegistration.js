@@ -1,16 +1,18 @@
+const Vendor = require('../models/Vendor.js');
+
 let vendorRegistrationPage = {
-    display: function( Vendor ){
+    display: function(){
 
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
-            form.onsubmit = () => {this.submitForm( Vendor )};
+            form.onsubmit = () => {this.submitForm()};
 
             state.vendorRegistrationPage.isPopulated = true;
         }
     },
 
-    submitForm: function( Vendor ) {
+    submitForm: function() {
         event.preventDefault();
 
         let data = {

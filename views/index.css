@@ -1,6 +1,5 @@
 *{margin:0;padding:0;}
 
-
 header{
     height: 60px;
     width: 100%;
@@ -90,9 +89,9 @@ header{
     height: 50px;
     background:#2B583D;
     border: medium none;
-    display: flex;
     font-size: small;
     color: white;
+    border-radius: .25rem;
 }
 
 .cta_button:hover{

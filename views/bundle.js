@@ -1,8 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const Market = require("./js/models/Market.js");
-const Vendor = require("./js/models/Vendor.js");
-const User = require("./js/models/User.js");
-
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
@@ -31,11 +27,11 @@ controller = {
                 break;    
 
             case 'vendorRegistrationPage':
-                vendorRegistrationPage.display( Vendor );
+                vendorRegistrationPage.display();
                 break; 
             
             case 'loginPage':
-                loginPage.display(Vendor);
+                loginPage.display();
                 break;
 
         }
@@ -65,7 +61,7 @@ state = {
 }
 
 landingPage.display();
-},{"./js/components.js":2,"./js/models/Market.js":4,"./js/models/User.js":5,"./js/models/Vendor.js":6,"./js/pages/landing.js":7,"./js/pages/login.js":8,"./js/pages/vendorInfo.js":9,"./js/pages/vendorRegistration.js":10}],2:[function(require,module,exports){
+},{"./js/components.js":2,"./js/pages/landing.js":5,"./js/pages/login.js":6,"./js/pages/vendorInfo.js":7,"./js/pages/vendorRegistration.js":8}],2:[function(require,module,exports){
 class HomeButton extends HTMLElement{
     static get observedAttributes(){
         return ["change", "other", "something", "gofuckyourself"];
@@ -164,46 +160,6 @@ class Item {
 
 module.exports = Item;
 },{}],4:[function(require,module,exports){
-class Market{
-    constructor( id, name, owner, vendors, address, description ){
-        this._id = id;
-        this._name = name;
-        this._owner = new Vendor( 
-            owner._id, 
-            owner._name, 
-            owner._email,
-            owner._description,
-            []
-        );
-        this._vendors = [];
-        this._address = address;
-        this._description = description;
-
-        for( let i = 0; i < vendors.length; i++){
-            let vendor = new Vendor(        
-                vendors[i]._id,
-                vendors[i]._name, 
-                vendors[i]._email,
-                vendors[i]._description,
-                vendors[i]._items
-            );
-            this._vendors.push( vendor );
-        }
-    }
-}
-
-module.exports = Market;
-},{}],5:[function(require,module,exports){
-class User {
-    constructor( id, name, email ){
-        this._id = id;
-        this._name = name;
-        this._email = email;
-    }
-}
-
-module.exports = User;
-},{}],6:[function(require,module,exports){
 const Item = require("./Item.js");
 
 class Vendor {
@@ -235,7 +191,7 @@ class Vendor {
 }
 
 module.exports = Vendor;
-},{"./Item.js":3}],7:[function(require,module,exports){
+},{"./Item.js":3}],5:[function(require,module,exports){
 let landingPage = {
     display: function(){
 
@@ -253,20 +209,22 @@ let landingPage = {
 }
 
 module.exports = landingPage;
-},{}],8:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+const Vendor = require('../models/Vendor.js');
+
 let loginPage ={
-    display: function (Vendor) {
+    display: function () {
         if( state.loginPage.isPopulated === false ){
 
             let form = document.getElementById('vendorLoginForm');
-            form.onsubmit = () => {this.submit(Vendor)};
+            form.onsubmit = () => {this.submit()};
 
             state.loginPage.isPopulated = true;
         }
    
     },
 
-    submit: function (Vendor) {
+    submit: function () {
         event.preventDefault();
 
         let data = {
@@ -300,7 +258,7 @@ let loginPage ={
 }
 
 module.exports = loginPage;
-},{}],9:[function(require,module,exports){
+},{"../models/Vendor.js":4}],7:[function(require,module,exports){
 let vendorInfoPage = {
     display: function(){
         if(state.vendorInfoPage.isPopulated === false){
@@ -322,20 +280,22 @@ let vendorInfoPage = {
 }
 
 module.exports = vendorInfoPage;
-},{}],10:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+const Vendor = require('../models/Vendor.js');
+
 let vendorRegistrationPage = {
-    display: function( Vendor ){
+    display: function(){
 
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
-            form.onsubmit = () => {this.submitForm( Vendor )};
+            form.onsubmit = () => {this.submitForm()};
 
             state.vendorRegistrationPage.isPopulated = true;
         }
     },
 
-    submitForm: function( Vendor ) {
+    submitForm: function() {
         event.preventDefault();
 
         let data = {
@@ -380,4 +340,4 @@ let vendorRegistrationPage = {
 module.exports = vendorRegistrationPage;
 
 
-},{}]},{},[1]);
+},{"../models/Vendor.js":4}]},{},[1]);
