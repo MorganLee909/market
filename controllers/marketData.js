@@ -14,13 +14,13 @@ module.exports = {
     response = Market
     */
     createMarket: async function(req, res){
-        if(req.session.vendor === undefined){
+        if(res.locals.vendor === null){
             return res.json("YOU MUST HAVE A VENDOR ACCOUNT TO CREATE A MARKET");
         }
 
         let market = new Market({
             name: req.body.name,
-            owner: req.session.vendor,
+            owner: res.locals.vendor._id,
             url: await helper.createMarketURL(req.body.name)
         });
 
@@ -52,7 +52,7 @@ module.exports = {
     updateMarket: function(req, res){
         Market.findOne({_id: req.body.id})
             .then(async (market)=>{
-                if(market.owner.toString() !== req.session.vendor){
+                if(market.owner.toString() !== res.locals.vendor._id.toString()){
                     throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
                 }
 
@@ -152,13 +152,13 @@ module.exports = {
     response = Market
     */
     addVendors: function(req, res){
-        if(req.session.vendor === undefined){
+        if(res.locals.vendor === null){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
         Market.findOne({_id: req.params.id})
             .then((market)=>{
-                if(market.owner.toString() !== req.session.vendor){
+                if(market.owner.toString() !== res.locals.vendor._id.toString()){
                     throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
                 }
 
@@ -213,13 +213,13 @@ module.exports = {
     repsonse = {}
     */
     removeMarket: function(req, res){
-        if(req.session.vendor === undefined){
+        if(res.locals.vendor === null){
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
         Market.findOne({_id: req.params.id})
             .then((market)=>{
-                if(market.owner.toString() !== req.session.vendor){
+                if(market.owner.toString() !== res.locals.vendor._id.toString()){
                     throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
                 }
 

@@ -156,4 +156,11 @@ form {
         background-image: none;
         border: .0625rem solid #ccc;
         border-radius: .25rem;
-    }   
+    }
+
+/*
+LANDING PAGE
+*/
+#landingPage{
+    flex-direction: column;
+}

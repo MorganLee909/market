@@ -9,7 +9,6 @@ let loginPage ={
 
             state.loginPage.isPopulated = true;
         }
-   
     },
 
     submit: function () {

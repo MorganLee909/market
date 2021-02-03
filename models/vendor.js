@@ -119,6 +119,15 @@ const VendorSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+
+    //PRIVATE: Used for backend checking whether the vendor is logged in
+    session: {
+        sessionId: {
+            type: String,
+            index: true
+        },
+        expiration: Date
     }
 });
 

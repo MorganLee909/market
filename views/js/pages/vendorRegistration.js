@@ -50,9 +50,7 @@ let vendorRegistrationPage = {
             })
             .catch((err)=>{
             });
-
     }
 }
 
 module.exports = vendorRegistrationPage;
-
