@@ -1,3 +1,4 @@
+
 let landingPage = {
     display: function(){
         document.getElementById('openVendorRegistration').addEventListener(
@@ -9,6 +10,7 @@ let landingPage = {
             'click',
             () => {controller.openPage( 'loginPage' )}
         );
+        
     }
 }
 

@@ -3,8 +3,28 @@ let vendorInfoPage = {
         if(state.vendorInfoPage.isPopulated === false){
             document.getElementById('vendorInfoToLanding').addEventListener(
                 'click', 
-                () => {controller.openPage( 'landingPage')}
+                () => {controller.openPage( 'landingPage' )}
             );
+
+            document.getElementById('vendorInfoToSignOut').addEventListener(
+                'click', 
+                () => {
+                    fetch('/logout')
+                        .then( response => response.json() )
+                        .then((response)=>{
+                            if(typeof(response) === 'string'){
+                                throw response;
+                            } else {
+                                state.vendor = null;
+                                controller.openPage("landingPage");
+                            }
+                        
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }
+            );    
             
             let goods = document.getElementById("goods");
 

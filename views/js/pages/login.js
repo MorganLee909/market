@@ -2,6 +2,17 @@ const Vendor = require('../models/Vendor.js');
 
 let loginPage ={
     display: function () {
+
+        document.getElementById('loginToLanding').addEventListener(
+            'click',
+            () => {controller.openPage( 'landingPage' )}
+        );
+
+        document.getElementById('loginToVendorRegistration').addEventListener(
+            'click',
+            () => {controller.openPage( 'vendorRegistrationPage' )}
+        );
+
         if( state.loginPage.isPopulated === false ){
 
             let form = document.getElementById('vendorLoginForm');

@@ -3,6 +3,16 @@ const Vendor = require('../models/Vendor.js');
 let vendorRegistrationPage = {
     display: function(){
 
+        document.getElementById('vendorRegistrationToLanding').addEventListener(
+            'click',
+            () => {controller.openPage( 'landingPage' )}
+        );
+
+        document.getElementById('VendorRegistrationToLogin').addEventListener(
+            'click',
+            () => {controller.openPage( 'loginPage' )}
+        );
+
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
