@@ -36,6 +36,36 @@ controller = {
         }
 
         document.getElementById( page ).style.display = "flex";
+    },
+
+    createToaster: function ( mess, type ) {
+        
+        document.getElementById( "toasterText" ).innerText = mess;
+
+        let toasterContainer = document.getElementById( "toasterContainer" );
+        let toasterCanvas = document.getElementById( "toasterCanvas" );
+
+        switch(type){
+            
+            case 'error':
+                toasterCanvas.classList.add( 'toasterError' );
+                toasterContainer.style.display = "flex";
+                
+                break;
+
+            case "success":
+                toasterCanvas.classList.add( 'toasterSuccess' );
+                toasterContainer.style.display = "flex";
+
+                break;
+        }
+
+        setTimeout(function () {
+            toasterContainer.style.display = "none";
+            toasterCanvas.classList = '';
+        }, 
+        4000);
+        
     }
 };
 
@@ -59,13 +89,12 @@ state = {
     }
 }
 
-console.log("something");
 fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
-        console.log(response);
+
         if(typeof(response) === "string"){
-            throw response;
+            controller.createBanner(response, "error");
         }
         
         if( response === null ){ 
@@ -83,5 +112,5 @@ fetch( '/vendors/session' )
         }
     })
     .catch((err) => {
-        console.log(err);
+        controller.createBanner("Something went wrong. Refresh the page.", "error");
     });

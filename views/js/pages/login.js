@@ -39,18 +39,22 @@ let loginPage ={
         })
             .then(response => response.json())
             .then((response) => {
-                state.vendor = new Vendor(
-                    response._id,
-                    response.name,
-                    response.email,
-                    response.description,
-                    response.items
-                );
-
-                controller.openPage('vendorInfoPage');
+                if( typeof(response) === 'string'){
+                    controller.createToaster( response, 'error' );
+                } else{
+                    state.vendor = new Vendor(
+                        response._id,
+                        response.name,
+                        response.email,
+                        response.description,
+                        response.items
+                    );
+                    
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err) => {
-                console.log(err);
+                controller.createToaster( 'Something went wrong. Refresh the page.', 'error' );
             });
     }
 }

@@ -37,6 +37,36 @@ controller = {
         }
 
         document.getElementById( page ).style.display = "flex";
+    },
+
+    createToaster: function ( mess, type ) {
+        
+        document.getElementById( "toasterText" ).innerText = mess;
+
+        let toasterContainer = document.getElementById( "toasterContainer" );
+        let toasterCanvas = document.getElementById( "toasterCanvas" );
+
+        switch(type){
+            
+            case 'error':
+                toasterCanvas.classList.add( 'toasterError' );
+                toasterContainer.style.display = "flex";
+                
+                break;
+
+            case "success":
+                toasterCanvas.classList.add( 'toasterSuccess' );
+                toasterContainer.style.display = "flex";
+
+                break;
+        }
+
+        setTimeout(function () {
+            toasterContainer.style.display = "none";
+            toasterCanvas.classList = '';
+        }, 
+        4000);
+        
     }
 };
 
@@ -60,13 +90,12 @@ state = {
     }
 }
 
-console.log("something");
 fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
-        console.log(response);
+
         if(typeof(response) === "string"){
-            throw response;
+            controller.createBanner(response, "error");
         }
         
         if( response === null ){ 
@@ -84,7 +113,7 @@ fetch( '/vendors/session' )
         }
     })
     .catch((err) => {
-        console.log(err);
+        controller.createBanner("Something went wrong. Refresh the page.", "error");
     });
 },{"./js/components.js":2,"./js/models/Vendor.js":4,"./js/pages/landing.js":5,"./js/pages/login.js":6,"./js/pages/vendorInfo.js":7,"./js/pages/vendorRegistration.js":8}],2:[function(require,module,exports){
 class HomeButton extends HTMLElement{
@@ -129,6 +158,9 @@ class HomeButton extends HTMLElement{
 
 //new component
 class VendorItem extends HTMLElement{
+    static get observedAttributes(){
+        return ["product"];
+    }
     
     constructor(){
         super();
@@ -169,6 +201,15 @@ class VendorItem extends HTMLElement{
 
         this._shadow.appendChild(vendorItem);
     }
+
+    attributeChangedCallback( name, oldValue, newValue ){
+        switch( name ){
+
+            case 'product':
+                this._shadow.children[1].children[0].innerText = newValue;
+
+        }
+    }
 }
 
 customElements.define('vendor-item', VendorItem);
@@ -181,6 +222,11 @@ class Item {
         this._quantity = quantity;
         this._unit = unit;
     }
+
+    get name(){
+        return this._name;
+    }
+
 }
 
 module.exports = Item;
@@ -276,18 +322,22 @@ let loginPage ={
         })
             .then(response => response.json())
             .then((response) => {
-                state.vendor = new Vendor(
-                    response._id,
-                    response.name,
-                    response.email,
-                    response.description,
-                    response.items
-                );
-
-                controller.openPage('vendorInfoPage');
+                if( typeof(response) === 'string'){
+                    controller.createToaster( response, 'error' );
+                } else{
+                    state.vendor = new Vendor(
+                        response._id,
+                        response.name,
+                        response.email,
+                        response.description,
+                        response.items
+                    );
+                    
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err) => {
-                console.log(err);
+                controller.createToaster( 'Something went wrong. Refresh the page.', 'error' );
             });
     }
 }
@@ -309,7 +359,7 @@ let vendorInfoPage = {
                         .then( response => response.json() )
                         .then((response)=>{
                             if(typeof(response) === 'string'){
-                                throw response;
+                                controller.createBanner(response, "error");
                             } else {
                                 state.vendor = null;
                                 controller.openPage("landingPage");
@@ -317,7 +367,7 @@ let vendorInfoPage = {
                         
                         })
                         .catch((err) => {
-                            console.log(err);
+                            controller.createBanner("Something went wrong. Refresh the page.", "error");
                         });
                 }
             );    
@@ -326,6 +376,7 @@ let vendorInfoPage = {
 
             for( let i = 0; i < state.vendor.items.length; i++ ){
                 let item = document.createElement('vendor-item');
+                item.setAttribute( 'product', state.vendor.items[i].name );
                 goods.appendChild(item);
             }
 
@@ -382,21 +433,23 @@ let vendorRegistrationPage = {
             .then(response => response.json())
             .then((response)=>{
                 if( typeof(response) === "string" ) {
-                    throw response;
-                } 
+                    controller.createBanner(response, "error");
+                } else{
+                    let newVendor = new Vendor(
+                        response._id, 
+                        response.name, 
+                        response.email, 
+                        "", 
+                        response.items
+                    );
 
-                let newVendor = new Vendor(
-                    response._id, 
-                    response.name, 
-                    response.email, 
-                    "", 
-                    response.items
-                );
-                
-                state.vendor = newVendor;
-                controller.openPage('vendorInfoPage');
+                    state.vendor = newVendor;
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err)=>{
+                controller.createBanner("Something went wrong. Refresh the page.", "error");
+
             });
     }
 }

@@ -44,21 +44,23 @@ let vendorRegistrationPage = {
             .then(response => response.json())
             .then((response)=>{
                 if( typeof(response) === "string" ) {
-                    throw response;
-                } 
+                    controller.createBanner(response, "error");
+                } else{
+                    let newVendor = new Vendor(
+                        response._id, 
+                        response.name, 
+                        response.email, 
+                        "", 
+                        response.items
+                    );
 
-                let newVendor = new Vendor(
-                    response._id, 
-                    response.name, 
-                    response.email, 
-                    "", 
-                    response.items
-                );
-                
-                state.vendor = newVendor;
-                controller.openPage('vendorInfoPage');
+                    state.vendor = newVendor;
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err)=>{
+                controller.createBanner("Something went wrong. Refresh the page.", "error");
+
             });
     }
 }

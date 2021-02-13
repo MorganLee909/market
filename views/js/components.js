@@ -40,6 +40,9 @@ class HomeButton extends HTMLElement{
 
 //new component
 class VendorItem extends HTMLElement{
+    static get observedAttributes(){
+        return ["product"];
+    }
     
     constructor(){
         super();
@@ -79,6 +82,15 @@ class VendorItem extends HTMLElement{
         `;
 
         this._shadow.appendChild(vendorItem);
+    }
+
+    attributeChangedCallback( name, oldValue, newValue ){
+        switch( name ){
+
+            case 'product':
+                this._shadow.children[1].children[0].innerText = newValue;
+
+        }
     }
 }
 

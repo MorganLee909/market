@@ -66,8 +66,6 @@ module.exports = {
     response = Vendor || null
     */
     checkSession: function(req, res){
-        console.log("checkSession");
-        console.log(req.session.vendor);
         return res.json(res.locals.vendor);
     },
 
@@ -97,7 +95,6 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
@@ -177,10 +174,7 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
-                        console.log(req.session.vendor);
-                        console.log(vendor.session);
                         req.session.vendor = vendor.session.sessionId;
-                        console.log(req.session.vendor);
                         return res.json(vendor)
                     }
 

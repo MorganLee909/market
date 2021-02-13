@@ -5,6 +5,11 @@ class Item {
         this._quantity = quantity;
         this._unit = unit;
     }
+
+    get name(){
+        return this._name;
+    }
+
 }
 
 module.exports = Item;

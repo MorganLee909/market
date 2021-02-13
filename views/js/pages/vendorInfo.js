@@ -13,7 +13,7 @@ let vendorInfoPage = {
                         .then( response => response.json() )
                         .then((response)=>{
                             if(typeof(response) === 'string'){
-                                throw response;
+                                controller.createBanner(response, "error");
                             } else {
                                 state.vendor = null;
                                 controller.openPage("landingPage");
@@ -21,7 +21,7 @@ let vendorInfoPage = {
                         
                         })
                         .catch((err) => {
-                            console.log(err);
+                            controller.createBanner("Something went wrong. Refresh the page.", "error");
                         });
                 }
             );    
@@ -30,6 +30,7 @@ let vendorInfoPage = {
 
             for( let i = 0; i < state.vendor.items.length; i++ ){
                 let item = document.createElement('vendor-item');
+                item.setAttribute( 'product', state.vendor.items[i].name );
                 goods.appendChild(item);
             }
 
