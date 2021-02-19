@@ -8,7 +8,8 @@ module.exports = {
     req.body = {
         name: String,
         quantity: Number,
-        unit: String
+        unit: String,
+        price: Number (per unit, cents)
     }
     response = Vendor (returns private data)
     */
@@ -20,7 +21,8 @@ module.exports = {
         let item = new Item({
             name: req.body.name,
             quantity: req.body.quantity,
-            unit: req.body.unit
+            unit: req.body.unit,
+            price: req.body.price
         });
 
         res.locals.vendor.items.push(item);
@@ -78,7 +80,8 @@ module.exports = {
         id: String
         name: String,
         quantity: Number,
-        unit: String
+        unit: String,
+        price: Number (per unit, cents)
     }
     response = updated Vendor item
     */
@@ -93,6 +96,7 @@ module.exports = {
                 res.locals.vendor.items[i].name = req.body.name;
                 res.locals.vendor.items[i].quantity = req.body.quantity;
                 res.locals.vendor.items[i].unit = req.body.unit;
+                res.locals.vendor.items[i].price = req.body.price
 
                 item = res.locals.vendor.items[i];
                 break;

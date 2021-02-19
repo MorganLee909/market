@@ -28,6 +28,13 @@ const ItemSchema = new mongoose.Schema({
             validator: validation.isSanitary,
             message: "UNIT CONTAINS ILLEGAL CHARACTERS"
         }
+    },
+
+    //PUBLIC: price of the item (per unit) (cents)
+    price: {
+        type: Number,
+        required: [true, "ITEM MUST HAVE A PRICE"],
+        min: 0
     }
 });
 
