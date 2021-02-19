@@ -6,6 +6,16 @@ let vendorInfoPage = {
                 () => {controller.openPage( 'landingPage' )}
             );
 
+            document.getElementById( 'addNewProduct' ).addEventListener(
+                'click',
+                () => { 
+                    let newItem = document.createElement( "vendor-item" );
+                    let goods = document.getElementById( "goods" );
+                    newItem.setAttribute( "isnew", "true" );
+                    goods.insertBefore( newItem, goods.firstChild );
+                }
+            );
+
             document.getElementById('vendorInfoToSignOut').addEventListener(
                 'click', 
                 () => {

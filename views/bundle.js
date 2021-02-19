@@ -93,7 +93,6 @@ state = {
 fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
-        console.log(response);
         if(typeof(response) === "string"){
             controller.createBanner(response, "error");
         }
@@ -160,7 +159,7 @@ class HomeButton extends HTMLElement{
 
 class VendorItem extends HTMLElement{
     static get observedAttributes(){
-        return ["product", "amount", "unit", "price"];
+        return ["product", "amount", "unit", "price", "isnew"];
     }
     
     constructor(){
@@ -184,7 +183,6 @@ class VendorItem extends HTMLElement{
         
         //amount
         this.amountGoods = document.createElement( "p" );
-        this.amountGoods.innerText = "5";
         this.amountGoods.classList.add( "goodsInput" );
         this.container.appendChild( this.amountGoods );
 
@@ -233,7 +231,7 @@ class VendorItem extends HTMLElement{
 
     attributeChangedCallback( name, oldValue, newValue ){
         switch( name ){
-
+           
             case 'product':
                 this.itemTitle.innerText = newValue;
                 break;
@@ -245,6 +243,9 @@ class VendorItem extends HTMLElement{
                 break;
             case "price":
                 this.price.innerText = newValue;
+                break;
+            case "isnew":
+                this.editItem();
                 break;
         }
     }
@@ -301,6 +302,11 @@ class VendorItem extends HTMLElement{
             </svg>
         `;
         this.submitButton.onclick = () => { this.submitEdit() };
+
+        if(this.getAttribute( "isnew" ) === "true"){
+            this.submitButton.onclick = () => { this.submitNew() };
+        }
+            
         this.container.insertBefore( this.submitButton, this.editButton );
         this.container.removeChild( this.editButton );
     }
@@ -334,6 +340,15 @@ class VendorItem extends HTMLElement{
         }
 
         console.log(data);
+    }
+
+    submitNew(){
+        let data = {
+            name: this.nameInput.value,
+            quantity: this.amountGoods.value,
+            unit: 'kg'
+        }
+
     }
 }
 
@@ -487,6 +502,16 @@ let vendorInfoPage = {
             document.getElementById('vendorInfoToLanding').addEventListener(
                 'click', 
                 () => {controller.openPage( 'landingPage' )}
+            );
+
+            document.getElementById( 'addNewProduct' ).addEventListener(
+                'click',
+                () => { 
+                    let newItem = document.createElement( "vendor-item" );
+                    let goods = document.getElementById( "goods" );
+                    newItem.setAttribute( "isnew", "true" );
+                    goods.insertBefore( newItem, goods.firstChild );
+                }
             );
 
             document.getElementById('vendorInfoToSignOut').addEventListener(
