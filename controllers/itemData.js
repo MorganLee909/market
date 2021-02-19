@@ -1,13 +1,15 @@
+const Item = require("../models/item.js").Item;
+
 const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
     POST: add items to a specific vendor
-    req.body = [{
+    req.body = {
         name: String,
         quantity: Number,
         unit: String
-    }]
+    }
     response = Vendor (returns private data)
     */
     addItems: function(req, res){
@@ -15,9 +17,11 @@ module.exports = {
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        for(let i = 0; i < req.body.length; i++){
-            res.locals.vendor.items.push(req.body[i]);
-        }
+        res.locals.vendor.items.push(new Item({
+            name: req.body.name,
+            quantity: req.body.quantity,
+            unit: req.body.unit
+        }));
 
         res.locals.vendor.save()
             .then((vendor)=>{
