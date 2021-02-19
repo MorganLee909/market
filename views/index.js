@@ -92,7 +92,7 @@ state = {
 fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
-
+        console.log(response);
         if(typeof(response) === "string"){
             controller.createBanner(response, "error");
         }

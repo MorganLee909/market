@@ -72,7 +72,7 @@ module.exports = {
     /*
     PUT: update a list of items
     req.body = [{
-        id: String
+        id: String,
         name: String,
         quantity: Number,
         unit: String

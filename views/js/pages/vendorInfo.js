@@ -30,7 +30,11 @@ let vendorInfoPage = {
 
             for( let i = 0; i < state.vendor.items.length; i++ ){
                 let item = document.createElement('vendor-item');
+                item.setAttribute( "_id", state.vendor.items[i].id );
                 item.setAttribute( 'product', state.vendor.items[i].name );
+                item.setAttribute( 'amount', state.vendor.items[i].quantity );
+                item.setAttribute( "unit", state.vendor.items[i].unit );
+                // item.setAttribute( "price", state.vendor.items[i].price );
                 goods.appendChild(item);
             }
 

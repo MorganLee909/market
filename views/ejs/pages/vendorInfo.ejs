@@ -21,7 +21,7 @@
             </svg>
         </button>
 
-        <div id="vendorInfoToAllvendors" class="login">
+        <div id="vendorInfoToAllvendors" class="login all-vendors">
             
             <i class="all-vendors-icon">
                 <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,14 +48,24 @@
     
         <div class="vendor-about">
             
-            <div class="title vendor-about-title"> About Zeleniy Market </div> 
+            <div class="title vendor-about-title"> Zeleniy Market  Farm </div> 
 
         </div>
 
         <div class="vendor-form">
-
-            <h2> Zeleniy Market Goods </h2>
-            <h4> Select amount of goods you need </h4>
+            <div class="vendor-form-header">
+                <div>
+                    <h1> Your Goods </h1>
+                    <h4 class="subtitle text-left"> Your currently available products </h4>
+                </div>
+                    <button id="addNewProduct" class="button-medium"> + Add More </button>
+            </div>
+            
+            <div class="vendor-table-header"> 
+                <p style="flex-basis: 42%;"> Product </p>
+                <p style="flex-basis: 11%;"> Amount </p>
+                <p> Price </p>
+            </div>
 
             <div id="goods"></div>
             

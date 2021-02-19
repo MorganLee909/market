@@ -1,6 +1,11 @@
+*{margin:0;padding:0;}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 html, body {
     height: 100%;
     font-family: 'Roboto', sans-serif;
+    color: #214530;
 }
 
 button{
@@ -9,14 +14,56 @@ button{
     cursor: pointer;
 }
 
-*{margin:0;padding:0;}
+.padding-right-23{
+    padding-right: 23px;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+.icon{
+    fill: none;
+}
+
+.icon:hover #remove-icon,
+.icon:hover #edit-icon{
+    fill: #828282;
+}
+
+.icon-close:hover #icon-close{
+    fill: #828282;
+}
+
+.icon-close:hover #icon-close-back{
+    fill: #F7F7F7;
+}
+
+.icon:hover #remove-icon-back,
+.icon:hover #edit-icon-back{
+    fill: white;
+}
+
+.icon:hover #icon-save-back{
+    fill: #43825C;
+}
+
+.icon-close{
+    padding-right: 28px;
+}
 
 .page{
     flex-direction: column;
     display: flex;
     height: 100%;  
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.all-vendors{
+    flex-basis: 38%;
 }
 
 .title{
@@ -25,7 +72,6 @@ button{
     font-weight: 900;
     font-size: 25px;
     line-height: 29px;
-    text-align: center;
     padding-bottom: 24px;
     color: #214530;
 }
@@ -38,7 +84,6 @@ button{
 .subtitle{
     font-family: Roboto;
     font-weight: normal;
-    text-align: center;
     font-size: 14px;
     line-height: 20px;
     color: #2B583D;
@@ -57,6 +102,7 @@ button{
 
 .links:hover{
     text-decoration-line: underline;
+    color: #43825C;
 }
 
 .logo{
@@ -76,6 +122,7 @@ button{
 
 .login:hover{
     text-decoration-line: underline;
+    color: #43825C;
 }
 
 .login-icon{
@@ -99,14 +146,39 @@ button{
 }
 
 .vendor-about{
-    width: 28%;
+    width: 24%;
     padding: 2rem;
     background-color:#2B583D;
 }
 
 .vendor-form{
-    padding: 2rem;
-    padding-top: 15rem;
+    padding: 6rem;
+    padding-top: 6rem;
+    width: 60%;
+}
+
+.vendor-form-header{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: #D0D9D4;
+    padding-bottom: 26px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding-left: 19px;
+    padding-right: 19px;
+}
+
+.vendor-table-header{
+    padding-top: 40px;
+    padding-bottom: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    display: flex;
+    padding-left: 19px;
+    padding-right: 19px;
 }
 
 .all-vendors-icon{
@@ -116,32 +188,73 @@ button{
 }
 
 .goodsTitle{
-    align-self: center;
+    font-weight: 500;
+    font-size: 18px;
+    flex-basis: 48%;
 }
 
-.price{
-    margin-left: 2rem;
+.goodsInput{
+    width: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+    padding-right: 10px;
+    flex-basis: 17%;
 }
 
-.priceTitle{
-    font-size: .85rem;
-    color: #ccc;
-    margin-bottom: 8px;
-    width: 60%;
-    font-weight: inherit;
+.goodsInput:focus{
+    border-color: #2B583D;
+}
+
+.goodsInput:focus-visible{
+    outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.goods-price{
+    font-weight: bold;
+    font-size: 22px;
+    flex-basis: 57%;
+}
+
+.header-vendor-info{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
 }
 
 .vendor-item{
     flex-direction: row;
     align-items: center;
     display: flex;
-    padding: 1rem;
-    margin: 1rem;   
+    justify-content: space-between;
+    height: 54px;
+    padding-left: 19px;
+    padding-right: 19px;
 }
 
-.goodsInput{
-    width: 3rem;
-    padding-left: 2rem;
+.vendor-item:hover{
+    background-color: #F7F7F7;
+}
+
+.unit-goods{
+    font-size: 12px;
+    flex-basis: 12%;
 }
 
 .plus_button{
@@ -169,8 +282,20 @@ button{
     margin-top: 24px;
 }
 
-.cta_button:hover{
+.cta_button:hover,
+.button-medium:hover
+{
     cursor: pointer;
+    background-color: #43825C;
+}
+
+.button-medium{
+    width: 120px;
+    height: 32px;
+    background: #2B583D;
+    border-radius: 4px;
+    font-size: 13px;
+    color: white;
 }
 
 form {
@@ -234,6 +359,25 @@ form {
     form input:focus-visible{
         outline: none;
     } 
+
+.input-product{
+    border-top-width: 0px;
+    border-top-style: solid;
+    border-left-width: 0px;
+    border-left-style: solid;
+    border-right-width: 0px;
+    border-right-style: solid;
+    margin-right: 20px;
+    color: #2B583D;
+}
+
+.input-product:focus{
+    border-color: #2B583D;
+}
+
+.input-product:focus-visible{
+    outline: none;
+}
 
 .searchbox{
     align-items: center;
@@ -304,16 +448,6 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.header-vendor-info{
-    height: 60px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
 }
 
 .landing-footer{
