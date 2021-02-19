@@ -17,18 +17,17 @@ module.exports = {
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        res.locals.vendor.items.push(new Item({
+        let item = new Item({
             name: req.body.name,
             quantity: req.body.quantity,
             unit: req.body.unit
-        }));
+        });
+
+        res.locals.vendor.items.push(item);
 
         res.locals.vendor.save()
             .then((vendor)=>{
-                vendor.password = undefined;
-                vendor.status = undefined;
-
-                return res.json(vendor);
+                return res.json(item);
             })
             .catch((err)=>{
                 if(err instanceof ValidationError){
@@ -102,9 +101,6 @@ module.exports = {
 
         res.locals.vendor.save()
             .then((vendor)=>{
-                vendor.password = undefined;
-                vendor.status = undefined;
-
                 return res.json(item);
             })
             .catch((err)=>{
