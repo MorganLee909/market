@@ -30,7 +30,7 @@ const ItemSchema = new mongoose.Schema({
         }
     },
 
-    //PUBLIC: price of the item (per unit) (cents)
+    //PUBLIC: price of the item (per unit, cents)
     price: {
         type: Number,
         required: [true, "ITEM MUST HAVE A PRICE"],
