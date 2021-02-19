@@ -71,12 +71,12 @@ module.exports = {
 
     /*
     PUT: update a list of items
-    req.body = [{
+    req.body = {
         id: String
         name: String,
         quantity: Number,
         unit: String
-    }]
+    }
     response = updated Vendor item
     */
     updateItems: function(req, res){
@@ -85,17 +85,14 @@ module.exports = {
         }
 
         let item = {};
-        for(let i = 0; i < req.body.length; i++){
-            for(let j = 0; j < res.locals.vendor.items.length; j++){
-                if(req.body[i].id === res.locals.vendor.items[j]._id.toString()){
-                    res.locals.vendor.items[j].name = req.body[i].name;
-                    res.locals.vendor.items[j].quantity = req.body[i].quantity;
-                    res.locals.vendor.items[j].unit = req.body[i].unit;
+        for(let i = 0; i < res.locals.vendor.items.length; i++){
+            if(req.body.id === res.locals.vendor.items[i]._id.toString()){
+                res.locals.vendor.items[i].name = req.body.name;
+                res.locals.vendor.items[i].quantity = req.body.quantity;
+                res.locals.vendor.items[i].unit = req.body.unit;
 
-                    item = res.locals.vendor.items[j];
-
-                    break;
-                }
+                item = res.locals.vendor.items[i];
+                break;
             }
         }
 
