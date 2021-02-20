@@ -1,13 +1,16 @@
+const Item = require("../models/item.js").Item;
+
 const ValidationError = require("mongoose").Error.ValidationError;
 
 module.exports = {
     /*
     POST: add items to a specific vendor
-    req.body = [{
+    req.body = {
         name: String,
         quantity: Number,
-        unit: String
-    }]
+        unit: String,
+        price: Number (per unit, cents)
+    }
     response = Vendor (returns private data)
     */
     addItems: function(req, res){
@@ -15,16 +18,18 @@ module.exports = {
             return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
         }
 
-        for(let i = 0; i < req.body.length; i++){
-            res.locals.vendor.items.push(req.body[i]);
-        }
+        let item = new Item({
+            name: req.body.name,
+            quantity: req.body.quantity,
+            unit: req.body.unit,
+            price: req.body.price
+        });
+
+        res.locals.vendor.items.push(item);
 
         res.locals.vendor.save()
             .then((vendor)=>{
-                vendor.password = undefined;
-                vendor.status = undefined;
-
-                return res.json(vendor);
+                return res.json(item);
             })
             .catch((err)=>{
                 if(err instanceof ValidationError){
@@ -71,12 +76,13 @@ module.exports = {
 
     /*
     PUT: update a list of items
-    req.body = [{
+    req.body = {
         id: String
         name: String,
         quantity: Number,
-        unit: String
-    }]
+        unit: String,
+        price: Number (per unit, cents)
+    }
     response = updated Vendor item
     */
     updateItems: function(req, res){
@@ -85,25 +91,20 @@ module.exports = {
         }
 
         let item = {};
-        for(let i = 0; i < req.body.length; i++){
-            for(let j = 0; j < res.locals.vendor.items.length; j++){
-                if(req.body[i].id === res.locals.vendor.items[j]._id.toString()){
-                    res.locals.vendor.items[j].name = req.body[i].name;
-                    res.locals.vendor.items[j].quantity = req.body[i].quantity;
-                    res.locals.vendor.items[j].unit = req.body[i].unit;
+        for(let i = 0; i < res.locals.vendor.items.length; i++){
+            if(req.body.id === res.locals.vendor.items[i]._id.toString()){
+                res.locals.vendor.items[i].name = req.body.name;
+                res.locals.vendor.items[i].quantity = req.body.quantity;
+                res.locals.vendor.items[i].unit = req.body.unit;
+                res.locals.vendor.items[i].price = req.body.price
 
-                    item = res.locals.vendor.items[j];
-
-                    break;
-                }
+                item = res.locals.vendor.items[i];
+                break;
             }
         }
 
         res.locals.vendor.save()
             .then((vendor)=>{
-                vendor.password = undefined;
-                vendor.status = undefined;
-
                 return res.json(item);
             })
             .catch((err)=>{
