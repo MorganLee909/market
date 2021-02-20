@@ -18,6 +18,10 @@ button{
     padding-right: 23px;
 }
 
+.margin-top{
+    margin-top: 54px !important;
+}
+
 .icon{
     fill: none;
 }
@@ -143,6 +147,15 @@ button{
     display: flex;
     height: 100%;
     background-color: white;
+}
+
+#vendorNoProduct{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    margin-left: 95px;
+    margin-bottom: 150px;
 }
 
 .vendor-about{

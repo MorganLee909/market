@@ -47,16 +47,26 @@
     <div class="main-vendor-container">
     
         <div class="vendor-about">
-            
             <div class="title vendor-about-title"> Zeleniy Market  Farm </div> 
-
         </div>
 
-        <div class="vendor-form">
+        <div id="vendorNoProduct" style="display: none;"> 
+            
+            <div>
+                <h1 class="title"> Welcome! </h1>
+                <h4 class="subtitle text-left"> 
+                    You are welcome to start your farm business with our platform 
+                </h4>
+            </div>
+                <button id="addFirstProduct" class="cta_button margin-top"> + Add Your First Product </button>
+
+        </div>
+            
+        <div id="vendorForm" class="vendor-form" style="display: none;">
             <div class="vendor-form-header">
                 <div>
-                    <h1> Your Goods </h1>
-                    <h4 class="subtitle text-left"> Your currently available products </h4>
+                    <h1 id="productTableTitle"> Your Goods </h1>
+                    <h4 id="productTableSubtitle" class="subtitle text-left"> Your currently available products </h4>
                 </div>
                     <button id="addNewProduct" class="button-medium"> + Add More </button>
             </div>

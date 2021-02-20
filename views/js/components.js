@@ -1,6 +1,6 @@
 class HomeButton extends HTMLElement{
     static get observedAttributes(){
-        return ["change", "other", "something", "gofuckyourself"];
+        return ["change", "other", "something", ];
     }
 
     constructor(){
@@ -173,6 +173,11 @@ class VendorItem extends HTMLElement{
             </svg>
         `;
         this.cancelButton.onclick = () => { this.cancelEdit() };
+
+        if(this.getAttribute("isnew") === "true"){
+            this.cancelButton.onclick = () => {this.parentElement.removeChild(this)};
+        };
+
         this.container.insertBefore( this.cancelButton, this.removeButton );
         this.container.removeChild( this.removeButton );
 
@@ -231,6 +236,8 @@ class VendorItem extends HTMLElement{
             quantity: this.amountGoods.value,
             unit: 'kg'
         }
+
+    
 
     }
 }
