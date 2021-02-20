@@ -1,3 +1,5 @@
+const ItemSchema = require("./item.js").ItemSchema;
+
 const validation = require("./validation.js");
 
 const mongoose = require("mongoose");
@@ -78,34 +80,7 @@ const VendorSchema = new mongoose.Schema({
     },
 
     //PUBLIC: items sold by the vendor
-    items: [{
-        //PUBLIC: the name of the item
-        name: {
-            type: String,
-            required: [true, "ITEM NAME IS REQUIRED"],
-            minlength: [3, "ITEM NAME MUST CONTAIN AT LEAST 3 CHARACTERS"],
-            validate: {
-                validator: validation.isSanitary,
-                message: "ITEM NAME CONTAINS ILLEGAL CHARACTERS"
-            }
-        },
-
-        //PUBLIC: quantity of the item available
-        quantity: {
-            type: Number,
-            required: [true, "ITEM QUANTITY IS REQUIRED"]
-        },
-
-        //PUBLIC: measurement unit of the item (lbs, each, g, etc.)
-        unit: {
-            type: String,
-            required: [true, "UNIT OF MEASUREMENT FOR THE ITEM IS REQUIRED"],
-            validate: {
-                validator: validation.isSanitary,
-                message: "UNIT CONTAINS ILLEGAL CHARACTERS"
-            }
-        }
-    }],
+    items: [ItemSchema],
 
     //PUBLIC: determines whether the vendor shares their address or not
     sharesAddress: {
