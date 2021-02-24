@@ -44,7 +44,7 @@ let vendorRegistrationPage = {
             .then(response => response.json())
             .then((response)=>{
                 if( typeof(response) === "string" ) {
-                    controller.createBanner(response, "error");
+                    controller.createToaster(response, "error");
                 } else{
                     let newVendor = new Vendor(
                         response._id, 
@@ -59,7 +59,7 @@ let vendorRegistrationPage = {
                 }
             })
             .catch((err)=>{
-                controller.createBanner("Something went wrong. Refresh the page.", "error");
+                controller.createToaster("Something went wrong. Refresh the page.", "error");
 
             });
     }

@@ -93,12 +93,13 @@ fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
         if(typeof(response) === "string"){
-            controller.createBanner(response, "error");
+            controller.createToaster(response, "error");
         }
         
         if( response === null ){ 
             controller.openPage( 'landingPage' );
         } else{ 
+            
             state.vendor = new Vendor(
                 response._id,
                 response.name,
@@ -111,5 +112,6 @@ fetch( '/vendors/session' )
         }
     })
     .catch((err) => {
-        controller.createBanner("Something went wrong. Refresh the page.", "error");
+        controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
+

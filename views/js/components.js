@@ -1,3 +1,6 @@
+const vendor = require("../../models/vendor.js");
+const vendorInfoPage = require("./pages/vendorInfo.js");
+
 class HomeButton extends HTMLElement{
     static get observedAttributes(){
         return ["change", "other", "something", ];
@@ -97,7 +100,9 @@ class VendorItem extends HTMLElement{
                 </defs>
             </svg>
         `;
-        this.container.appendChild( this.removeButton ) ;
+        
+        this.removeButton.onclick = () => { this.removeItem() };
+        this.container.appendChild( this.removeButton );
         
         //edit button
         this.editButton = document.createElement( "button" );
@@ -125,7 +130,7 @@ class VendorItem extends HTMLElement{
                 this.unitGoods.innerText = newValue;
                 break;
             case "price":
-                this.price.innerText = newValue;
+                this.price.innerText = `$${newValue}`;
                 break;
             case "isnew":
                 this.editItem();
@@ -161,6 +166,7 @@ class VendorItem extends HTMLElement{
         this.priceGoods.classList.add( "goods-price" );
         this.priceGoods.classList.add( "input-product" );
         this.priceGoods.type = "number";
+        this.priceGoods.value = this.getAttribute( 'price' );
         this.container.insertBefore( this.priceGoods, this.price );
         this.container.removeChild( this.price );
 
@@ -200,7 +206,6 @@ class VendorItem extends HTMLElement{
     }
 
     cancelEdit(){
-        //remove background color
         this.container.style.backgroundColor = '';
 
         this.container.insertBefore( this.itemTitle, this.nameInput  );
@@ -219,26 +224,81 @@ class VendorItem extends HTMLElement{
         this.container.removeChild( this.submitButton );
     }
 
+    removeItem(){
+        let id = this.getAttribute( "itemid" );
+
+        fetch( `/vendors/items/${id}`, {
+            method: 'DELETE',
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                if(typeof(response) === "string"){
+                    controller.createToaster(response, "error");
+                }else{
+                    state.vendor.removeItem( id );
+                }
+            })
+            .catch((err) =>{
+                controller.createToaster('Something went wrong, please refresh the page.', "error");
+            });
+    }
+
     submitEdit(){
         let data = {
-            id: this.getAttribute( "_id" ),
+            id: this.getAttribute( "itemid" ),
             name: this.nameInput.value,
-            quantity: this.amountGoods.value,
-            unit: this.getAttribute( "unit" )
-        }
+            quantity: this.amountInput.value,
+            unit: this.getAttribute( "unit" ),
+            price: parseInt( this.priceGoods.value * 100 )
+        };
 
-        console.log(data);
+        fetch( "/vendors/items", {
+            method: 'PUT',
+            headers:{
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then((response) => {
+                if(typeof(response) === "string") {
+                    controller.createToaster(response, "error");
+                }else{
+                    state.vendor.removeItem(response._id);
+                    state.vendor.addItem(response);                  
+                }
+            })
+            .catch((err) => {
+                controller.createToaster('Something went wrong, please refresh the page.', "error");
+            });
     }
 
     submitNew(){
         let data = {
             name: this.nameInput.value,
-            quantity: this.amountGoods.value,
-            unit: 'kg'
-        }
+            quantity: this.amountInput.value,
+            unit: 'kg',
+            price: parseInt( this.priceGoods.value * 100 )
+        };
 
-    
-
+        fetch( "/vendors/items", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify(data)
+        } )
+            .then( response => response.json() )
+            .then( (response) => {
+                if(typeof(response) === "string"){
+                    controller.createToaster(response, "error");
+                }else{
+                    state.vendor.addItem( response );
+                }
+            })
+            .catch((err) => {
+                controller.createToaster('Something went wrong, please refresh the page.', "error");
+            });
     }
 }
 
