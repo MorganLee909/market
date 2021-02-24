@@ -1,14 +1,10 @@
-const Market = require("./js/models/Market.js");
-const Vendor = require("./js/models/Vendor.js");
-const Item = require("./js/models/Item.js");
-const User = require("./js/models/User.js");
-
 const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
+const Vendor = require("./js/models/Vendor.js");
 
-///Components Start///
+// Components //
 require("./js/components.js");
 
 controller = {
@@ -18,7 +14,7 @@ controller = {
         for( let i = 0; i < pages.length; i++){
             pages[i].style.display = 'none';
         }
-        
+
         switch( page ) {
 
             case 'vendorInfoPage':
@@ -30,16 +26,46 @@ controller = {
                 break;    
 
             case 'vendorRegistrationPage':
-                vendorRegistrationPage.display( Vendor );
+                vendorRegistrationPage.display();
                 break; 
             
             case 'loginPage':
-                loginPage.display(Vendor);
+                loginPage.display();
                 break;
 
         }
 
         document.getElementById( page ).style.display = "flex";
+    },
+
+    createToaster: function ( mess, type ) {
+        
+        document.getElementById( "toasterText" ).innerText = mess;
+
+        let toasterContainer = document.getElementById( "toasterContainer" );
+        let toasterCanvas = document.getElementById( "toasterCanvas" );
+
+        switch(type){
+            
+            case 'error':
+                toasterCanvas.classList.add( 'toasterError' );
+                toasterContainer.style.display = "flex";
+                
+                break;
+
+            case "success":
+                toasterCanvas.classList.add( 'toasterSuccess' );
+                toasterContainer.style.display = "flex";
+
+                break;
+        }
+
+        setTimeout(function () {
+            toasterContainer.style.display = "none";
+            toasterCanvas.classList = '';
+        }, 
+        4000);
+        
     }
 };
 
@@ -63,4 +89,29 @@ state = {
     }
 }
 
-landingPage.display();
+fetch( '/vendors/session' )
+    .then( response => response.json() )
+    .then( (response) => {
+        if(typeof(response) === "string"){
+            controller.createToaster(response, "error");
+        }
+        
+        if( response === null ){ 
+            controller.openPage( 'landingPage' );
+        } else{ 
+            
+            state.vendor = new Vendor(
+                response._id,
+                response.name,
+                response.email,
+                response.description,
+                response.items
+            );
+            
+            controller.openPage( 'vendorInfoPage' ); 
+        }
+    })
+    .catch((err) => {
+        controller.createToaster("Something went wrong. Refresh the page.", "error");
+    });
+

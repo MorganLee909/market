@@ -1,15 +1,28 @@
+const Vendor = require('../models/Vendor.js');
+
 let vendorRegistrationPage = {
-    display: function( Vendor ){
+    display: function(){
+
+        document.getElementById('vendorRegistrationToLanding').addEventListener(
+            'click',
+            () => {controller.openPage( 'landingPage' )}
+        );
+
+        document.getElementById('VendorRegistrationToLogin').addEventListener(
+            'click',
+            () => {controller.openPage( 'loginPage' )}
+        );
+
         if( state.vendorRegistrationPage.isPopulated === false ){
 
             let form = document.getElementById('vendorRegForm');
-            form.onsubmit = () => {this.submitForm( Vendor )};
+            form.onsubmit = () => {this.submitForm()};
 
             state.vendorRegistrationPage.isPopulated = true;
         }
     },
 
-    submitForm: function( Vendor ) {
+    submitForm: function() {
         event.preventDefault();
 
         let data = {
@@ -31,21 +44,23 @@ let vendorRegistrationPage = {
             .then(response => response.json())
             .then((response)=>{
                 if( typeof(response) === "string" ) {
-                    throw response;
-                } 
+                    controller.createToaster(response, "error");
+                } else{
+                    let newVendor = new Vendor(
+                        response._id, 
+                        response.name, 
+                        response.email, 
+                        "", 
+                        response.items
+                    );
 
-                let newVendor = new Vendor(
-                    response._id, 
-                    response.name, 
-                    response.email, 
-                    "", 
-                    response.items
-                );
-                
-                state.vendor = newVendor;
-                controller.openPage('vendorInfoPage');
+                    state.vendor = newVendor;
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err)=>{
+                controller.createToaster("Something went wrong. Refresh the page.", "error");
+
             });
     }
 }

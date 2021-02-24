@@ -11,6 +11,11 @@ module.exports = {
 
         Vendor.findOne({"session.sessionId": req.session.vendor})
             .then((vendor)=>{
+                if(vendor === null){
+                    res.locals.vendor = null;
+                    return next();
+                }
+
                 if(vendor.session.date < new Date){
                     let newExpiration = new Date();
                     newExpiration.setDate(newExpiration.getDate() + 90);

@@ -11,7 +11,7 @@ module.exports = {
         unit: String,
         price: Number (per unit, cents)
     }
-    response = Vendor (returns private data)
+    response = Item
     */
     addItems: function(req, res){
         if(res.locals.vendor === null){

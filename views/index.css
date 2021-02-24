@@ -1,18 +1,136 @@
 *{margin:0;padding:0;}
 
-header{
-    height: 60px;
-    width: 100%;
-    background-color: white;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+html, body {
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    color: #214530;
+}
+
+button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.padding-right-23{
+    padding-right: 23px;
+}
+
+.margin-top{
+    margin-top: 54px !important;
+}
+
+.icon{
+    fill: none;
+}
+
+.icon:hover #remove-icon,
+.icon:hover #edit-icon{
+    fill: #828282;
+}
+
+.icon-close:hover #icon-close{
+    fill: #828282;
+}
+
+.icon-close:hover #icon-close-back{
+    fill: #F7F7F7;
+}
+
+.icon:hover #remove-icon-back,
+.icon:hover #edit-icon-back{
+    fill: white;
+}
+
+.icon:hover #icon-save-back{
+    fill: #43825C;
+}
+
+.icon-close{
+    padding-right: 28px;
+}
+
+.page{
+    flex-direction: column;
     display: flex;
-    justify-content: space-between;
+    height: 100%;  
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.all-vendors{
+    flex-basis: 38%;
+}
+
+.title{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 25px;
+    line-height: 29px;
+    padding-bottom: 24px;
+    color: #214530;
+}
+
+.vendor-about-title{
+    color: white;
+    padding-top: 60px;
+}
+
+.subtitle{
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #2B583D;
+}
+
+.links{
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2B583D;
+    cursor: pointer;
+    padding-left: 6px;
+    background: none;
+    border: none;
+}
+
+.links:hover{
+    text-decoration-line: underline;
+    color: #43825C;
+}
+
+.logo{
+    padding-left: 26px;
+    padding-top: 14px;
 }
 
 .login{
-    right: 20px;
-    position: absolute;
     cursor: pointer;
     color: #2B583D;
+    font-family: Roboto;
+    font-weight: 600;
+    font-size: 14px;
+    padding-right: 26px;
+    display: flex;
+}
+
+.login:hover{
+    text-decoration-line: underline;
+    color: #43825C;
+}
+
+.login-icon{
+    padding-left: 6px;
 }
 
 .shadowButton{
@@ -27,47 +145,129 @@ header{
 
 .main-vendor-container{
     display: flex;
+    height: 100%;
     background-color: white;
 }
 
+#vendorNoProduct{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    margin-left: 95px;
+    margin-bottom: 150px;
+}
+
 .vendor-about{
-    width: 28%;
-    height: 40rem;
+    width: 24%;
     padding: 2rem;
     background-color:#2B583D;
 }
 
 .vendor-form{
-    padding: 2rem;
+    padding: 6rem;
+    padding-top: 6rem;
+    width: 60%;
+}
+
+.vendor-form-header{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: #D0D9D4;
+    padding-bottom: 26px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding-left: 19px;
+    padding-right: 19px;
+}
+
+.vendor-table-header{
+    padding-top: 40px;
+    padding-bottom: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    display: flex;
+    padding-left: 19px;
+    padding-right: 19px;
+}
+
+.all-vendors-icon{
+    padding: right 6px;
+    margin-top: -2px;
+    padding-right: 6px;
 }
 
 .goodsTitle{
-    align-self: center;
+    font-weight: 500;
+    font-size: 18px;
+    flex-basis: 48%;
 }
 
-.price{
-    margin-left: 2rem;
+.goodsInput{
+    width: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+    padding-right: 10px;
+    flex-basis: 17%;
 }
 
-.priceTitle{
-    font-size: .85rem;
-    color: #ccc;
-    margin-bottom: 8px;
-    width: 60%;
-    font-weight: inherit;
+.goodsInput:focus{
+    border-color: #2B583D;
+}
+
+.goodsInput:focus-visible{
+    outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.goods-price{
+    font-weight: bold;
+    font-size: 22px;
+    flex-basis: 57%;
+}
+
+.header-vendor-info{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
 }
 
 .vendor-item{
     flex-direction: row;
     align-items: center;
     display: flex;
-    padding: 1rem;
-    margin: 1rem;   
+    justify-content: space-between;
+    height: 54px;
+    padding-left: 19px;
+    padding-right: 19px;
 }
 
-.goodsInput{
-    width: 3rem;
-    padding-left: 2rem;
+.vendor-item:hover{
+    background-color: #F7F7F7;
+}
+
+.unit-goods{
+    font-size: 12px;
+    flex-basis: 12%;
 }
 
 .plus_button{
@@ -84,18 +284,31 @@ header{
 }
 
 .cta_button{
-    margin-top: 1rem;
     width: 384px;
     height: 50px;
     background:#2B583D;
     border: medium none;
-    display: flex;
-    font-size: small;
+    font-weight: 500;
+    font-size: 16px;
     color: white;
+    border-radius: .25rem;
+    margin-top: 24px;
 }
 
-.cta_button:hover{
+.cta_button:hover,
+.button-medium:hover
+{
     cursor: pointer;
+    background-color: #43825C;
+}
+
+.button-medium{
+    width: 120px;
+    height: 32px;
+    background: #2B583D;
+    border-radius: 4px;
+    font-size: 13px;
+    color: white;
 }
 
 form {
@@ -118,49 +331,155 @@ form {
 }
 
     form h1{ 
-        font-size: large;
-        margin-bottom: 1rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 25px;
+        line-height: 29px;
+        text-align: center;
+        color: #214530;
+        margin-bottom: 24px;
     }
 
     form label {
-        font-size: .85rem;
         color: #ccc;
         margin-bottom: 15px;
         width: 80%;
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
     }
+
+    form input {
+        font-family: 'Roboto', sans-serif;
+        width: 372px;
+        font-size: 14px;
+        height: 44px;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        border: 2px solid #E0E0E0;
+        border-radius: 4px;
+        padding-left: 8px;
+        margin-top: 7px;
+        margin-bottom: 4px;
+        box-shadow: inset 0px 0px 0px 0px red;
+    }
+
+    form input:focus{
+        border-color: #2B583D;
+       }  
+
+    form input:focus-visible{
+        outline: none;
+    } 
+
+.input-product{
+    border-top-width: 0px;
+    border-top-style: solid;
+    border-left-width: 0px;
+    border-left-style: solid;
+    border-right-width: 0px;
+    border-right-style: solid;
+    margin-right: 20px;
+    color: #2B583D;
+}
+
+.input-product:focus{
+    border-color: #2B583D;
+}
+
+.input-product:focus-visible{
+    outline: none;
+}
 
 .searchbox{
     align-items: center;
     display: flex;
-    align-self: center;
+    justify-content: center;
     flex-direction: column;
     color: #2B583D;
+    height: 80%;
 }
 
 .search-input{
-    font-size: .85rem;
-    color: #ccc;
-    margin-bottom: 15px;
+    margin-bottom: 23px;
+    margin-top: 46px;
+    padding-left: 8px;
     height: 48px;
     width: 384px;
+    border: 2px solid #E0E0E0;
+    border-radius: 4px;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #BDBDBD;
+    box-shadow: inset 0px 0px 0px 0px red;
+    box-shadow: none;
 }
 
-    form input {
-        width: 100%;
-        padding-top: 0.375rem;
-        padding-bottom: 0.375rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #55595c;
-        background-color: #fff;
-        background-image: none;
-        border: .0625rem solid #ccc;
-        border-radius: .25rem;
-    }
+.search-input:focus{
+    border-color: #2B583D;
+   } 
 
-/*
-LANDING PAGE
-*/
-#landingPage{
-    flex-direction: column;
+.search-input:focus-visible{
+    outline: none;
+} 
+
+#toasterContainer{
+    position: fixed;
+    left: 37%;
+    top: 40px;
+    z-index: 1;
 }
+
+#toasterText{
+    color: white;
+    font-size: 13px;
+}
+
+#toasterCanvas{
+    width: 380px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toasterError{
+    background-color: #C55;
+}
+
+.toasterSuccess{
+    background-color: rgb(67, 119, 57);
+}
+
+/* Landing Page Start*/
+
+.header-landing{
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landing-footer{
+    display: flex;
+    position: absolute;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    bottom: 8%;
+}
+
+/* Landing Page Start*/
+
+/* Login Page Start*/
+
+#btnGoToLanding{
+    background: none;
+    cursor: pointer;
+    border: none;
+}
+
+/* Login Page End*/

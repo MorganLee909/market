@@ -1,15 +1,28 @@
+const Vendor = require('../models/Vendor.js');
+
 let loginPage ={
-    display: function (Vendor) {
+    display: function () {
+
+        document.getElementById('loginToLanding').addEventListener(
+            'click',
+            () => {controller.openPage( 'landingPage' )}
+        );
+
+        document.getElementById('loginToVendorRegistration').addEventListener(
+            'click',
+            () => {controller.openPage( 'vendorRegistrationPage' )}
+        );
+
         if( state.loginPage.isPopulated === false ){
 
             let form = document.getElementById('vendorLoginForm');
-            form.onsubmit = () => {this.submit(Vendor)};
+            form.onsubmit = () => {this.submit()};
 
             state.loginPage.isPopulated = true;
         }
     },
 
-    submit: function (Vendor) {
+    submit: function () {
         event.preventDefault();
 
         let data = {
@@ -26,17 +39,22 @@ let loginPage ={
         })
             .then(response => response.json())
             .then((response) => {
-                state.vendor = new Vendor(
-                    response._id,
-                    response.name,
-                    response.email,
-                    response.description,
-                    response.items
-                );
-
-                controller.openPage('vendorInfoPage');
+                if( typeof(response) === 'string'){
+                    controller.createToaster( response, 'error' );
+                } else{
+                    state.vendor = new Vendor(
+                        response._id,
+                        response.name,
+                        response.email,
+                        response.description,
+                        response.items
+                    );
+                    
+                    controller.openPage('vendorInfoPage');
+                }
             })
             .catch((err) => {
+                controller.createToaster( 'Something went wrong. Refresh the page.', 'error' );
             });
     }
 }

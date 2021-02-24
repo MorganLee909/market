@@ -95,7 +95,6 @@ module.exports = {
                 return res.json(vendor);
             })
             .catch((err)=>{
-                console.log(err);
                 if(typeof(err) === "string"){
                     return res.json(err);
                 }
@@ -175,7 +174,7 @@ module.exports = {
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
-                        req.session.vendor = vendor.session.sessionId; 
+                        req.session.vendor = vendor.session.sessionId;
                         return res.json(vendor)
                     }
 
