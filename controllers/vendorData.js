@@ -144,6 +144,8 @@ module.exports = {
                 vendor.status = undefined;
                 vendor.password = undefined;
 
+                req.session.vendor = vendor.session.sessionId;
+
                 return res.json(vendor);
             })
             .catch((err)=>{
