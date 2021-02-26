@@ -14,6 +14,18 @@ button{
     cursor: pointer;
 }
 
+.groupOfbuttons{
+    display: flex;
+    align-items: center;
+    margin-bottom: -20px;
+}
+
+.center-items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .padding-right-23{
     padding-right: 23px;
 }
@@ -86,6 +98,7 @@ button{
 }
 
 .subtitle{
+    display: flex;
     font-family: Roboto;
     font-weight: normal;
     font-size: 14px;
@@ -302,6 +315,27 @@ input[type=number] {
     background-color: #43825C;
 }
 
+.cancel-button{
+    width: 170px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B583D;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+.cancel-button:hover{
+    background: #F6F6F6;
+    border-radius: 6px;
+}
+
+#confirmConfirmButton{
+    width: 260px;
+}
+
 .button-medium{
     width: 120px;
     height: 32px;
@@ -310,6 +344,17 @@ input[type=number] {
     font-size: 13px;
     color: white;
 }
+
+.modal{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+}
+
 
 form {
     position: absolute;

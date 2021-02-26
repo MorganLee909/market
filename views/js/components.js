@@ -11,7 +11,7 @@ class HomeButton extends HTMLElement{
         this._shadow = this.attachShadow({mode: "open"});
 
         let button = document.createElement("button");
-        button.onclick = ()=>{controller.openPage( 'landingPage' )};
+        button.onclick = () => {controller.openPage( 'landingPage' )};
         button.innerText = "Go to Home Page";
         button.classList.add('cta_button');
         
@@ -36,9 +36,6 @@ class HomeButton extends HTMLElement{
         }
     }
 
-    doOther(){
-        //doing other things
-    }
 }
 
 //Goods Component
@@ -227,20 +224,15 @@ class VendorItem extends HTMLElement{
     removeItem(){
         let id = this.getAttribute( "itemid" );
 
-        fetch( `/vendors/items/${id}`, {
-            method: 'DELETE',
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                if(typeof(response) === "string"){
-                    controller.createToaster(response, "error");
-                }else{
-                    state.vendor.removeItem( id );
-                }
-            })
-            .catch((err) =>{
-                controller.createToaster('Something went wrong, please refresh the page.', "error");
-            });
+        // document.getElementById( 'vendorInfoPage' ).style.display = 'none';
+        document.getElementById( 'confirmationModal' ).childNodes[1].children[1].innerText = `
+            ${this.getAttribute("product")} ${this.getAttribute("amount")} Kg will be removed
+        `; 
+
+        // document.getElementById( "modal" ).style.display = "flex";
+        // document.getElementById( 'confirmationModal' ).style.display = "flex";
+        controller.openModal( 'confirmationModal', id );
+
     }
 
     submitEdit(){
@@ -249,7 +241,7 @@ class VendorItem extends HTMLElement{
             name: this.nameInput.value,
             quantity: this.amountInput.value,
             unit: this.getAttribute( "unit" ),
-            price: parseInt( this.priceGoods.value * 100 )
+            price: parseInt( this.priceGoods.value * 100 ),
         };
 
         fetch( "/vendors/items", {
@@ -264,6 +256,7 @@ class VendorItem extends HTMLElement{
                 if(typeof(response) === "string") {
                     controller.createToaster(response, "error");
                 }else{
+
                     state.vendor.removeItem(response._id);
                     state.vendor.addItem(response);                  
                 }

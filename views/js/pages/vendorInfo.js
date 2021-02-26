@@ -50,7 +50,9 @@ let vendorInfoPage = {
                             controller.createToaster( "Something went wrong. Refresh the page.", "error" );
                         });
                 }
-            );    
+            ); 
+            
+            document.getElementById( '')
             
             if(state.vendor.items.length === 0){
                 document.getElementById("vendorNoProduct").style.display = "flex";

@@ -1792,6 +1792,7 @@ const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
+const modal = require('./js/modal.js');
 const Vendor = require("./js/models/Vendor.js");
 
 // Components //
@@ -1828,6 +1829,26 @@ controller = {
         document.getElementById( page ).style.display = "flex";
     },
 
+    openModal: function ( modal, id ) {
+        
+        state.itemID = id;
+
+        document.getElementById( "modal" ).style.display = "flex";
+        document.getElementById( modal ).style.display = "flex";
+        
+    },
+
+    closeModal: function () {
+
+        let modal = document.getElementById("modal");
+        modal.style.display = "none";
+        let chil = modal.children;
+
+        for( let i = 0; i < chil.length; i++ ){
+            chil[i].style.display = "none";
+        }
+    },
+
     createToaster: function ( mess, type ) {
         
         document.getElementById( "toasterText" ).innerText = mess;
@@ -1860,6 +1881,9 @@ controller = {
 };
 
 state = {
+
+    itemID: '',
+
     vendor: null,
 
     vendorInfoPage: {
@@ -1905,8 +1929,13 @@ fetch( '/vendors/session' )
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
 
+modal.displayRemoveConfirmation();
 
-},{"./js/components.js":6,"./js/models/Vendor.js":8,"./js/pages/landing.js":9,"./js/pages/login.js":10,"./js/pages/vendorInfo.js":11,"./js/pages/vendorRegistration.js":12}],6:[function(require,module,exports){
+
+
+
+
+},{"./js/components.js":6,"./js/modal.js":7,"./js/models/Vendor.js":9,"./js/pages/landing.js":10,"./js/pages/login.js":11,"./js/pages/vendorInfo.js":12,"./js/pages/vendorRegistration.js":13}],6:[function(require,module,exports){
 const vendor = require("../../models/vendor.js");
 const vendorInfoPage = require("./pages/vendorInfo.js");
 
@@ -1920,7 +1949,7 @@ class HomeButton extends HTMLElement{
         this._shadow = this.attachShadow({mode: "open"});
 
         let button = document.createElement("button");
-        button.onclick = ()=>{controller.openPage( 'landingPage' )};
+        button.onclick = () => {controller.openPage( 'landingPage' )};
         button.innerText = "Go to Home Page";
         button.classList.add('cta_button');
         
@@ -1945,9 +1974,6 @@ class HomeButton extends HTMLElement{
         }
     }
 
-    doOther(){
-        //doing other things
-    }
 }
 
 //Goods Component
@@ -2136,20 +2162,15 @@ class VendorItem extends HTMLElement{
     removeItem(){
         let id = this.getAttribute( "itemid" );
 
-        fetch( `/vendors/items/${id}`, {
-            method: 'DELETE',
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                if(typeof(response) === "string"){
-                    controller.createToaster(response, "error");
-                }else{
-                    state.vendor.removeItem( id );
-                }
-            })
-            .catch((err) =>{
-                controller.createToaster('Something went wrong, please refresh the page.', "error");
-            });
+        // document.getElementById( 'vendorInfoPage' ).style.display = 'none';
+        document.getElementById( 'confirmationModal' ).childNodes[1].children[1].innerText = `
+            ${this.getAttribute("product")} ${this.getAttribute("amount")} Kg will be removed
+        `; 
+
+        // document.getElementById( "modal" ).style.display = "flex";
+        // document.getElementById( 'confirmationModal' ).style.display = "flex";
+        controller.openModal( 'confirmationModal', id );
+
     }
 
     submitEdit(){
@@ -2158,7 +2179,7 @@ class VendorItem extends HTMLElement{
             name: this.nameInput.value,
             quantity: this.amountInput.value,
             unit: this.getAttribute( "unit" ),
-            price: parseInt( this.priceGoods.value * 100 )
+            price: parseInt( this.priceGoods.value * 100 ),
         };
 
         fetch( "/vendors/items", {
@@ -2173,6 +2194,7 @@ class VendorItem extends HTMLElement{
                 if(typeof(response) === "string") {
                     controller.createToaster(response, "error");
                 }else{
+
                     state.vendor.removeItem(response._id);
                     state.vendor.addItem(response);                  
                 }
@@ -2213,7 +2235,53 @@ class VendorItem extends HTMLElement{
 
 customElements.define('vendor-item', VendorItem);
 customElements.define("home-button", HomeButton);
-},{"../../models/vendor.js":3,"./pages/vendorInfo.js":11}],7:[function(require,module,exports){
+},{"../../models/vendor.js":3,"./pages/vendorInfo.js":12}],7:[function(require,module,exports){
+let modal = {
+    
+    displayRemoveConfirmation: function ( id ) {
+        //cance button start
+        var modalWindow = document.getElementById('modal');
+        var cancelBtn = document.getElementById("confirmCancelButton");
+
+        cancelBtn.onclick = function () {
+            modalWindow.style.display = 'none';
+            console.log( state.itemID );
+        };
+
+        //cancel button end
+
+        //confirm button start
+        var confirmButton = document.getElementById('confirmConfirmButton');
+        confirmButton.addEventListener(
+            'click',
+            () => {
+                let id = state.itemID;
+    
+                fetch( `/vendors/items/${ id }`, {
+                    method: 'DELETE',
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if(typeof(response) === "string"){
+                            controller.createToaster(response, "error");
+                        }else{
+                            state.vendor.removeItem( id );
+                        }
+                    })
+                    .catch((err) =>{
+                        controller.createToaster('Something went wrong, please refresh the page.', "error");
+                    });
+        
+                    controller.closeModal();
+            }
+        )
+        // confirm button end
+    },
+  
+}
+
+module.exports = modal;
+},{}],8:[function(require,module,exports){
 class Item {
     constructor( id, name, quantity, unit, price ){
         this._id = id;
@@ -2246,7 +2314,7 @@ class Item {
 }
 
 module.exports = Item;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 const Item = require("./Item.js");
 const vendorInfoPage = require("../pages/vendorInfo.js");
 
@@ -2311,7 +2379,7 @@ class Vendor {
 }
 
 module.exports = Vendor;
-},{"../pages/vendorInfo.js":11,"./Item.js":7}],9:[function(require,module,exports){
+},{"../pages/vendorInfo.js":12,"./Item.js":8}],10:[function(require,module,exports){
 
 let landingPage = {
     display: function(){
@@ -2329,7 +2397,7 @@ let landingPage = {
 }
 
 module.exports = landingPage;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 const Vendor = require('../models/Vendor.js');
 
 let loginPage ={
@@ -2392,7 +2460,7 @@ let loginPage ={
 }
 
 module.exports = loginPage;
-},{"../models/Vendor.js":8}],11:[function(require,module,exports){
+},{"../models/Vendor.js":9}],12:[function(require,module,exports){
 let vendorInfoPage = {
     display: function(){
         if(state.vendorInfoPage.isPopulated === false){
@@ -2445,7 +2513,9 @@ let vendorInfoPage = {
                             controller.createToaster( "Something went wrong. Refresh the page.", "error" );
                         });
                 }
-            );    
+            ); 
+            
+            document.getElementById( '')
             
             if(state.vendor.items.length === 0){
                 document.getElementById("vendorNoProduct").style.display = "flex";
@@ -2479,7 +2549,7 @@ let vendorInfoPage = {
 }
 
 module.exports = vendorInfoPage;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 const Vendor = require('../models/Vendor.js');
 
 let vendorRegistrationPage = {
@@ -2548,4 +2618,4 @@ let vendorRegistrationPage = {
 }
 
 module.exports = vendorRegistrationPage;
-},{"../models/Vendor.js":8}]},{},[5]);
+},{"../models/Vendor.js":9}]},{},[5]);

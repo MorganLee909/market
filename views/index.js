@@ -2,6 +2,7 @@ const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
+const modal = require('./js/modal.js');
 const Vendor = require("./js/models/Vendor.js");
 
 // Components //
@@ -38,6 +39,26 @@ controller = {
         document.getElementById( page ).style.display = "flex";
     },
 
+    openModal: function ( modal, id ) {
+        
+        state.itemID = id;
+
+        document.getElementById( "modal" ).style.display = "flex";
+        document.getElementById( modal ).style.display = "flex";
+        
+    },
+
+    closeModal: function () {
+
+        let modal = document.getElementById("modal");
+        modal.style.display = "none";
+        let chil = modal.children;
+
+        for( let i = 0; i < chil.length; i++ ){
+            chil[i].style.display = "none";
+        }
+    },
+
     createToaster: function ( mess, type ) {
         
         document.getElementById( "toasterText" ).innerText = mess;
@@ -70,6 +91,9 @@ controller = {
 };
 
 state = {
+
+    itemID: '',
+
     vendor: null,
 
     vendorInfoPage: {
@@ -114,4 +138,9 @@ fetch( '/vendors/session' )
     .catch((err) => {
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
+
+modal.displayRemoveConfirmation();
+
+
+
 
