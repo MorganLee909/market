@@ -223,14 +223,18 @@ class VendorItem extends HTMLElement{
     removeItem( item ){
         let id = item.getAttribute( "itemid" );
 
-        // document.getElementById( 'vendorInfoPage' ).style.display = 'none';
-        document.getElementById( 'confirmationModal' ).childNodes[1].children[1].innerText = `
-            ${this.getAttribute("product")} ${this.getAttribute("amount")} Kg will be removed
-        `; 
-
-        // document.getElementById( "modal" ).style.display = "flex";
-        // document.getElementById( 'confirmationModal' ).style.display = "flex";
-        controller.openModal( 'confirmationModal', id );
+        fetch(`/vendors/items/${id}`, {method: "delete"})
+            .then(response => response.json())
+            .then((response)=>{
+                if(typeof(response) === "string"){
+                    controller.createToaster(response, "error");
+                }else{
+                    state.vendor.removeItem(id);
+                }
+            })
+            .catch((err)=>{
+                controller.createToaster('Something went wrong, please refresh the page.', 'error');
+            });
 
     }
 

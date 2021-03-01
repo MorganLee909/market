@@ -4,7 +4,7 @@ let modal = {
         //cance button start
         var modalWindow = document.getElementById('modal');
         var cancelBtn = document.getElementById("confirmationCancelBtn");
-        var confBtn = document.getElementById("confirmaitonConfirmBtn");
+        var confBtn = document.getElementById("confirmationConfirmBtn");
 
         cancelBtn.onclick = function () {
             controller.closeModal();
