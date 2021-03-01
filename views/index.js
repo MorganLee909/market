@@ -4,6 +4,8 @@ const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
 const Vendor = require("./js/models/Vendor.js");
 
+const modalWindow = require("./js/modal.js");
+
 // Components //
 require("./js/components.js");
 
@@ -36,6 +38,28 @@ controller = {
         }
 
         document.getElementById( page ).style.display = "flex";
+    },
+
+    openModal: function( modal, data = {} ){
+        document.getElementById("modal").style.display = "flex";
+        document.getElementById(modal).style.display = "flex";
+
+        switch( modal ){
+            case 'confirmationModal':
+                modalWindow.displayRemoveConfirmation( data.item, data.func );
+                break;
+        }
+    },
+
+    closeModal: function(){
+        let modal = document.getElementById("modal");
+        let children = modal.children;
+        
+        modal.style.display = "none";
+
+        for(let i = 0; i < children.length; i++){
+            children[i].style.display = "none";
+        }
     },
 
     createToaster: function ( mess, type ) {

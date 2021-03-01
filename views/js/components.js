@@ -100,8 +100,7 @@ class VendorItem extends HTMLElement{
                 </defs>
             </svg>
         `;
-        
-        this.removeButton.onclick = () => { this.removeItem() };
+        this.removeButton.onclick = () => { controller.openModal( "confirmationModal", {item: this, func: this.removeItem} ) };
         this.container.appendChild( this.removeButton );
         
         //edit button
@@ -224,8 +223,8 @@ class VendorItem extends HTMLElement{
         this.container.removeChild( this.submitButton );
     }
 
-    removeItem(){
-        let id = this.getAttribute( "itemid" );
+    removeItem( item ){
+        let id = item.getAttribute( "itemid" );
 
         fetch( `/vendors/items/${id}`, {
             method: 'DELETE',
