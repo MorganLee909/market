@@ -1,43 +1,21 @@
 let modal = {
     
-    displayRemoveConfirmation: function ( id ) {
+    displayRemoveConfirmation: function ( item, removeFunction ) {
         //cance button start
         var modalWindow = document.getElementById('modal');
-        var cancelBtn = document.getElementById("confirmCancelButton");
+        var cancelBtn = document.getElementById("confirmationCancelBtn");
+        var confBtn = document.getElementById("confirmaitonConfirmBtn");
 
         cancelBtn.onclick = function () {
-            modalWindow.style.display = 'none';
-            console.log( state.itemID );
+            controller.closeModal();
+        };
+
+        confBtn.onclick = () => {
+            removeFunction(item)
+            controller.closeModal();
         };
 
         //cancel button end
-
-        //confirm button start
-        var confirmButton = document.getElementById('confirmConfirmButton');
-        confirmButton.addEventListener(
-            'click',
-            () => {
-                let id = state.itemID;
-    
-                fetch( `/vendors/items/${ id }`, {
-                    method: 'DELETE',
-                })
-                    .then((response) => response.json())
-                    .then((response) => {
-                        if(typeof(response) === "string"){
-                            controller.createToaster(response, "error");
-                        }else{
-                            state.vendor.removeItem( id );
-                        }
-                    })
-                    .catch((err) =>{
-                        controller.createToaster('Something went wrong, please refresh the page.', "error");
-                    });
-        
-                    controller.closeModal();
-            }
-        )
-        // confirm button end
     },
   
 }
