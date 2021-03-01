@@ -97,7 +97,10 @@ class VendorItem extends HTMLElement{
                 </defs>
             </svg>
         `;
-        this.removeButton.onclick = () => { controller.openModal( "confirmationModal", {item: this, func: this.removeItem} ) };
+        this.removeButton.onclick = () => { 
+            controller.openModal( "confirmationModal", 
+            { item: this, func: this.removeItem } ) 
+        };
         this.container.appendChild( this.removeButton );
         
         //edit button

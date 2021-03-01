@@ -1,8 +1,7 @@
 let modal = {
     
     displayRemoveConfirmation: function ( item, removeFunction ) {
-        //cance button start
-        var modalWindow = document.getElementById('modal');
+       
         var cancelBtn = document.getElementById("confirmationCancelBtn");
         var confBtn = document.getElementById("confirmationConfirmBtn");
 
@@ -11,11 +10,10 @@ let modal = {
         };
 
         confBtn.onclick = () => {
-            removeFunction(item)
+            removeFunction( item );
             controller.closeModal();
         };
 
-        //cancel button end
     },
   
 }
