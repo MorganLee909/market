@@ -44,9 +44,6 @@ controller = {
     openModal: function( modal, data = {} ){
         document.getElementById("modal").style.display = "flex";
         document.getElementById( modal ).style.display = "flex";
-        
-        let subTitle = document.getElementById("confSubtitleModal");
-        subTitle.innerText = `${data.item.getAttribute('amount')} Kg of ${data.item.getAttribute('product')} ${"will be removed"}`;
 
         switch( modal ){
             case 'confirmationModal':
