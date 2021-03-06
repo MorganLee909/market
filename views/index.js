@@ -49,6 +49,9 @@ controller = {
             case 'confirmationModal':
                 modalWindow.displayRemoveConfirmation( data.item, data.func );
                 break;
+            case 'vendorBioEditModal':
+                modalWindow.displayEditVendorBio();
+                break;
         }
     },
 
@@ -131,7 +134,9 @@ fetch( '/vendors/session' )
                 response.name,
                 response.email,
                 response.description,
-                response.items
+                response.items,
+                response.ownerName,
+                response.address
             );
             
             controller.openPage( 'vendorInfoPage' ); 
@@ -140,9 +145,3 @@ fetch( '/vendors/session' )
     .catch((err) => {
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
-
-modal.displayRemoveConfirmation();
-
-
-
-

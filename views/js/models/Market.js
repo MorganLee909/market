@@ -4,9 +4,9 @@ class Market{
         this._name = name;
         this._owner = new Vendor( 
             owner._id, 
-            owner._name, 
-            owner._email,
-            owner._description,
+            owner.name, 
+            owner.email,
+            owner.description,
             []
         );
         this._vendors = [];
@@ -16,10 +16,12 @@ class Market{
         for( let i = 0; i < vendors.length; i++){
             let vendor = new Vendor(        
                 vendors[i]._id,
-                vendors[i]._name, 
-                vendors[i]._email,
-                vendors[i]._description,
-                vendors[i]._items
+                vendors[i].name, 
+                vendors[i].email,
+                vendors[i].description,
+                vendors[i].items,
+                vendors[i].ownerName,
+                vendors[i].address
             );
             this._vendors.push( vendor );
         }
@@ -27,3 +29,11 @@ class Market{
 }
 
 module.exports = Market;
+
+// response._id,
+// response.name,
+// response.email,
+// response.description,
+// response.items,
+// response.ownerName,
+// response.address

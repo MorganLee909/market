@@ -51,7 +51,9 @@ let vendorRegistrationPage = {
                         response.name, 
                         response.email, 
                         "", 
-                        response.items
+                        response.items,
+                        response.ownerName,
+                        response.address
                     );
 
                     state.vendor = newVendor;

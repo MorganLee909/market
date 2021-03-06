@@ -262,7 +262,6 @@ class VendorItem extends HTMLElement{
                 if(typeof(response) === "string") {
                     controller.createToaster(response, "error");
                 }else{
-
                     state.vendor.removeItem(response._id);
                     state.vendor.addItem(response);                  
                 }

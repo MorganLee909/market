@@ -324,6 +324,18 @@ input[type=number] {
     cursor: pointer;
 }
 
+.edit-button{
+    width: 170px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}
+
 .cancel-button:hover{
     background: #F6F6F6;
     border-radius: 6px;
@@ -382,10 +394,10 @@ form {
     border-radius: 0.1875rem;
     box-shadow: 0px 0.1875rem 0.4375rem rgba(0, 0, 0, 0.25);
     padding: 2rem;
+    background-color: white;
 }
 
     form h1{ 
-        font-family: Roboto;
         font-style: normal;
         font-weight: 900;
         font-size: 25px;
@@ -403,7 +415,7 @@ form {
         font-size: 12px;
     }
 
-    form input {
+    form input, textarea{
         font-family: 'Roboto', sans-serif;
         width: 372px;
         font-size: 14px;
@@ -419,13 +431,37 @@ form {
         box-shadow: inset 0px 0px 0px 0px red;
     }
 
-    form input:focus{
+    form textarea:focus, input:focus{
         border-color: #2B583D;
        }  
 
-    form input:focus-visible{
+    form textarea:focus-visible, input:focus-visible{
         outline: none;
     } 
+
+.form-cancel-button {
+    width: 108px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B583D;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}  
+
+.form-cta_button {
+    width: 265px;
+    height: 50px;
+    background: #2B583D;
+    border: medium none;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    border-radius: .25rem;
+    margin-top: 24px;
+}
 
 .input-product{
     border-top-width: 0px;

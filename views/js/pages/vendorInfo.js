@@ -6,7 +6,12 @@ let vendorInfoPage = {
                 () => {controller.openPage( 'landingPage' )}
             );
 
-            document.getElementById( 'addNewProduct' ).addEventListener(
+            //Edit VendorBio
+            document.getElementById( "vendorBioBtn" ).onclick = () => {
+                controller.openModal( 'vendorBioEditModal' );
+            }
+
+            let btn = document.getElementById( 'addNewProduct' ).addEventListener(
                 'click',
                 () => { 
                     let newItem = document.createElement( "vendor-item" );
@@ -15,6 +20,7 @@ let vendorInfoPage = {
                     goods.insertBefore( newItem, goods.firstChild );
                 }
             );
+
             //Add first product
             document.getElementById("addFirstProduct").addEventListener(
                 "click",
@@ -51,9 +57,7 @@ let vendorInfoPage = {
                         });
                 }
             ); 
-            
-            document.getElementById( '')
-            
+                        
             if(state.vendor.items.length === 0){
                 document.getElementById("vendorNoProduct").style.display = "flex";
             }else{
@@ -82,6 +86,10 @@ let vendorInfoPage = {
             item.setAttribute( "price", state.vendor.items[i].price );
             goods.appendChild(item);
         }
+    },
+
+    displayVendorInfo: function(){
+        console.log("vendorBio");
     }
 }
 

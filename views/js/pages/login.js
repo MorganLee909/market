@@ -47,7 +47,9 @@ let loginPage ={
                         response.name,
                         response.email,
                         response.description,
-                        response.items
+                        response.items,
+                        response.ownerName,
+                        response.address
                     );
                     
                     controller.openPage('vendorInfoPage');
@@ -60,3 +62,5 @@ let loginPage ={
 }
 
 module.exports = loginPage;
+
+

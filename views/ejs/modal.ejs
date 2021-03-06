@@ -1,4 +1,37 @@
 <div id="modal" class="modal" style="display: none;">
+
+    <div id="vendorBioEditModal" style="display: none;">
+        
+        <form id="vendorBioEditForm">
+            <h1> About You </h1>
+
+            <label> Vendor Name 
+                <input id="vendorName" type="name" />
+            </label>
+
+            <label> Email 
+                <input id="vendorBioEmail" type="email" />
+            </label>
+
+            <label> Name of owner
+                <input id="vendorBioOwnerName" type="name" />
+            </label>
+
+            <label> Description 
+                <textarea id="vendorBioDescription" ></textarea>
+            </label>
+
+            <label> Address 
+                <input id="vendorBioAddress" type="text" />
+            </label>
+
+            <div class="groupOfbuttons">
+                <button id="vendorBioCancelBtn" type="button" class="center-items form-cancel-button"> Cancel </button>
+                <input type="submit" value="Save" class="center-items form-cta_button" />
+            </div>  
+
+        </form>
+    </div>
     
     <div id="confirmationModal" style="display: none;">
         <h1 class="title center-items"> Are You Sure? </h1>
@@ -10,3 +43,4 @@
     </div>
 
 </div>
+
