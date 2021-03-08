@@ -28,8 +28,7 @@ let modal = {
         document.getElementById("vendorBioEmail").value = state.vendor.email;
         document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName || "";
         document.getElementById("vendorBioDescription").innerText = state.vendor.description || "";
-        document.getElementById("vendorBioAddress").value = state.vendor.address || "";
-
+        document.getElementById("vendorBioAddress").value = state.vendor.address.full || "";
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
         document.getElementById('vendorBioCancelBtn').onclick = () => { controller.closeModal() };
         
@@ -71,6 +70,7 @@ let modal = {
                         response.address
                     );
                     vendorInfo.displayVendorInfo();
+                    controller.closeModal();
                 }
             })
             .catch((err) => {

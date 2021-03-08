@@ -65,6 +65,7 @@ let vendorInfoPage = {
             };
 
             this.displayItems();
+            this.displayVendorInfo();
 
             state.vendorInfoPage.isPopulated = true;
         }
@@ -89,7 +90,12 @@ let vendorInfoPage = {
     },
 
     displayVendorInfo: function(){
-        console.log("vendorBio");
+
+        let bioTitle = document.getElementById("bioTitle");
+        bioTitle.innerText = state.vendor.name;
+        document.getElementById("bioDescription").innerText = `Description: ${state.vendor.description}`;
+        document.getElementById("bioAddress").innerText = `Address: ${state.vendor.address.full}`;
+        document.getElementById("bioEmail").innerText = `Email: ${state.vendor.email}`;
     }
 }
 
