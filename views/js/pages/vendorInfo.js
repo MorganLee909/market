@@ -91,11 +91,44 @@ let vendorInfoPage = {
 
     displayVendorInfo: function(){
 
-        let bioTitle = document.getElementById("bioTitle");
-        bioTitle.innerText = state.vendor.name;
-        document.getElementById("bioDescription").innerText = `Description: ${state.vendor.description}`;
-        document.getElementById("bioAddress").innerText = `Address: ${state.vendor.address.full}`;
-        document.getElementById("bioEmail").innerText = `Email: ${state.vendor.email}`;
+        document.getElementById("bioTitle").innerText = state.vendor.name;
+        document.getElementById("bioDescription").innerText = state.vendor.description;
+        document.getElementById("bioEmail").innerText = state.vendor.email;
+        
+        //Descriptioin
+        let descriptionVendor = document.getElementById("bioDescription");
+        if(state.vendor.description === ''){
+            descriptionVendor.innerText = '+ Add Description';
+            descriptionVendor.onclick = () => {controller.openModal("vendorBioEditModal")};
+        }else{
+            descriptionVendor.innerText = state.vendor.description;
+            descriptionVendor.onclick = () => {controller.openModal("vendorBioEditModal")};
+        }
+
+        //Owner
+        if(state.vendor.ownerName !== undefined){
+            document.getElementById("bioOwnerName").innerText = state.vendor.ownerName;
+        }
+
+        let owner = document.getElementById("bioOwnerName");
+        if(state.vendor.ownerName === undefined){
+            owner.innerText = '+ Add';
+            owner.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }else{
+            owner.innerText = state.vendor.ownerName;
+            owner.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }
+        
+        //Address
+        let addressField = document.getElementById("bioAddress");
+        if(state.vendor.address === undefined){
+            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
+            addressField.innerText = '+ Add';
+        }else{
+            addressField.innerText = state.vendor.address.full;
+            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }
+
     }
 }
 

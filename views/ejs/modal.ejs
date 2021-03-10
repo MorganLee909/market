@@ -16,6 +16,11 @@
             <label> Name of owner
                 <input id="vendorBioOwnerName" type="name" />
             </label>
+            <label class="row-checkbox">
+                <input id="ownerCheckbox" class="checkbox" type="checkbox" checked="checked"/> 
+                Show owner name in the market
+                <span class="checkbox"></span>
+            </label>
 
             <label> Description 
                 <textarea id="vendorBioDescription" ></textarea>
@@ -24,12 +29,18 @@
             <label> Address 
                 <input id="vendorBioAddress" type="text" />
             </label>
+            <label class="row-checkbox">
+                <input id="addressCheckbox" class="checkbox" type="checkbox" checked="checked"/> 
+                Show your address in the market
+                <span class="checkbox"></span>
+            </label>
 
             <div class="groupOfbuttons">
                 <button id="vendorBioCancelBtn" type="button" class="center-items form-cancel-button"> Cancel </button>
                 <input type="submit" value="Save" class="center-items form-cta_button" />
             </div>  
-
+            <!-- <input type="checkbox" checked="checked">
+            <span class="checkmark"></span> -->
         </form>
     </div>
     

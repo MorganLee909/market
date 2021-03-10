@@ -2,7 +2,6 @@ const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
-const modal = require('./js/modal.js');
 const Vendor = require("./js/models/Vendor.js");
 
 const modalWindow = require("./js/modal.js");
@@ -128,7 +127,6 @@ fetch( '/vendors/session' )
         if( response === null ){ 
             controller.openPage( 'landingPage' );
         } else{ 
-            
             state.vendor = new Vendor(
                 response._id,
                 response.name,
@@ -136,7 +134,9 @@ fetch( '/vendors/session' )
                 response.description,
                 response.items,
                 response.ownerName,
-                response.address
+                response.address,
+                response.sharesOwnerName,
+                response.sharesAddress
             );
             
             controller.openPage( 'vendorInfoPage' ); 

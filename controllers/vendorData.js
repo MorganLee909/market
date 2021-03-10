@@ -222,34 +222,38 @@ module.exports = {
 
         //Update address and coordinates of vendor
         if(req.body.address !== res.locals.vendor.address.full){
-            const apiUrl = "https://api.geocod.io/v1.6/geocode";
-            const address = req.body.address.replace(/ /g, "+");
-            const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
+            if(req.body.address === ""){
+                res.locals.vendor.address = undefined;
+            }else{
+                const apiUrl = "https://api.geocod.io/v1.6/geocode";
+                const address = req.body.address.replace(/ /g, "+");
+                const fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
 
-            try{
-                const geoData = await axios.get(fullUrl);
-                const result = geoData.data.results[0];
-                const lat = result.location.lat;
-                const lng = result.location.lng;
-                
-                res.locals.vendor.location = {
-                    type: "Point",
-                    coordinates: [lat, lng]
-                }
+                try{
+                    const geoData = await axios.get(fullUrl);
+                    const result = geoData.data.results[0];
+                    const lat = result.location.lat;
+                    const lng = result.location.lng;
+                    
+                    res.locals.vendor.location = {
+                        type: "Point",
+                        coordinates: [lat, lng]
+                    }
 
-                const comps = result.address_components;
-                res.locals.vendor.address = {
-                    streetNumber: comps.number,
-                    road: comps.formatted_street,
-                    city: comps.city,
-                    county: comps.county,
-                    state: comps.state,
-                    country: comps.country,
-                    zipCode: comps.zip,
-                    full: result.formatted_address
+                    const comps = result.address_components;
+                    res.locals.vendor.address = {
+                        streetNumber: comps.number,
+                        road: comps.formatted_street,
+                        city: comps.city,
+                        county: comps.county,
+                        state: comps.state,
+                        country: comps.country,
+                        zipCode: comps.zip,
+                        full: result.formatted_address
+                    }
+                }catch(err){
+                    return err;
                 }
-            }catch(err){
-                return err;
             }
         }
 

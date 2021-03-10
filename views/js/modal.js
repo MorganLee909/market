@@ -27,8 +27,15 @@ let modal = {
         document.getElementById("vendorName").value = state.vendor.name;
         document.getElementById("vendorBioEmail").value = state.vendor.email;
         document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName || "";
+        document.getElementById("ownerCheckbox").checked = state.vendor.sharesOwnerName;
+
         document.getElementById("vendorBioDescription").innerText = state.vendor.description || "";
-        document.getElementById("vendorBioAddress").value = state.vendor.address.full || "";
+
+        let addressField = document.getElementById("vendorBioAddress");
+        addressField.value = "";
+        if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
+        document.getElementById("addressCheckbox").checked = state.vendor.sharesAddress;
+       
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
         document.getElementById('vendorBioCancelBtn').onclick = () => { controller.closeModal() };
         
@@ -44,8 +51,8 @@ let modal = {
             ownerName: document.getElementById("vendorBioOwnerName").value,
             description: document.getElementById("vendorBioDescription").value,
             address: document.getElementById("vendorBioAddress").value,
-            sharesAddress: false,
-            sharesOwnerName: false
+            sharesOwnerName: document.getElementById("ownerCheckbox").checked,
+            sharesAddress: document.getElementById("addressCheckbox").checked
         };
 
         fetch( "/vendors", {
@@ -67,7 +74,9 @@ let modal = {
                         response.description,
                         response.items,
                         response.ownerName,
-                        response.address
+                        response.address,
+                        response.sharesAddress,
+                        response.sharesOwnerName
                     );
                     vendorInfo.displayVendorInfo();
                     controller.closeModal();

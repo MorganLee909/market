@@ -14,6 +14,10 @@ button{
     cursor: pointer;
 }
 
+.color-white{
+    color: white !important;
+}
+
 .groupOfbuttons{
     display: flex;
     align-items: center;
@@ -30,8 +34,24 @@ button{
     padding-right: 23px;
 }
 
+.padding-right-12{
+    padding-right: 12px;
+}
+
+.padding-left-8{
+    padding-left: 8px;
+}
+
+.padding-top-22{
+    padding-top: 22px;
+}
+
 .margin-top{
     margin-top: 54px !important;
+}
+
+.margin-bottom-48{
+    margin-bottom: 48px;
 }
 
 .icon{
@@ -64,6 +84,10 @@ button{
     padding-right: 28px;
 }
 
+.contact-edit-icon{
+    visibility: hidden;
+}
+
 .page{
     flex-direction: column;
     display: flex;
@@ -89,11 +113,6 @@ button{
     line-height: 29px;
     padding-bottom: 24px;
     color: #214530;
-}
-
-.vendor-about-title{
-    color: white;
-    padding-top: 60px;
 }
 
 .subtitle{
@@ -132,6 +151,7 @@ button{
     font-size: 14px;
     padding-right: 26px;
     display: flex;
+    align-items: center;
 }
 
 .login:hover{
@@ -141,6 +161,11 @@ button{
 
 .login-icon{
     padding-left: 6px;
+}
+
+.sign-out-icon{
+    margin-top: 4px;
+    padding-left: 8px;
 }
 
 .shadowButton{
@@ -174,6 +199,25 @@ button{
     background-color:#2B583D;
 }
 
+.vendor-about-title{
+    color: white;
+    padding-top: 60px;
+}
+
+.vendor-about-description{
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: white;
+}
+
+.vendor-about-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
 .vendor-form{
     padding: 6rem;
     padding-top: 6rem;
@@ -205,9 +249,17 @@ button{
 }
 
 .all-vendors-icon{
-    padding: right 6px;
-    margin-top: -2px;
     padding-right: 6px;
+}
+
+.row-with-icon{
+    display: flex;
+    align-items: center;
+}
+
+#bioAddress:hover, #bioOwnerName:hover,
+#bioDescription:hover{
+    cursor: pointer;
 }
 
 .goodsTitle{
@@ -306,7 +358,8 @@ input[type=number] {
 }
 
 .cta_button:hover,
-.button-medium:hover
+.button-medium:hover,
+.form-cta_button:hover
 {
     cursor: pointer;
     background-color: #43825C;
@@ -324,6 +377,16 @@ input[type=number] {
     cursor: pointer;
 }
 
+.cancel-button:hover,
+.form-cancel-button:hover{
+    background: #F6F6F6;
+    border-radius: 6px;
+}
+
+#confirmConfirmButton{
+    width: 260px;
+}
+
 .edit-button{
     width: 170px;
     height: 50px;
@@ -334,15 +397,6 @@ input[type=number] {
     margin-bottom: 30px;
     margin-right: 14px;
     cursor: pointer;
-}
-
-.cancel-button:hover{
-    background: #F6F6F6;
-    border-radius: 6px;
-}
-
-#confirmConfirmButton{
-    width: 260px;
 }
 
 .button-medium{
@@ -376,6 +430,7 @@ input[type=number] {
         top: 30%;
         position: absolute;
     }
+    
 
 form {
     position: absolute;
@@ -418,6 +473,7 @@ form {
     form input, textarea{
         font-family: 'Roboto', sans-serif;
         width: 372px;
+        resize: vertical;
         font-size: 14px;
         height: 44px;
         color: #55595c;
@@ -431,6 +487,11 @@ form {
         box-shadow: inset 0px 0px 0px 0px red;
     }
 
+    form textarea{
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+
     form textarea:focus, input:focus{
         border-color: #2B583D;
        }  
@@ -438,6 +499,71 @@ form {
     form textarea:focus-visible, input:focus-visible{
         outline: none;
     } 
+
+    .checkbox{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 22px;
+        width: 22px;
+        background-color: #eee;
+        border-radius: 2px;
+    }
+
+    .checkbox:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+
+      .row-checkbox input:checked ~ .checkbox:after {
+        display: block;
+      }
+
+    .row-checkbox .checkbox:after {
+        left: 7px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .row-checkbox input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+    .row-checkbox {
+        display: block;
+        position: relative;
+        padding-left: 37px;
+        padding-top: 4px;
+        margin-bottom: 24px;
+        margin-left: 36px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #55595c;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+
+    .row-checkbox:hover input ~ .checkbox {
+        background-color: #ccc;
+      }
+
+    .row-checkbox input:checked ~.checkbox{
+        background-color:#2b583d;
+    }
 
 .form-cancel-button {
     width: 108px;
