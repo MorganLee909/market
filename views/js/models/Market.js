@@ -29,11 +29,3 @@ class Market{
 }
 
 module.exports = Market;
-
-// response._id,
-// response.name,
-// response.email,
-// response.description,
-// response.items,
-// response.ownerName,
-// response.address

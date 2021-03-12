@@ -506,8 +506,8 @@ form {
         left: 0;
         height: 22px;
         width: 22px;
-        background-color: #eee;
-        border-radius: 2px;
+        border: 2px solid #E0E0E0;
+        border-radius: 4px;
     }
 
     .checkbox:after {
