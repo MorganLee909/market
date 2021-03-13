@@ -33,7 +33,10 @@ let modal = {
 
         let addressField = document.getElementById("vendorBioAddress");
         addressField.value = "";
+        console.log(addressField);
         if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
+        console.log(addressField.value, 'value');
+
         document.getElementById("addressCheckbox").checked = state.vendor.sharesAddress;
        
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
@@ -54,7 +57,8 @@ let modal = {
             sharesOwnerName: document.getElementById("ownerCheckbox").checked,
             sharesAddress: document.getElementById("addressCheckbox").checked
         };
-
+        
+        console.log(data);
         fetch( "/vendors", {
             method: 'PUT',
             headers:{
@@ -78,6 +82,7 @@ let modal = {
                         response.sharesAddress,
                         response.sharesOwnerName
                     );
+                    console.log(response.address);
                     vendorInfo.displayVendorInfo();
                     controller.closeModal();
                 }

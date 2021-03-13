@@ -92,41 +92,42 @@ let vendorInfoPage = {
     displayVendorInfo: function(){
 
         document.getElementById("bioTitle").innerText = state.vendor.name;
-        document.getElementById("bioDescription").innerText = state.vendor.description;
         document.getElementById("bioEmail").innerText = state.vendor.email;
         
         //Descriptioin
         let descriptionVendor = document.getElementById("bioDescription");
         if(state.vendor.description === ''){
             descriptionVendor.innerText = '+ Add Description';
+            descriptionVendor.classList.add("links"); 
             descriptionVendor.onclick = () => {controller.openModal("vendorBioEditModal")};
         }else{
             descriptionVendor.innerText = state.vendor.description;
-            descriptionVendor.onclick = () => {controller.openModal("vendorBioEditModal")};
+            descriptionVendor.onclick = undefined;
+            descriptionVendor.classList.remove("links"); 
         }
 
         //Owner
-        if(state.vendor.ownerName !== undefined){
-            document.getElementById("bioOwnerName").innerText = state.vendor.ownerName;
-        }
-
         let owner = document.getElementById("bioOwnerName");
         if(state.vendor.ownerName === undefined){
             owner.innerText = '+ Add';
+            owner.classList.add("links");
             owner.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
             owner.innerText = state.vendor.ownerName;
-            owner.onclick = () => { controller.openModal("vendorBioEditModal")};
+            owner.onclick = undefined;
+            owner.classList.remove("links");
         }
         
         //Address
         let addressField = document.getElementById("bioAddress");
         if(state.vendor.address === undefined){
-            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
             addressField.innerText = '+ Add';
+            addressField.classList.add("links");
+            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
             addressField.innerText = state.vendor.address.full;
-            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
+            addressField.onclick = undefined;
+            addressField.classList.remove("links");
         }
 
     }

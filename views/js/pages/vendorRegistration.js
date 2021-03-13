@@ -26,7 +26,7 @@ let vendorRegistrationPage = {
         event.preventDefault();
 
         let data = {
-            name: "ivan",
+            name: document.getElementById("vendorUsername").value,
             email: document.getElementById('vendorRegEmail').value,
             password: document.getElementById('vendorRegPassword').value,
             confirmPassword: document.getElementById('vendorRegConfPassword').value,

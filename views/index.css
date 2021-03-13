@@ -128,7 +128,7 @@ button{
     font-size: 14px;
     font-weight: 600;
     color: #2B583D;
-    cursor: pointer;
+    cursor: pointer!important;
     padding-left: 6px;
     background: none;
     border: none;
@@ -209,6 +209,7 @@ button{
     font-size: 14px;
     line-height: 20px;
     color: white;
+    padding-left: 6px;
 }
 
 .vendor-about-image{
@@ -259,7 +260,7 @@ button{
 
 #bioAddress:hover, #bioOwnerName:hover,
 #bioDescription:hover{
-    cursor: pointer;
+    cursor: text;
 }
 
 .goodsTitle{
@@ -463,7 +464,7 @@ form {
     }
 
     form label {
-        color: #ccc;
+        color: #807c7c;
         margin-bottom: 15px;
         width: 80%;
         font-family: 'Roboto', sans-serif;
