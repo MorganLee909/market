@@ -58,7 +58,7 @@ let modal = {
             sharesAddress: document.getElementById("addressCheckbox").checked
         };
         
-        console.log(data);
+        console.log("something");
         fetch( "/vendors", {
             method: 'PUT',
             headers:{
@@ -82,12 +82,12 @@ let modal = {
                         response.sharesAddress,
                         response.sharesOwnerName
                     );
-                    console.log(response.address);
                     vendorInfo.displayVendorInfo();
                     controller.closeModal();
                 }
             })
             .catch((err) => {
+                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', "error");
             });
     }

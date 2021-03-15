@@ -64,11 +64,10 @@ let vendorInfoPage = {
                 document.getElementById("vendorForm").style.display = "block";
             };
 
-            this.displayItems();
-            this.displayVendorInfo();
-
             state.vendorInfoPage.isPopulated = true;
         }
+        this.displayItems();
+        this.displayVendorInfo();
     },
     
     displayItems: function(){
