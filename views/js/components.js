@@ -11,7 +11,7 @@ class HomeButton extends HTMLElement{
         this._shadow = this.attachShadow({mode: "open"});
 
         let button = document.createElement("button");
-        button.onclick = ()=>{controller.openPage( 'landingPage' )};
+        button.onclick = () => {controller.openPage( 'landingPage' )};
         button.innerText = "Go to Home Page";
         button.classList.add('cta_button');
         
@@ -36,9 +36,6 @@ class HomeButton extends HTMLElement{
         }
     }
 
-    doOther(){
-        //doing other things
-    }
 }
 
 //Goods Component
@@ -100,8 +97,9 @@ class VendorItem extends HTMLElement{
                 </defs>
             </svg>
         `;
+
+        this.removeButton.onclick = () => { controller.openModal( "confirmationModal", { item: this, func: this.removeItem } ) };
         
-        this.removeButton.onclick = () => { this.removeItem() };
         this.container.appendChild( this.removeButton );
         
         //edit button
@@ -224,23 +222,22 @@ class VendorItem extends HTMLElement{
         this.container.removeChild( this.submitButton );
     }
 
-    removeItem(){
-        let id = this.getAttribute( "itemid" );
+    removeItem( item ){
+        let id = item.getAttribute( "itemid" );
 
-        fetch( `/vendors/items/${id}`, {
-            method: 'DELETE',
-        })
-            .then((response) => response.json())
-            .then((response) => {
+        fetch(`/vendors/items/${id}`, {method: "delete"})
+            .then(response => response.json())
+            .then((response)=>{
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    state.vendor.removeItem( id );
+                    state.vendor.removeItem(id);
                 }
             })
-            .catch((err) =>{
-                controller.createToaster('Something went wrong, please refresh the page.', "error");
+            .catch((err)=>{
+                controller.createToaster('Something went wrong, please refresh the page.', 'error');
             });
+
     }
 
     submitEdit(){
@@ -249,7 +246,7 @@ class VendorItem extends HTMLElement{
             name: this.nameInput.value,
             quantity: this.amountInput.value,
             unit: this.getAttribute( "unit" ),
-            price: parseInt( this.priceGoods.value * 100 )
+            price: parseInt( this.priceGoods.value * 100 ),
         };
 
         fetch( "/vendors/items", {

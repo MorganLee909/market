@@ -4,6 +4,8 @@ const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
 const Vendor = require("./js/models/Vendor.js");
 
+const modalWindow = require("./js/modal.js");
+
 // Components //
 require("./js/components.js");
 
@@ -38,6 +40,31 @@ controller = {
         document.getElementById( page ).style.display = "flex";
     },
 
+    openModal: function( modal, data = {} ){
+        document.getElementById("modal").style.display = "flex";
+        document.getElementById( modal ).style.display = "flex";
+
+        switch( modal ){
+            case 'confirmationModal':
+                modalWindow.displayRemoveConfirmation( data.item, data.func );
+                break;
+            case 'vendorBioEditModal':
+                modalWindow.displayEditVendorBio();
+                break;
+        }
+    },
+
+    closeModal: function(){
+        let modal = document.getElementById("modal");
+        let children = modal.children;
+        
+        modal.style.display = "none";
+
+        for(let i = 0; i < children.length; i++){
+            children[i].style.display = "none";
+        }
+    },
+
     createToaster: function ( mess, type ) {
         
         document.getElementById( "toasterText" ).innerText = mess;
@@ -70,6 +97,7 @@ controller = {
 };
 
 state = {
+
     vendor: null,
 
     vendorInfoPage: {
@@ -99,13 +127,16 @@ fetch( '/vendors/session' )
         if( response === null ){ 
             controller.openPage( 'landingPage' );
         } else{ 
-            
             state.vendor = new Vendor(
                 response._id,
                 response.name,
                 response.email,
                 response.description,
-                response.items
+                response.items,
+                response.ownerName,
+                response.address,
+                response.sharesOwnerName,
+                response.sharesAddress
             );
             
             controller.openPage( 'vendorInfoPage' ); 
@@ -114,4 +145,3 @@ fetch( '/vendors/session' )
     .catch((err) => {
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
-

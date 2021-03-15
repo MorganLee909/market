@@ -2,12 +2,16 @@ const Item = require("./Item.js");
 const vendorInfoPage = require("../pages/vendorInfo.js");
 
 class Vendor {
-    constructor( id, name, email, description, items ){
+    constructor( id, name, email, description, items, ownerName, address, sharesOwnerName, sharesAddress ){
         this._id = id;
         this._name = name;
         this._email = email;
+        this._ownerName = ownerName;
         this._description = description;
         this._items = [];
+        this._address = address;
+        this._sharesOwnerName = sharesOwnerName;
+        this._sharesAddress = sharesAddress;
 
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
@@ -23,12 +27,40 @@ class Vendor {
         this._items.sort((a, b) => (a.name > b.name) ? 1 : -1);
     }
 
+    get id(){
+        return this._id;
+    }
+
     get name(){
         return this._name;
     }
 
+    get email(){
+        return this._email;
+    }
+
+    get ownerName(){
+        return this._ownerName;
+    }
+
+    get description(){
+        return this._description;
+    }
+
+    get address(){
+        return this._address;
+    }
+
     get items(){
         return this._items;
+    }
+
+    get sharesOwnerName(){
+        return this._sharesOwnerName
+    }
+
+    get sharesAddress(){
+        return this._sharesAddress;
     }
 
     addItem( item ){

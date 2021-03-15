@@ -6,7 +6,12 @@ let vendorInfoPage = {
                 () => {controller.openPage( 'landingPage' )}
             );
 
-            document.getElementById( 'addNewProduct' ).addEventListener(
+            //Edit VendorBio
+            document.getElementById( "vendorBioBtn" ).onclick = () => {
+                controller.openModal( 'vendorBioEditModal' );
+            }
+
+            let btn = document.getElementById( 'addNewProduct' ).addEventListener(
                 'click',
                 () => { 
                     let newItem = document.createElement( "vendor-item" );
@@ -15,6 +20,7 @@ let vendorInfoPage = {
                     goods.insertBefore( newItem, goods.firstChild );
                 }
             );
+
             //Add first product
             document.getElementById("addFirstProduct").addEventListener(
                 "click",
@@ -50,18 +56,18 @@ let vendorInfoPage = {
                             controller.createToaster( "Something went wrong. Refresh the page.", "error" );
                         });
                 }
-            );    
-            
+            ); 
+                        
             if(state.vendor.items.length === 0){
                 document.getElementById("vendorNoProduct").style.display = "flex";
             }else{
                 document.getElementById("vendorForm").style.display = "block";
             };
 
-            this.displayItems();
-
             state.vendorInfoPage.isPopulated = true;
         }
+        this.displayItems();
+        this.displayVendorInfo();
     },
     
     displayItems: function(){
@@ -80,6 +86,49 @@ let vendorInfoPage = {
             item.setAttribute( "price", state.vendor.items[i].price );
             goods.appendChild(item);
         }
+    },
+
+    displayVendorInfo: function(){
+
+        document.getElementById("bioTitle").innerText = state.vendor.name;
+        document.getElementById("bioEmail").innerText = state.vendor.email;
+        
+        //Descriptioin
+        let descriptionVendor = document.getElementById("bioDescription");
+        if(state.vendor.description === ''){
+            descriptionVendor.innerText = '+ Add Description';
+            descriptionVendor.classList.add("links"); 
+            descriptionVendor.onclick = () => {controller.openModal("vendorBioEditModal")};
+        }else{
+            descriptionVendor.innerText = state.vendor.description;
+            descriptionVendor.onclick = undefined;
+            descriptionVendor.classList.remove("links"); 
+        }
+
+        //Owner
+        let owner = document.getElementById("bioOwnerName");
+        if(state.vendor.ownerName === undefined){
+            owner.innerText = '+ Add';
+            owner.classList.add("links");
+            owner.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }else{
+            owner.innerText = state.vendor.ownerName;
+            owner.onclick = undefined;
+            owner.classList.remove("links");
+        }
+        
+        //Address
+        let addressField = document.getElementById("bioAddress");
+        if(state.vendor.address === undefined){
+            addressField.innerText = '+ Add';
+            addressField.classList.add("links");
+            addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }else{
+            addressField.innerText = state.vendor.address.full;
+            addressField.onclick = undefined;
+            addressField.classList.remove("links");
+        }
+
     }
 }
 
