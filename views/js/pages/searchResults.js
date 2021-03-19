@@ -7,23 +7,22 @@ let searchResultsPage = {
 
         let editLocationToLanding = document.getElementById("editLocationToLanding");
         editLocationToLanding.onclick = () => { 
-            vendors = '';
-            console.log(vendors);
             controller.openPage("landingPage");
         }
 
         let container = document.getElementById("listOfVendors");
         
+        while(container.children.length > 0 ){
+            container.removeChild(container.firstChild);
+        }
+
         for( let i = 0; i < vendors.length; i++ ){
             
             let item = document.createElement("search-item");
             item.setAttribute('vendor', vendors[i].name);
-            
+            item.vendor = vendors[i];
             container.appendChild(item);
         }
-
-        let vendorLocationTitle = document.getElementById("vendorLocationTitle");
-        vendorLocationTitle.innerText = state.vendor.address.city;
 
     }
 }

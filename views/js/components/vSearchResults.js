@@ -3,9 +3,10 @@ class VSearchResults extends HTMLElement{
     static get observedAttributes(){
         return ["vendor"];
     }
-
+    
     constructor(){
         super();
+        console.log(this.vendor);
         this.shadow = this.attachShadow({ mode:"open" });
 
         // Apply external styles to the shadow dom
@@ -48,6 +49,8 @@ class VSearchResults extends HTMLElement{
                 <path d="M9.31002 6.70978C9.21732 6.80229 9.14377 6.91218 9.09359 7.03315C9.04341 7.15413 9.01758 7.28381 9.01758 7.41478C9.01758 7.54575 9.04341 7.67543 9.09359 7.7964C9.14377 7.91738 9.21732 8.02726 9.31002 8.11978L13.19 11.9998L9.31002 15.8798C9.12304 16.0668 9.018 16.3204 9.018 16.5848C9.018 16.8492 9.12304 17.1028 9.31002 17.2898C9.497 17.4768 9.7506 17.5818 10.015 17.5818C10.2794 17.5818 10.533 17.4768 10.72 17.2898L15.31 12.6998C15.4027 12.6073 15.4763 12.4974 15.5265 12.3764C15.5766 12.2554 15.6025 12.1257 15.6025 11.9948C15.6025 11.8638 15.5766 11.7341 15.5265 11.6132C15.4763 11.4922 15.4027 11.3823 15.31 11.2898L10.72 6.69978C10.34 6.31978 9.70002 6.31978 9.31002 6.70978Z" fill="#BDBDBD"/>
             </svg>
         `;
+
+        this.onclick = () => { controller.openPage("vendorInfoPage", this.id) };
 
         this.container.appendChild( this.accordion );
     }
