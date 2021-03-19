@@ -33,9 +33,7 @@ let modal = {
 
         let addressField = document.getElementById("vendorBioAddress");
         addressField.value = "";
-        console.log(addressField);
         if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
-        console.log(addressField.value, 'value');
 
         document.getElementById("addressCheckbox").checked = state.vendor.sharesAddress;
        
@@ -58,7 +56,6 @@ let modal = {
             sharesAddress: document.getElementById("addressCheckbox").checked
         };
         
-        console.log("something");
         fetch( "/vendors", {
             method: 'PUT',
             headers:{
@@ -87,7 +84,6 @@ let modal = {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', "error");
             });
     }

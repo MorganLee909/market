@@ -20,23 +20,20 @@ let vendorInfoPage = {
                     goods.insertBefore( newItem, goods.firstChild );
                 }
             );
-
+            
             //Add first product
-            document.getElementById("addFirstProduct").addEventListener(
-                "click",
-                () => {
-                    document.getElementById("vendorNoProduct").style.display = "none";
-                    document.getElementById("vendorForm").style.display = "block";
+            document.getElementById("addFirstProduct").onclick = () => {
+                document.getElementById("vendorNoProduct").style.display = "none";
+                document.getElementById("vendorForm").style.display = "block";
 
-                    document.getElementById("productTableTitle").innerText = "Add Your First Product";
-                    document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
+                document.getElementById("productTableTitle").innerText = "Add Your First Product";
+                document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
 
-                    let newItem =document.createElement("vendor-item");
-                    let goods = document.getElementById("goods");
-                    newItem.setAttribute("isnew", "true");
-                    goods.insertBefore(newItem, goods.firstChild);
-                }
-            );
+                let newItem = document.createElement("vendor-item");
+                let goods = document.getElementById("goods");
+                newItem.setAttribute("isnew", "true");
+                goods.insertBefore(newItem, goods.firstChild);
+            };
 
             document.getElementById( 'vendorInfoToSignOut' ).addEventListener(
                 'click', 

@@ -1,45 +1,3 @@
-const vendor = require("../../models/vendor.js");
-const vendorInfoPage = require("./pages/vendorInfo.js");
-
-class HomeButton extends HTMLElement{
-    static get observedAttributes(){
-        return ["change", "other", "something", ];
-    }
-
-    constructor(){
-        super();
-        this._shadow = this.attachShadow({mode: "open"});
-
-        let button = document.createElement("button");
-        button.onclick = () => {controller.openPage( 'landingPage' )};
-        button.innerText = "Go to Home Page";
-        button.classList.add('cta_button');
-        
-        // Apply external styles to the shadow dom
-        const linkElem = document.createElement('link');
-        linkElem.setAttribute('rel', 'stylesheet');
-        linkElem.setAttribute('href', 'index.css');
-
-        this._shadow.appendChild(linkElem);
-
-        this._shadow.appendChild(button);
-    }
-
-    attibuteChangedCallback(name, oldValue, newValue){
-        switch(name){
-            case "change":
-                //our code
-                break;
-            case "other":
-                this.doOther();
-                break;
-        }
-    }
-
-}
-
-//Goods Component
-
 class VendorItem extends HTMLElement{
     static get observedAttributes(){
         return ["product", "amount", "unit", "price", "isnew"];
@@ -300,4 +258,3 @@ class VendorItem extends HTMLElement{
 }
 
 customElements.define('vendor-item', VendorItem);
-customElements.define("home-button", HomeButton);

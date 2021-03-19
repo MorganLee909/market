@@ -2,15 +2,18 @@ const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
+const searchResultsPage = require("./js/pages/searchResults.js");
+
 const Vendor = require("./js/models/Vendor.js");
 
 const modalWindow = require("./js/modal.js");
 
 // Components //
-require("./js/components.js");
+require("./js/components/vendorItem.js");
+require("./js/components/vSearchResults.js");
 
 controller = {
-    openPage: function( page ) {
+    openPage: function( page, data ) {
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -33,6 +36,10 @@ controller = {
             
             case 'loginPage':
                 loginPage.display();
+                break;
+
+            case "searchResultsPage":
+                searchResultsPage.display(data);
                 break;
 
         }
@@ -113,6 +120,10 @@ state = {
     },
 
     loginPage: {
+        isPopulated: false
+    },
+
+    searchResultsPage: {
         isPopulated: false
     }
 }
