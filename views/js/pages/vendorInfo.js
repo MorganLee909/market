@@ -1,68 +1,31 @@
 let vendorInfoPage = {
     display: function(){
-        if(state.vendorInfoPage.isPopulated === false){
-            document.getElementById( 'vendorInfoToLanding' ).addEventListener(
-                'click', 
-                () => {controller.openPage( 'landingPage' )}
-            );
+        document.getElementById( 'vendorInfoToLanding' ).onclick = () => {
+            controller.openPage( 'landingPage' );
+        };
 
-            //Edit VendorBio
-            document.getElementById( "vendorBioBtn" ).onclick = () => {
-                controller.openModal( 'vendorBioEditModal' );
-            }
+        //Edit VendorBio
+        document.getElementById( "vendorBioBtn" ).onclick = () => {
+            controller.openModal( 'vendorBioEditModal' );
+        };
 
-            let btn = document.getElementById( 'addNewProduct' ).addEventListener(
-                'click',
-                () => { 
-                    let newItem = document.createElement( "vendor-item" );
-                    let goods = document.getElementById( "goods" );
-                    newItem.setAttribute( "isnew", "true" );
-                    goods.insertBefore( newItem, goods.firstChild );
-                }
-            );
-            
-            //Add first product
-            document.getElementById("addFirstProduct").onclick = () => {
-                document.getElementById("vendorNoProduct").style.display = "none";
-                document.getElementById("vendorForm").style.display = "block";
+        let btn = document.getElementById( 'addNewProduct' ).onclick = () => {
+            this.addNewProduct();
+        };
+        
+        //Add first product
+        document.getElementById("addFirstProduct").onclick = () => {
+            this.addFirstProduct();
+        };
+      
+        if(state.vendor.items.length === 0){
+            document.getElementById("vendorNoProduct").style.display = "flex";
+        }else{
+            document.getElementById("vendorForm").style.display = "block";
+        };
 
-                document.getElementById("productTableTitle").innerText = "Add Your First Product";
-                document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
-
-                let newItem = document.createElement("vendor-item");
-                let goods = document.getElementById("goods");
-                newItem.setAttribute("isnew", "true");
-                goods.insertBefore(newItem, goods.firstChild);
-            };
-
-            document.getElementById( 'vendorInfoToSignOut' ).addEventListener(
-                'click', 
-                () => {
-                    fetch('/logout')
-                        .then( response => response.json() )
-                        .then((response)=>{
-                            if( typeof(response) === 'string' ){
-                                controller.createToaster( response, "error" );
-                            } else {
-                                state.vendor = null;
-                                controller.openPage( "landingPage" );
-                            }
-                        
-                        })
-                        .catch((err) => {
-                            controller.createToaster( "Something went wrong. Refresh the page.", "error" );
-                        });
-                }
-            ); 
-                        
-            if(state.vendor.items.length === 0){
-                document.getElementById("vendorNoProduct").style.display = "flex";
-            }else{
-                document.getElementById("vendorForm").style.display = "block";
-            };
-
-            state.vendorInfoPage.isPopulated = true;
-        }
+        state.vendorInfoPage.isPopulated = true;
+        
         this.displayItems();
         this.displayVendorInfo();
     },
@@ -125,7 +88,26 @@ let vendorInfoPage = {
             addressField.onclick = undefined;
             addressField.classList.remove("links");
         }
+    },
 
+    addNewProduct: function(){
+        let newItem = document.createElement( "vendor-item" );
+        let goods = document.getElementById( "goods" );
+        newItem.setAttribute( "isnew", "true" );
+        goods.insertBefore( newItem, goods.firstChild );
+    },
+
+    addFirstProduct: function(){
+        document.getElementById("vendorNoProduct").style.display = "none";
+        document.getElementById("vendorForm").style.display = "block";
+
+        document.getElementById("productTableTitle").innerText = "Add Your First Product";
+        document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
+
+        let newItem = document.createElement("vendor-item");
+        let goods = document.getElementById("goods");
+        newItem.setAttribute("isnew", "true");
+        goods.insertBefore(newItem, goods.firstChild);
     }
 }
 
