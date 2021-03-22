@@ -1,5 +1,6 @@
 let vendorInfoPage = {
-    display: function(){
+    display: function( vendor ){
+        
         document.getElementById( 'vendorInfoToLanding' ).onclick = () => {
             controller.openPage( 'landingPage' );
         };
@@ -23,11 +24,14 @@ let vendorInfoPage = {
         }else{
             document.getElementById("vendorForm").style.display = "block";
         };
-
-        state.vendorInfoPage.isPopulated = true;
+        
+        if(vendor.id === state.vendor.id){
+            this.displayVendorInfoLoggedIn();
+        }else{
+            this.displayVendorInfo();
+        }
         
         this.displayItems();
-        this.displayVendorInfo();
     },
     
     displayItems: function(){
@@ -49,6 +53,10 @@ let vendorInfoPage = {
     },
 
     displayVendorInfo: function(){
+        
+    },
+
+    displayVendorInfoLoggedIn: function(){
 
         document.getElementById("bioTitle").innerText = state.vendor.name;
         document.getElementById("bioEmail").innerText = state.vendor.email;

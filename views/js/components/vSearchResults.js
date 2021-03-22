@@ -6,7 +6,6 @@ class VSearchResults extends HTMLElement{
     
     constructor(){
         super();
-        console.log(this.vendor);
         this.shadow = this.attachShadow({ mode:"open" });
 
         // Apply external styles to the shadow dom
@@ -50,7 +49,7 @@ class VSearchResults extends HTMLElement{
             </svg>
         `;
 
-        this.onclick = () => { controller.openPage("vendorInfoPage", this.id) };
+        this.onclick = () => { controller.openPage("vendorInfoPage", this.vendor) };
 
         this.container.appendChild( this.accordion );
     }

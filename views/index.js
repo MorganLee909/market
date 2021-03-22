@@ -23,7 +23,7 @@ controller = {
         switch( page ) {
 
             case 'vendorInfoPage':
-                vendorInfoPage.display();
+                vendorInfoPage.display(data);
                 break;  
 
             case 'landingPage':
@@ -150,9 +150,10 @@ fetch( '/vendors/session' )
                 response.sharesAddress
             );
             
-            controller.openPage( 'vendorInfoPage' ); 
+            controller.openPage( 'vendorInfoPage', state.vendor ); 
         }
     })
     .catch((err) => {
+        console.log(err);
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
