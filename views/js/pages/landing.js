@@ -25,7 +25,11 @@ let landingPage = {
         fetch( url )
             .then(response => response.json() )
             .then((response) => {
-                controller.openPage("searchResultsPage", response);
+                if(typeof(response) === "string"){
+                    controller.createToaster(response, "error");
+                }else{
+                    controller.openPage("searchResultsPage", response);
+                }
             })
             .catch((err) => {
                 console.log(err);

@@ -238,6 +238,13 @@ button{
     border-right-width: 1px;
     border-right-style: solid;
     border-color: rgb(236, 234, 234);
+    display: flex;
+    flex-flow: column;
+}
+
+.search-results-container{
+    display: flex;
+    justify-content: center;
 }
 
 .search-results-item{
@@ -285,6 +292,20 @@ button{
 .search-results-header-title{
     display: flex;
     flex-flow: row;
+}
+
+.search-results-input{
+    margin-bottom: 23px;
+    margin-top: 46px;
+    padding-left: 8px;
+    height: 38px;
+    width: 272px;
+    border: 2px solid #E0E0E0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #BDBDBD;
+    box-shadow: inset 0px 0px 0px 0px red;
+    box-shadow: none;
 }
 
 .vendor-form{
