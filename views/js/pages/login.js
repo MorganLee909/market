@@ -36,6 +36,7 @@ let loginPage ={
         })
             .then(response => response.json())
             .then((response) => {
+
                 if( typeof(response) === 'string'){
                     controller.createToaster( response, 'error' );
                 } else{
@@ -48,8 +49,8 @@ let loginPage ={
                         response.ownerName,
                         response.address
                     );
-
-                    controller.openPage('vendorInfoPage');
+                    
+                    controller.openPage('vendorInfoPage', state.vendor);
                 }
             })
             .catch((err) => {
@@ -59,5 +60,3 @@ let loginPage ={
 }
 
 module.exports = loginPage;
-
-
