@@ -14,11 +14,8 @@ let loginPage ={
         );
 
         if( state.loginPage.isPopulated === false ){
-
             let form = document.getElementById('vendorLoginForm');
             form.onsubmit = () => {this.submit()};
-
-            state.loginPage.isPopulated = true;
         }
     },
 
@@ -51,7 +48,7 @@ let loginPage ={
                         response.ownerName,
                         response.address
                     );
-                    
+
                     controller.openPage('vendorInfoPage');
                 }
             })

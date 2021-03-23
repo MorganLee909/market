@@ -1,6 +1,18 @@
 let landingPage = {
 
     display: function(){
+
+        let logOut = document.getElementById("landingLogOut");
+        let logIn = document.getElementById("landingToLoginBtn");
+
+        if(state.vendor === null){
+            logIn.style.display = "flex";
+            logOut.style.display = "none";
+        }else{
+            logIn.style.display = "none";
+            logOut.style.display = "flex";
+        }
+        
         document.getElementById("openVendorRegistration").onclick = () => {
             controller.openPage("vendorRegistrationPage");
         }

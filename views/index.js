@@ -154,6 +154,5 @@ fetch( '/vendors/session' )
         }
     })
     .catch((err) => {
-        console.log(err);
         controller.createToaster("Something went wrong. Refresh the page.", "error");
     });
