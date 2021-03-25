@@ -1,3 +1,5 @@
+const Vendor = require("../models/Vendor");
+
 let landingPage = {
 
     display: function(){
@@ -40,7 +42,25 @@ let landingPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    controller.openPage("searchResultsPage", response);
+                    let vendors = [];
+                    for( let i = 0; i < response.length; i++){
+        
+                        let vendor = new Vendor(
+                            response[i]._id,
+                            response[i].name,
+                            '',
+                            response[i].description,
+                            response[i].items,
+                            '',
+                            '',
+                            response[i].sharesAddress,
+                            response[i].sharesOwnerName
+                        );
+                        
+                        vendors.push(vendor);
+                    }
+
+                    controller.openPage("searchResultsPage", vendors);
                 }
             })
             .catch((err) => {
@@ -51,3 +71,29 @@ let landingPage = {
 }
 
 module.exports = landingPage;
+
+// _id: "603a03638c44f722745cf1a9"
+// ​​
+// description: ""
+// ​​
+// items: Array [ {…} ]
+// ​​
+// name: "Zeleniy Market"
+// ​​
+// sharesAddress: false
+// ​​
+// sharesOwnerName: false
+// ​​
+// url: "ivan"
+
+//     state.vendor = new Vendor(
+//         response._id,
+//         response.name,
+//         response.email,
+//         response.description,
+//         response.items,
+//         response.ownerName,
+//         response.address,
+//         response.sharesOwnerName,
+//         response.sharesAddress
+//     );

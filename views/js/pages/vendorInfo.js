@@ -19,47 +19,50 @@ let vendorInfoPage = {
             this.addFirstProduct();
         };
       
-        if(state.vendor.items.length === 0){
-            document.getElementById("vendorNoProduct").style.display = "flex";
-        }else{
-            document.getElementById("vendorForm").style.display = "block";
-        };
-        
-        if(vendor.id === state.vendor.id){
+        console.log(vendor.id);
+        console.log(state.vendor.id);
+        if(state.vendor !== null && vendor.id === state.vendor.id ){
             this.displayVendorInfoLoggedIn();
         }else{
             this.displayVendorInfo();
         }
         
-        this.displayItems();
+        this.displayItems(vendor);
     },
     
-    displayItems: function(){
+    displayItems: function(vendor){
         let goods = document.getElementById( "goods" );
 
         while( goods.children.length > 0){
             goods.removeChild(goods.firstChild);
         }
 
-        for( let i = 0; i < state.vendor.items.length; i++ ){
+        for( let i = 0; i < vendor.items.length; i++ ){
             let item = document.createElement( 'vendor-item' );
-            item.setAttribute( "itemid", state.vendor.items[i].id );
-            item.setAttribute( 'product', state.vendor.items[i].name );
-            item.setAttribute( 'amount', state.vendor.items[i].quantity );
-            item.setAttribute( "unit", state.vendor.items[i].unit );
-            item.setAttribute( "price", state.vendor.items[i].price );
+            item.setAttribute( "itemid", vendor.items[i].id );
+            item.setAttribute( 'product', vendor.items[i].name );
+            item.setAttribute( 'amount', vendor.items[i].quantity );
+            item.setAttribute( "unit", vendor.items[i].unit );
+            item.setAttribute( "price", vendor.items[i].price );
             goods.appendChild(item);
         }
     },
 
     displayVendorInfo: function(){
-        
+        console.log("display basic info");
     },
 
     displayVendorInfoLoggedIn: function(){
-
+        console.log("display all info");
         document.getElementById("bioTitle").innerText = state.vendor.name;
         document.getElementById("bioEmail").innerText = state.vendor.email;
+
+        //Check if vendor has product
+        if(state.vendor.items.length === 0){
+            document.getElementById("vendorNoProduct").style.display = "flex";
+        }else{
+            document.getElementById("vendorForm").style.display = "block";
+        };
         
         //Descriptioin
         let descriptionVendor = document.getElementById("bioDescription");
