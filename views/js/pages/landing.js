@@ -6,13 +6,16 @@ let landingPage = {
 
         let logOut = document.getElementById("landingLogOut");
         let logIn = document.getElementById("landingToLoginBtn");
+        let signUp = document.getElementById("landingFooter");
 
         if(state.vendor === null){
             logIn.style.display = "flex";
             logOut.style.display = "none";
+            signUp.style.display = "flex"
         }else{
             logIn.style.display = "none";
             logOut.style.display = "flex";
+            signUp.style.display = "none"
         }
         
         document.getElementById("openVendorRegistration").onclick = () => {
@@ -71,29 +74,3 @@ let landingPage = {
 }
 
 module.exports = landingPage;
-
-// _id: "603a03638c44f722745cf1a9"
-// ​​
-// description: ""
-// ​​
-// items: Array [ {…} ]
-// ​​
-// name: "Zeleniy Market"
-// ​​
-// sharesAddress: false
-// ​​
-// sharesOwnerName: false
-// ​​
-// url: "ivan"
-
-//     state.vendor = new Vendor(
-//         response._id,
-//         response.name,
-//         response.email,
-//         response.description,
-//         response.items,
-//         response.ownerName,
-//         response.address,
-//         response.sharesOwnerName,
-//         response.sharesAddress
-//     );

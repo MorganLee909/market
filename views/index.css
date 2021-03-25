@@ -144,7 +144,6 @@ button{
 
 .links:hover{
     text-decoration-line: underline;
-    color: #43825C;
 }
 
 .logo{
@@ -160,11 +159,11 @@ button{
     padding-right: 26px;
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .login:hover{
     text-decoration-line: underline;
-    color: #43825C;
 }
 
 .login-icon{
@@ -172,7 +171,7 @@ button{
 }
 
 .sign-out-icon{
-    margin-top: 4px;
+    margin-top: 2px;
     padding-left: 8px;
 }
 

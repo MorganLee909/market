@@ -43,6 +43,7 @@ controller = {
                 break;
 
         }
+                    
 
         document.getElementById( page ).style.display = "flex";
     },
