@@ -3,6 +3,7 @@ const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
 const searchResultsPage = require("./js/pages/searchResults.js");
+const vendorAboutPage = require("./js/pages/vendorAbout.js");
 
 const Vendor = require("./js/models/Vendor.js");
 
@@ -20,10 +21,18 @@ controller = {
             pages[i].style.display = 'none';
         }
 
+        console.log(page, "page");
         switch( page ) {
 
             case 'vendorInfoPage':
-                vendorInfoPage.display(data);
+                if( state.vendor !== null && data.id === state.vendor.id ){
+                    console.log("vendorInfoPage");
+                    vendorInfoPage.display(data);
+                }else{
+                    console.log('VendorAbout');
+                    page = 'vendorAboutPage'
+                    vendorAboutPage.display(data);
+                }
                 break;  
 
             case 'landingPage':
@@ -42,8 +51,7 @@ controller = {
                 searchResultsPage.display(data);
                 break;
 
-        }
-                    
+        }                    
 
         document.getElementById( page ).style.display = "flex";
     },

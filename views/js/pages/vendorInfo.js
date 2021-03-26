@@ -5,6 +5,11 @@ let vendorInfoPage = {
             controller.openPage( 'landingPage' );
         };
 
+        //Go to all vendors
+        document.getElementById("vendorInfoToAllvendors").onclick = () => {
+            controller.openPage("landingPage");
+        }
+
         //Edit VendorBio
         document.getElementById( "vendorBioBtn" ).onclick = () => {
             controller.openModal( 'vendorBioEditModal' );
@@ -19,14 +24,7 @@ let vendorInfoPage = {
             this.addFirstProduct();
         };
       
-        console.log(vendor.id);
-        console.log(state.vendor.id);
-        if(state.vendor !== null && vendor.id === state.vendor.id ){
-            this.displayVendorInfoLoggedIn();
-        }else{
-            this.displayVendorInfo();
-        }
-        
+        this.displayVendorInfo();
         this.displayItems(vendor);
     },
     
@@ -49,15 +47,11 @@ let vendorInfoPage = {
     },
 
     displayVendorInfo: function(){
-        console.log("display basic info");
-    },
-
-    displayVendorInfoLoggedIn: function(){
         console.log("display all info");
         document.getElementById("bioTitle").innerText = state.vendor.name;
         document.getElementById("bioEmail").innerText = state.vendor.email;
 
-        //Check if vendor has product
+        //Check if vendor has product   
         if(state.vendor.items.length === 0){
             document.getElementById("vendorNoProduct").style.display = "flex";
         }else{

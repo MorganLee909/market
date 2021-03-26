@@ -806,3 +806,11 @@ form {
 }
 
 /* Login Page End*/
+
+.vendor-about-footer{    
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    bottom: 8%;
+    width: 60%;
+}

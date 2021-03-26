@@ -1,7 +1,22 @@
 let searchResultsPage = {
+    
     display: function( vendors ){
 
-        document.getElementById("searchResultsToLanding").onclick = () => { 
+        let logOut = document.getElementById("searchResLogOut");
+        let logIn = document.getElementById("searchResToLoginBtn");
+        let signUp = document.getElementById("searchResFooter");
+        
+        if(state.vendor === null){
+            logIn.style.display = "flex";
+            logOut.style.display = "none";
+            signUp.style.display = "flex"
+        }else{
+            logIn.style.display = "none";
+            logOut.style.display = "flex";
+            signUp.style.display = "none"
+        }
+        
+        document.getElementById("searchResToLanding").onclick = () => { 
             controller.openPage("landingPage");
         }
 
