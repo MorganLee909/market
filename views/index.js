@@ -150,9 +150,7 @@ fetch( '/vendors/session' )
                 response.description,
                 response.items,
                 response.ownerName,
-                response.address,
-                response.sharesOwnerName,
-                response.sharesAddress
+                response.address
             );
             
             controller.openPage( 'vendorInfoPage', state.vendor ); 

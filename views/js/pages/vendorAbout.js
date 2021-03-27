@@ -37,7 +37,6 @@ let vendorAboutPage = {
     },
 
     displayVendorInfo: function(vendor){
-        console.log("display all info");
         document.getElementById("bioAboutTitle").innerText = vendor.name;
         document.getElementById("bioAboutEmail").innerText = vendor.email;
 

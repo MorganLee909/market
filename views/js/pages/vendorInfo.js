@@ -47,7 +47,6 @@ let vendorInfoPage = {
     },
 
     displayVendorInfo: function(){
-        console.log("display all info");
         document.getElementById("bioTitle").innerText = state.vendor.name;
         document.getElementById("bioEmail").innerText = state.vendor.email;
 

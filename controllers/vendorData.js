@@ -193,9 +193,7 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String,
-        sharesAddress: Boolean,
-        sharesOwnerName: Boolean
+        address: String
     }
     response = Vendor (returns private data)
     */
@@ -254,7 +252,7 @@ module.exports = {
             res.locals.vendor.url = await helper.createURL(req.body.name);
         }
 
-        res.locals.vendor.ownerName = req.body.ownerName;
+        if(req.body.ownerName !== "") res.locals.vendor.ownerName = req.body.ownerName;
         res.locals.vendor.description = req.body.description;
 
         res.locals.vendor.save()

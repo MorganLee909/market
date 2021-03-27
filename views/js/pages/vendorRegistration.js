@@ -49,7 +49,7 @@ let vendorRegistrationPage = {
                     let newVendor = new Vendor(
                         response._id, 
                         response.name, 
-                        response.email, 
+                        response.email,
                         "", 
                         response.items,
                         response.ownerName,

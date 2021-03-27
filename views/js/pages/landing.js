@@ -55,9 +55,7 @@ let landingPage = {
                             response[i].description,
                             response[i].items,
                             response[i].ownerName,
-                            response[i].address,
-                            response[i].sharesAddress,
-                            response[i].sharesOwnerName
+                            response[i].address
                         );
                         
                         vendors.push(vendor);
@@ -67,7 +65,6 @@ let landingPage = {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', 'error');
             });
 
