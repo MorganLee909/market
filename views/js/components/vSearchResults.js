@@ -1,7 +1,7 @@
 class VSearchResults extends HTMLElement{
 
     static get observedAttributes(){
-        return ["vendor"];
+        return ["vendor", "address"];
     }
     
     constructor(){
@@ -39,6 +39,11 @@ class VSearchResults extends HTMLElement{
         this.vendorTitle.classList.add("search-results-item-title");
         this.container.childNodes[3].appendChild(this.vendorTitle); 
 
+        //address
+        this.vendorAddress = document.createElement("p");
+        this.vendorAddress.classList.add("search-vendor-address");
+        this.container.childNodes[3].appendChild(this.vendorAddress);
+
         //icon-accordion
         this.accordion = document.createElement("button");
         this.accordion.classList.add("accordion-button");
@@ -49,7 +54,14 @@ class VSearchResults extends HTMLElement{
             </svg>
         `;
 
-        this.onclick = () => { controller.openPage("vendorInfoPage", this.vendor) };
+        this.onclick = () => { 
+            if( state.vendor !== null && this.vendor.id === state.vendor.id ){
+                controller.openPage("vendorInfoPage", this.vendor); 
+            }else{
+                controller.openPage("vendorAboutPage", this.vendor); 
+            };
+            
+        };
 
         this.container.appendChild( this.accordion );
     }
@@ -60,6 +72,9 @@ class VSearchResults extends HTMLElement{
             case "vendor":
                 this.vendorTitle.innerText = newValue;
                 break;
+
+            case "address":
+                this.vendorAddress.innerText = newValue;
 
         }
     }

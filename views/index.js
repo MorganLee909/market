@@ -21,20 +21,16 @@ controller = {
             pages[i].style.display = 'none';
         }
 
-        console.log(page, "page");
         switch( page ) {
 
             case 'vendorInfoPage':
-                if( state.vendor !== null && data.id === state.vendor.id ){
-                    console.log("vendorInfoPage");
-                    vendorInfoPage.display(data);
-                }else{
-                    console.log('VendorAbout');
-                    page = 'vendorAboutPage'
-                    vendorAboutPage.display(data);
-                }
+                vendorInfoPage.display(data);
                 break;  
 
+            case 'vendorAboutPage':
+                vendorAboutPage.display(data);
+                break; 
+                
             case 'landingPage':
                 landingPage.display();
                 break;    

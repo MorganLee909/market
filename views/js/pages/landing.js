@@ -51,11 +51,11 @@ let landingPage = {
                         let vendor = new Vendor(
                             response[i]._id,
                             response[i].name,
-                            '',
+                            response[i].email,
                             response[i].description,
                             response[i].items,
-                            '',
-                            '',
+                            response[i].ownerName,
+                            response[i].address,
                             response[i].sharesAddress,
                             response[i].sharesOwnerName
                         );
@@ -67,6 +67,7 @@ let landingPage = {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', 'error');
             });
 

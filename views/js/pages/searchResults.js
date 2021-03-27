@@ -32,10 +32,11 @@ let searchResultsPage = {
         }
 
         for( let i = 0; i < vendors.length; i++ ){
-            
+            console.log(vendors[i]);
             let item = document.createElement("search-item");
-            item.setAttribute('vendor', vendors[i].name);
             item.vendor = vendors[i];
+            item.setAttribute('vendor', vendors[i].name);
+            item.setAttribute('address', vendors[i].address.full);
             container.appendChild(item);
         }
 
