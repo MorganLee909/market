@@ -42,7 +42,8 @@ module.exports = {
                         url: 1,
                         items: 1,
                         ownerName: 1,
-                        address: 1
+                        address: 1,
+                        telephone: 1
                     }
                 );
             })
@@ -95,7 +96,8 @@ module.exports = {
                     items: vendor.items,
                     description: vendor.description,
                     ownerName: vendor.ownerName,
-                    address: address
+                    address: address,
+                    telephone: vendor.telephone
                 });
             })
             .catch((err)=>{
@@ -253,12 +255,14 @@ module.exports = {
         }
 
         if(req.body.ownerName !== "") res.locals.vendor.ownerName = req.body.ownerName;
-        res.locals.vendor.description = req.body.description;
+        if(req.body.telephone !== "") res.locals.vendor.telephone = req.body.telephone;
+        if(req.body.description !== "") res.locals.vendor.description = req.body.description;
 
         res.locals.vendor.save()
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
+                vendor.session = undefined;
 
                 return res.json(vendor);
             })

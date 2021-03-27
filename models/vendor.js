@@ -72,6 +72,13 @@ const VendorSchema = new mongoose.Schema({
         full: String
     },
 
+    //PUBLIC: phone number of the vendor
+    telephone: {
+        type: String,
+        required: false,
+        minlength: 7
+    },
+
     //PRIVATE: coordinates of the vendor
     location: {
         type: {type: "String"},
