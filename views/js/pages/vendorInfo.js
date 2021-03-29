@@ -1,5 +1,5 @@
 let vendorInfoPage = {
-    display: function( vendor ){
+    display: function(){
         
         document.getElementById( 'vendorInfoToLanding' ).onclick = () => {
             controller.openPage( 'landingPage' );
@@ -25,23 +25,23 @@ let vendorInfoPage = {
         };
       
         this.displayVendorInfo();
-        this.displayItems(vendor);
+        this.displayItems();
     },
     
-    displayItems: function(vendor){
+    displayItems: function(){
         let goods = document.getElementById( "goods" );
 
         while( goods.children.length > 0){
             goods.removeChild(goods.firstChild);
         }
 
-        for( let i = 0; i < vendor.items.length; i++ ){
+        for( let i = 0; i < state.vendor.items.length; i++ ){
             let item = document.createElement( 'vendor-item' );
-            item.setAttribute( "itemid", vendor.items[i].id );
-            item.setAttribute( 'product', vendor.items[i].name );
-            item.setAttribute( 'amount', vendor.items[i].quantity );
-            item.setAttribute( "unit", vendor.items[i].unit );
-            item.setAttribute( "price", vendor.items[i].price );
+            item.setAttribute( "itemid", state.vendor.items[i].id );
+            item.setAttribute( 'product', state.vendor.items[i].name );
+            item.setAttribute( 'amount', state.vendor.items[i].quantity );
+            item.setAttribute( "unit", state.vendor.items[i].unit );
+            item.setAttribute( "price", state.vendor.items[i].price );
             goods.appendChild(item);
         }
     },
