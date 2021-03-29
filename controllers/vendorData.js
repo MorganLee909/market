@@ -43,7 +43,8 @@ module.exports = {
                         items: 1,
                         ownerName: 1,
                         address: 1,
-                        telephone: 1
+                        telephone: 1,
+                        email: 1
                     }
                 );
             })
@@ -56,7 +57,8 @@ module.exports = {
                         url: vendors[i].url,
                         items: vendors[i].items,
                         ownerName: vendors[i].ownerName,
-                        address: vendors[i].address.city
+                        address: vendors[i].address.city,
+                        email: vendors[i].email
                     });
                 }
 

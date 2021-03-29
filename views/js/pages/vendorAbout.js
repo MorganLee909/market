@@ -34,11 +34,13 @@ let vendorAboutPage = {
             item.setAttribute( "price", vendor.items[i].price );
             goods.appendChild(item);
         }
+        
     },
 
     displayVendorInfo: function(vendor){
         document.getElementById("bioAboutTitle").innerText = vendor.name;
         document.getElementById("bioAboutEmail").innerText = vendor.email;
+        document.getElementById("bioAboutOwnerName").innerText = vendor.ownerName;
 
         //Check if vendor has product
         if(vendor.items.length === 0){
@@ -54,7 +56,7 @@ let vendorAboutPage = {
         
         //Address
         let addressField = document.getElementById("bioAboutAddress");
-        addressField.innerText = vendor.address.full;
+        addressField.innerText = vendor.address;
     },
 
 }

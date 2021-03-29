@@ -43,7 +43,6 @@ let vendorRegistrationPage = {
         fetch( '/vendors', fetchOptions)
             .then(response => response.json())
             .then((response)=>{
-                console.log(response);
                 if( typeof(response) === "string" ) {
                     controller.createToaster(response, "error");
                 } else{
@@ -58,12 +57,10 @@ let vendorRegistrationPage = {
                     );
 
                     state.vendor = newVendor;
-                    console.log(newVendor, 'newVendor');
                     controller.openPage('vendorInfoPage');
                 }
             })
             .catch((err)=>{
-                console.log(err);
                 controller.createToaster("Something went wrong. Refresh the page.", "error");
             });
     }
