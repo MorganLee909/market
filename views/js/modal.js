@@ -70,7 +70,8 @@ let modal = {
                         response.description,
                         response.items,
                         response.ownerName,
-                        response.address
+                        response.address,
+                        response.telephone
                     );
                     vendorInfo.displayVendorInfo();
                     controller.closeModal();

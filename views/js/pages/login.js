@@ -47,7 +47,8 @@ let loginPage ={
                         response.description,
                         response.items,
                         response.ownerName,
-                        response.address
+                        response.address,
+                        response.telephone
                     );
                     
                     controller.openPage('vendorInfoPage', state.vendor);

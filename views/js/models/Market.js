@@ -21,7 +21,8 @@ class Market{
                 vendors[i].description,
                 vendors[i].items,
                 vendors[i].ownerName,
-                vendors[i].address
+                vendors[i].address,
+                vendors[i].telephone
             );
             this._vendors.push( vendor );
         }
