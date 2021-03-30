@@ -1,6 +1,6 @@
 let vendorAboutPage = {
     display: function( vendor ){
-        
+
         document.getElementById( 'vendorAboutToLanding' ).onclick = () => {
             controller.openPage( 'landingPage' );
         };
@@ -37,7 +37,7 @@ let vendorAboutPage = {
         
     },
 
-    displayVendorInfo: function(vendor){
+    displayVendorInfo: function(vendor){        
         document.getElementById("bioAboutTitle").innerText = vendor.name;
         document.getElementById("bioAboutEmail").innerText = vendor.email;
         document.getElementById("bioAboutOwnerName").innerText = vendor.ownerName;
@@ -53,10 +53,13 @@ let vendorAboutPage = {
         let descriptionVendor = document.getElementById("bioAboutDescription");
         descriptionVendor.innerText = vendor.description;
 
-        
         //Address
         let addressField = document.getElementById("bioAboutAddress");
         addressField.innerText = vendor.address;
+
+        //Phone
+        let phoneField = document.getElementById("bioAboutPhone");
+        phoneField.innerText = vendor.phone;
     },
 
 }

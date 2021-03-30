@@ -50,6 +50,7 @@ class Vendor {
         return this._address;
     }
 
+    //123-456-7890
     get phone(){
         return this._phone;
     }

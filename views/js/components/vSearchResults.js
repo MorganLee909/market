@@ -75,6 +75,7 @@ class VSearchResults extends HTMLElement{
 
             case "address":
                 this.vendorAddress.innerText = newValue;
+                break;
 
         }
     }

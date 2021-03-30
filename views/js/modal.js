@@ -26,12 +26,14 @@ let modal = {
         
         document.getElementById("vendorName").value = state.vendor.name;
         document.getElementById("vendorBioEmail").value = state.vendor.email;
-        document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName || "";
+        document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName;
+        document.getElementById("vendorBioPhone").value = state.vendor.phone;
 
-        document.getElementById("vendorBioDescription").innerText = state.vendor.description || "";
+        document.getElementById("vendorBioDescription").innerText = state.vendor.description;
 
         let addressField = document.getElementById("vendorBioAddress");
         addressField.value = "";
+        
         if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
        
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
@@ -48,7 +50,8 @@ let modal = {
             email: document.getElementById("vendorBioEmail").value,
             ownerName: document.getElementById("vendorBioOwnerName").value,
             description: document.getElementById("vendorBioDescription").value,
-            address: document.getElementById("vendorBioAddress").value
+            address: document.getElementById("vendorBioAddress").value,
+            telephone: document.getElementById("vendorBioPhone").value
         };
         
         fetch( "/vendors", {

@@ -57,7 +57,7 @@ let vendorInfoPage = {
             document.getElementById("vendorForm").style.display = "block";
         };
         
-        //Descriptioin
+        //Description
         let descriptionVendor = document.getElementById("bioDescription");
         if(state.vendor.description === ''){
             descriptionVendor.innerText = '+ Add Description';
@@ -91,6 +91,18 @@ let vendorInfoPage = {
             addressField.innerText = state.vendor.address.full;
             addressField.onclick = undefined;
             addressField.classList.remove("links");
+        }
+
+        //Phone
+        let phoneField = document.getElementById("bioPhone");
+        if(state.vendor.phone === undefined){
+            phoneField.innerText = '+ Add';
+            phoneField.classList.add("links");
+            phoneField.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }else{
+            phoneField.innerText = state.vendor.phone;
+            phoneField.onclick = undefined;
+            phoneField.classList.remove("links");
         }
     },
 

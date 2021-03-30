@@ -52,13 +52,15 @@ module.exports = {
                 let response = [];
                 for(let i = 0; i < vendors.length; i++){
                     response.push({
+                        _id: vendors[i]._id,
                         name: vendors[i].name,
                         description: vendors[i].description,
                         url: vendors[i].url,
                         items: vendors[i].items,
                         ownerName: vendors[i].ownerName,
                         address: vendors[i].address.city,
-                        email: vendors[i].email
+                        email: vendors[i].email,
+                        telephone: vendors[i].telephone
                     });
                 }
 

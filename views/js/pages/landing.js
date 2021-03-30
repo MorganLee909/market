@@ -42,6 +42,7 @@ let landingPage = {
         fetch( url )
             .then(response => response.json() )
             .then((response) => {
+                console.log(response);
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
@@ -61,7 +62,7 @@ let landingPage = {
                         
                         vendors.push(vendor);
                     }
-
+                    console.log(vendors);
                     controller.openPage("searchResultsPage", vendors);
                 }
             })
