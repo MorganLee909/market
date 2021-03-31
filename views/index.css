@@ -246,6 +246,15 @@ button{
     justify-content: center;
 }
 
+.search-vendor-address{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 9px;
+    color: #9D9D9D;
+    margin-left: 11px;
+}
+
 .search-results-item{
     display: flex;
     align-items: center;
@@ -305,6 +314,15 @@ button{
     color: #BDBDBD;
     box-shadow: inset 0px 0px 0px 0px red;
     box-shadow: none;
+}
+
+.titlePlusAddress{
+    height: 45px;
+    width: 233px;
+    border-bottom: 1px solid #EEE;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 }
 
 .vendor-form{

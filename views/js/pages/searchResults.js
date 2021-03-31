@@ -35,7 +35,7 @@ let searchResultsPage = {
             let item = document.createElement("search-item");
             item.vendor = vendors[i];
             item.setAttribute('vendor', vendors[i].name);
-            item.setAttribute('address', vendors[i].address.full);
+            item.setAttribute('address', vendors[i].address);
             container.appendChild(item);
         }
 

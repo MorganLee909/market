@@ -28,7 +28,6 @@ controller = {
                 break;  
 
             case 'vendorAboutPage':
-                console.log(data);
                 vendorAboutPage.display(data);
                 break; 
                 

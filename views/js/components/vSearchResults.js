@@ -26,23 +26,32 @@ class VSearchResults extends HTMLElement{
                 </svg>
                 <p> 0.2 km </p>
             </div>
-
-            <div class="search-title-icons">
-                <i></i>
-            </div> 
+            <div class="titlePlusAddress">
+                <p class="search-results-item-title"></p>
+                <p class="search-vendor-address"></p>
+            </div>
         `;
 
         this.shadow.appendChild( this.container );
 
+        //addressTitle
+        // this.addressTitle = document.createElement('div');
+        // this.container.appendChild(this.addressTitle);
+
         //title
-        this.vendorTitle = document.createElement("p");
-        this.vendorTitle.classList.add("search-results-item-title");
-        this.container.childNodes[3].appendChild(this.vendorTitle); 
+        // this.vendorTitle = document.createElement("div");
+        // this.vendorTitle.classList.add("search-results-item-title");
+        // this.vendorTitle.appendChild(this.addressTitle);
+
+        // this.container.appendChild(this.vendorTitle); 
 
         //address
-        this.vendorAddress = document.createElement("p");
-        this.vendorAddress.classList.add("search-vendor-address");
-        this.container.childNodes[3].appendChild(this.vendorAddress);
+        // this.vendorAddress = document.createElement("div");
+        // this.vendorAddress.classList.add("search-vendor-address");
+        // this.container.childNodes[3].appendChild(this.vendorAddress);
+
+        // this.container.childNodes[3].appendChild(this.vendorAddress); 
+        // this.container.childNodes[3].appendChild(this.vendorAddress);
 
         //icon-accordion
         this.accordion = document.createElement("button");
@@ -70,11 +79,13 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                this.vendorTitle.innerText = newValue;
+                // this.vendorTitle.innerText = newValue;
+                this.container.childNodes[3].firstElementChild.innerText = newValue;
                 break;
 
             case "address":
-                this.vendorAddress.innerText = newValue;
+                this.container.childNodes[3].lastElementChild.innerText = newValue;
+                // this.vendorAddress.innerText = newValue;
                 break;
 
         }
