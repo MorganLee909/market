@@ -56,6 +56,9 @@ controller = {
         document.getElementById("modal").style.display = "flex";
         document.getElementById( modal ).style.display = "flex";
 
+        let modalContainer = document.getElementById("modal");
+        modalContainer.onclick = () => { this.closeModal() };
+
         switch( modal ){
             case 'confirmationModal':
                 modalWindow.displayRemoveConfirmation( data.item, data.func );

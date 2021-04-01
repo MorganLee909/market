@@ -1,6 +1,6 @@
 class VendorItem extends HTMLElement{
     static get observedAttributes(){
-        return ["product", "amount", "unit", "price", "isnew"];
+        return ["product", "amount", "unit", "price", "isnew", "samevendor"];
     }
     
     constructor(){
@@ -57,9 +57,7 @@ class VendorItem extends HTMLElement{
         `;
 
         this.removeButton.onclick = () => { controller.openModal( "confirmationModal", { item: this, func: this.removeItem } ) };
-        
-        this.container.appendChild( this.removeButton );
-        
+                
         //edit button
         this.editButton = document.createElement( "button" );
         this.editButton.innerHTML = `
@@ -70,12 +68,17 @@ class VendorItem extends HTMLElement{
         `;
         
         this.editButton.onclick = () => { this.editItem() };
-        this.container.appendChild( this.editButton );
     }
 
-    attributeChangedCallback( name, oldValue, newValue ){
-        switch( name ){
-           
+    attributeChangedCallback( nameAttribute, oldValue, newValue ){
+        switch( nameAttribute ){
+
+            case "samevendor":
+                if(newValue === "true"){
+                    this.container.appendChild(this.removeButton);
+                    this.container.appendChild(this.editButton);
+                }
+                break;
             case 'product':
                 this.itemTitle.innerText = newValue;
                 break;

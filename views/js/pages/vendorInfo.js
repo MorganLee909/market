@@ -42,6 +42,7 @@ let vendorInfoPage = {
             item.setAttribute( 'amount', state.vendor.items[i].quantity );
             item.setAttribute( "unit", state.vendor.items[i].unit );
             item.setAttribute( "price", state.vendor.items[i].price );
+            item.setAttribute("samevendor", "true");
             goods.appendChild(item);
         }
     },

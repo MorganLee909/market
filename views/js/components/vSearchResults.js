@@ -34,25 +34,6 @@ class VSearchResults extends HTMLElement{
 
         this.shadow.appendChild( this.container );
 
-        //addressTitle
-        // this.addressTitle = document.createElement('div');
-        // this.container.appendChild(this.addressTitle);
-
-        //title
-        // this.vendorTitle = document.createElement("div");
-        // this.vendorTitle.classList.add("search-results-item-title");
-        // this.vendorTitle.appendChild(this.addressTitle);
-
-        // this.container.appendChild(this.vendorTitle); 
-
-        //address
-        // this.vendorAddress = document.createElement("div");
-        // this.vendorAddress.classList.add("search-vendor-address");
-        // this.container.childNodes[3].appendChild(this.vendorAddress);
-
-        // this.container.childNodes[3].appendChild(this.vendorAddress); 
-        // this.container.childNodes[3].appendChild(this.vendorAddress);
-
         //icon-accordion
         this.accordion = document.createElement("button");
         this.accordion.classList.add("accordion-button");
@@ -69,7 +50,6 @@ class VSearchResults extends HTMLElement{
             }else{
                 controller.openPage("vendorAboutPage", this.vendor); 
             };
-            
         };
 
         this.container.appendChild( this.accordion );
@@ -79,13 +59,11 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                // this.vendorTitle.innerText = newValue;
                 this.container.childNodes[3].firstElementChild.innerText = newValue;
                 break;
 
             case "address":
                 this.container.childNodes[3].lastElementChild.innerText = newValue;
-                // this.vendorAddress.innerText = newValue;
                 break;
 
         }
