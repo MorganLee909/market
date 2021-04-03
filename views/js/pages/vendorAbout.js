@@ -1,17 +1,38 @@
 let vendorAboutPage = {
     display: function( vendor ){
 
+        //go to landing
         document.getElementById( 'vendorAboutToLanding' ).onclick = () => {
             controller.openPage( 'landingPage' );
         };
 
-        document.getElementById("vendorAboutToLoginBtn").onclick = () => {
+        //login
+        document.getElementById("vendorAboutToLogin").onclick = () => {
             controller.openPage("loginPage");
         };
 
-         //Go to all vendors
-         document.getElementById("vendorAboutToAllvendors").onclick = () => {
+        //footer
+        let footer = document.getElementById("vendorAboutFooter");
+
+        //Go to all vendors
+        document.getElementById("vendorAboutToAllvendors").onclick = () => {
             controller.openPage("landingPage");
+        };
+
+        let logOut = document.getElementById("vendorAboutLogOut");
+        let logIn = document.getElementById("vendorAboutToLogin");
+        let signUp = document.getElementById("searchResFooter");
+        
+        if(state.vendor === null){
+            logIn.style.display = "flex";
+            logOut.style.display = "none";
+            signUp.style.display = "flex";
+            footer.style.display = "flex";
+        }else{
+            logIn.style.display = "none";
+            logOut.style.display = "flex";
+            signUp.style.display = "none";
+            footer.style.display = "none";
         }
       
         this.displayVendorInfo(vendor);

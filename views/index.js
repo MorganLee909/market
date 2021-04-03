@@ -52,14 +52,17 @@ controller = {
         document.getElementById( page ).style.display = "flex";
     },
 
-    openModal: function( modal, data = {} ){
-        document.getElementById("modal").style.display = "flex";
-        document.getElementById( modal ).style.display = "flex";
+    openModal: function( modalString, data = {} ){
 
         let modalContainer = document.getElementById("modal");
-        modalContainer.onclick = () => { this.closeModal() };
+        modalContainer.style.display = "flex";
+        modalContainer.onclick = () => {this.closeModal()};
 
-        switch( modal ){
+        let modal = document.getElementById( modalString );
+        modal.style.display = "flex";
+        modal.onclick = () => {event.stopPropagation()};
+
+        switch( modalString ){
             case 'confirmationModal':
                 modalWindow.displayRemoveConfirmation( data.item, data.func );
                 break;

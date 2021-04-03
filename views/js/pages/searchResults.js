@@ -16,8 +16,14 @@ let searchResultsPage = {
             signUp.style.display = "none"
         }
         
+        //go to landing
         document.getElementById("searchResToLanding").onclick = () => { 
             controller.openPage("landingPage");
+        }
+
+        //login
+        document.getElementById("searchResToLoginBtn").onclick = () => {
+            controller.openPage("loginPage");
         }
 
         let editLocationToLanding = document.getElementById("editLocationToLanding");
