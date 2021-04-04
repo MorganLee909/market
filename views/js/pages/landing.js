@@ -1,4 +1,5 @@
 const Vendor = require("../models/Vendor");
+const vendorInfoPage = require("./vendorInfo");
 
 let landingPage = {
 
@@ -7,15 +8,18 @@ let landingPage = {
         let logOut = document.getElementById("landingLogOut");
         let logIn = document.getElementById("landingToLoginBtn");
         let signUp = document.getElementById("landingFooter");
+        let back = document.getElementById("backToVendorInfo");
 
         if(state.vendor === null){
             logIn.style.display = "flex";
             logOut.style.display = "none";
-            signUp.style.display = "flex"
+            signUp.style.display = "flex";
+            back.style.display = "none";
         }else{
             logIn.style.display = "none";
             logOut.style.display = "flex";
-            signUp.style.display = "none"
+            signUp.style.display = "none";
+            back.style.display = "flex";
         }
         
         document.getElementById("openVendorRegistration").onclick = () => {
@@ -26,9 +30,13 @@ let landingPage = {
             controller.openPage("loginPage");
         }       
 
-        document.getElementById("searchVendorBtn").onclick = () => {
+        document.getElementById("searchVendorForm").onsubmit = () => {
+            event.preventDefault();
             this.searchVendors();
         }
+
+        //back to vendor info page
+        back.onclick = () => { controller.openPage("vendorInfoPage") };
         
     },
 

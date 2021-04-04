@@ -123,6 +123,13 @@ button{
     color: #214530;
 }
 
+.title-landing{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 25px;
+    color: #214530;
+}
+
 .subtitle{
     display: flex;
     font-weight: normal;
@@ -324,6 +331,9 @@ button{
     justify-content: center;
 }
 
+#searchVendorForm{
+    box-shadow: none;
+}
 .vendor-form{
     padding: 6rem;
     padding-top: 6rem;
