@@ -248,6 +248,10 @@ button{
     flex-flow: column;
 }
 
+#map {
+    height: 100%;
+  }  
+
 .search-results-container{
     display: flex;
     justify-content: center;

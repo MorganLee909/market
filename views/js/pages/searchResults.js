@@ -26,6 +26,11 @@ let searchResultsPage = {
             controller.openPage("loginPage");
         }
 
+        //resultsToRegistration
+        document.getElementById("resultsToRegistration").onclick = () => {
+            controller.openPage("vendorRegistrationPage");
+        }
+
         let editLocationToLanding = document.getElementById("editLocationToLanding");
         editLocationToLanding.onclick = () => { 
             controller.openPage("landingPage");
@@ -45,7 +50,8 @@ let searchResultsPage = {
             container.appendChild(item);
         }
 
-    }
+    },
+
 }
 
 module.exports = searchResultsPage;
