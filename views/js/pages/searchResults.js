@@ -1,6 +1,9 @@
 let searchResultsPage = {
+    vendors: null,
     
     display: function( vendors ){
+        
+        this.vendors = vendors;
 
         let logOut = document.getElementById("searchResLogOut");
         let logIn = document.getElementById("searchResToLoginBtn");
@@ -31,6 +34,12 @@ let searchResultsPage = {
             controller.openPage("vendorRegistrationPage");
         }
 
+        //searchbox
+        let searchbox = document.getElementById("search-results-input");
+        searchbox.onchange = () => {
+            this.search( searchbox.value );
+        }
+
         let editLocationToLanding = document.getElementById("editLocationToLanding");
         editLocationToLanding.onclick = () => { 
             controller.openPage("landingPage");
@@ -52,6 +61,34 @@ let searchResultsPage = {
 
     },
 
+    search: function( searchvalue ){
+        let res = [];
+
+        for( let i = 0; i < this.vendors.length; i++ ){
+
+            if(this.vendors[i].name.toLowerCase().includes(searchvalue.toLowerCase())){
+                res.push(this.vendors[i]);
+            }
+        }
+
+        console.log(res);
+    }
+
 }
 
 module.exports = searchResultsPage;
+
+/*
+{
+    id: String,
+    name: String,
+    email: string,
+    ownerName: string
+    description: string,
+    items: [{
+        items.name
+    }]
+    address: string,
+    phone: string
+}
+*/
