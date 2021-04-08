@@ -73,7 +73,6 @@ let landingPage = {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', 'error');
             });
 

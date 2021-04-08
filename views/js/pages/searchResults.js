@@ -45,6 +45,11 @@ let searchResultsPage = {
             controller.openPage("landingPage");
         }
 
+        this.populateSearchItems( vendors );
+
+    },
+
+    populateSearchItems: function( vendors ){
         let container = document.getElementById("listOfVendors");
         
         while(container.children.length > 0 ){
@@ -58,20 +63,26 @@ let searchResultsPage = {
             item.setAttribute('address', vendors[i].address);
             container.appendChild(item);
         }
-
     },
 
     search: function( searchvalue ){
-        let res = [];
+        let result = [];
 
         for( let i = 0; i < this.vendors.length; i++ ){
 
             if(this.vendors[i].name.toLowerCase().includes(searchvalue.toLowerCase())){
-                res.push(this.vendors[i]);
+                result.push(this.vendors[i]);
+                continue;
+            }
+            
+            for( let x = 0; x < this.vendors[i].items.length; x++ ){                
+                if(this.vendors[i].items[x].name.toLowerCase().includes(searchvalue.toLowerCase())){
+                    result.push(this.vendors[i]);
+                    break;
+                }
             }
         }
-
-        console.log(res);
+        this.populateSearchItems( result );
     }
 
 }
