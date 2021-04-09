@@ -54,6 +54,7 @@ let landingPage = {
                     controller.createToaster(response, "error");
                 }else{
                     let vendors = [];
+
                     for( let i = 0; i < response.length; i++){
         
                         let vendor = new Vendor(
@@ -66,13 +67,16 @@ let landingPage = {
                             response[i].address,
                             response[i].telephone
                         );
-                        
                         vendors.push(vendor);
                     }
+                    
+                    state.searchRes = vendors;
+
                     controller.openPage("searchResultsPage", vendors);
                 }
             })
             .catch((err) => {
+                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', 'error');
             });
 

@@ -5,11 +5,17 @@ let vendorInfoPage = {
             controller.openPage( 'landingPage' );
         };
 
-        //Go to all vendors
-        document.getElementById("vendorInfoToAllvendors").onclick = () => {
-            controller.openPage("landingPage");
-        }
-
+        //Back to landing or search results
+        if(state.searchRes !== null){
+            document.getElementById("vendorInfoToAllvendors").onclick = () => {
+                controller.openPage("searchResultsPage", state.searchRes);
+            };
+        }else{
+            document.getElementById("vendorInfoToAllvendors").onclick = () => {
+                controller.openPage( "landingPage" );
+            }
+        };
+       
         //Edit VendorBio
         document.getElementById( "vendorBioBtn" ).onclick = () => {
             controller.openModal( 'vendorBioEditModal' );

@@ -118,6 +118,8 @@ state = {
 
     vendor: null,
 
+    searchRes: null,
+
     vendorInfoPage: {
         isPopulated: false
     },

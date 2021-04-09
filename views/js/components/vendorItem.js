@@ -73,12 +73,6 @@ class VendorItem extends HTMLElement{
     attributeChangedCallback( nameAttribute, oldValue, newValue ){
         switch( nameAttribute ){
 
-            case "samevendor":
-                if(newValue === "true"){
-                    this.container.appendChild(this.removeButton);
-                    this.container.appendChild(this.editButton);
-                }
-                break;
             case 'product':
                 this.itemTitle.innerText = newValue;
                 break;
@@ -92,7 +86,14 @@ class VendorItem extends HTMLElement{
                 this.price.innerText = `$${newValue}`;
                 break;
             case "isnew":
+                console.log(nameAttribute, oldValue, newValue);
                 this.editItem();
+                break;
+            case "samevendor":
+                if(newValue === "true"){
+                    this.container.appendChild(this.removeButton);
+                    this.container.appendChild(this.editButton);
+                }
                 break;
         }
     }
@@ -143,8 +144,7 @@ class VendorItem extends HTMLElement{
             this.cancelButton.onclick = () => {this.parentElement.removeChild(this)};
         };
 
-        this.container.insertBefore( this.cancelButton, this.removeButton );
-        this.container.removeChild( this.removeButton );
+        this.container.appendChild( this.cancelButton );
 
         //Save Button
         this.submitButton = document.createElement( "button" );
@@ -159,9 +159,8 @@ class VendorItem extends HTMLElement{
         if(this.getAttribute( "isnew" ) === "true"){
             this.submitButton.onclick = () => { this.submitNew() };
         }
-            
-        this.container.insertBefore( this.submitButton, this.editButton );
-        this.container.removeChild( this.editButton );
+        
+        this.container.appendChild( this.submitButton );
     }
 
     cancelEdit(){

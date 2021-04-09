@@ -24,6 +24,18 @@ let searchResultsPage = {
             controller.openPage("landingPage");
         }
 
+        //go to My Profile
+        document.getElementById("searchResToProfile").onclick = () => {
+            controller.openPage("vendorInfoPage");
+        }
+
+        //show btn My Profile
+        if( state.vendor !== null ){
+            document.getElementById("searchResToProfile").style.display = "flex"; 
+        }else{
+            document.getElementById("searchResToProfile").style.display = "none";
+        };
+        
         //login
         document.getElementById("searchResToLoginBtn").onclick = () => {
             controller.openPage("loginPage");

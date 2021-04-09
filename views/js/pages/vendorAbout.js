@@ -14,9 +14,9 @@ let vendorAboutPage = {
         //footer
         let footer = document.getElementById("vendorAboutFooter");
 
-        //Go to all vendors
+        //Back to search results
         document.getElementById("vendorAboutToAllvendors").onclick = () => {
-            controller.openPage("landingPage");
+            controller.openPage("searchResultsPage", state.searchRes);
         };
 
         let logOut = document.getElementById("vendorAboutLogOut");
