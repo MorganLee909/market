@@ -78,8 +78,8 @@ let vendorInfoPage = {
 
         //Owner
         let owner = document.getElementById("bioOwnerName");
-        if(state.vendor.ownerName === undefined){
-            owner.innerText = '+ Add';
+        if(state.vendor.ownerName === ""){
+            owner.innerText = '+ Add Owner Name';
             owner.classList.add("links");
             owner.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
@@ -90,8 +90,9 @@ let vendorInfoPage = {
         
         //Address
         let addressField = document.getElementById("bioAddress");
-        if(state.vendor.address === undefined){
-            addressField.innerText = '+ Add';
+
+        if(state.vendor.address === ""){
+            addressField.innerText = '+ Add Address';
             addressField.classList.add("links");
             addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
@@ -102,8 +103,8 @@ let vendorInfoPage = {
 
         //Phone
         let phoneField = document.getElementById("bioPhone");
-        if(state.vendor.phone === undefined){
-            phoneField.innerText = '+ Add';
+        if(state.vendor.phone === ""){
+            phoneField.innerText = '+ Add Phone';
             phoneField.classList.add("links");
             phoneField.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
@@ -124,7 +125,7 @@ let vendorInfoPage = {
         document.getElementById("vendorNoProduct").style.display = "none";
         document.getElementById("vendorForm").style.display = "block";
 
-        document.getElementById("productTableTitle").innerText = "Add Your First Product";
+        document.getElementById("productTableTitle").innerText = "Your Goods";
         document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
 
         let newItem = document.createElement("vendor-item");

@@ -86,7 +86,6 @@ class VendorItem extends HTMLElement{
                 this.price.innerText = `$${newValue}`;
                 break;
             case "isnew":
-                console.log(nameAttribute, oldValue, newValue);
                 this.editItem();
                 break;
             case "samevendor":

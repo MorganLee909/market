@@ -100,18 +100,3 @@ let searchResultsPage = {
 }
 
 module.exports = searchResultsPage;
-
-/*
-{
-    id: String,
-    name: String,
-    email: string,
-    ownerName: string
-    description: string,
-    items: [{
-        items.name
-    }]
-    address: string,
-    phone: string
-}
-*/

@@ -31,11 +31,8 @@ let modal = {
 
         document.getElementById("vendorBioDescription").innerText = state.vendor.description;
 
-        let addressField = document.getElementById("vendorBioAddress");
-        addressField.value = "";
-        
-        if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
-       
+        document.getElementById("vendorBioAddress").value = state.vendor.address;
+               
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
         document.getElementById('vendorBioCancelBtn').onclick = () => { controller.closeModal() };
         
@@ -43,6 +40,7 @@ let modal = {
 
     submitBioEdit: function() {
         event.preventDefault();
+        console.log('submit')
 
         let data = {
             id: state.vendor.id,
@@ -81,6 +79,7 @@ let modal = {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', "error");
             });
     }

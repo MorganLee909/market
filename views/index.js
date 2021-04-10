@@ -24,7 +24,7 @@ controller = {
         switch( page ) {
 
             case 'vendorInfoPage':
-                vendorInfoPage.display(data);
+                vendorInfoPage.display();
                 break;  
 
             case 'vendorAboutPage':

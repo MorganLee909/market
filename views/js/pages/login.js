@@ -51,7 +51,7 @@ let loginPage ={
                         response.telephone
                     );
                     
-                    controller.openPage('vendorInfoPage', state.vendor);
+                    controller.openPage('vendorInfoPage');
                 }
             })
             .catch((err) => {
