@@ -81,7 +81,7 @@ const VendorSchema = new mongoose.Schema({
 
     //PRIVATE: coordinates of the vendor
     location: {
-        type: {type: "String"},
+        type: {type: String},
         coordinates: [],
         required: false
     },
