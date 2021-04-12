@@ -65,7 +65,6 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                console.log(this.container.childNodes);
                 this.container.childNodes[1].firstElementChild.innerText = newValue;
                 break;
 

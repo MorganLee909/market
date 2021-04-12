@@ -44,7 +44,6 @@ let modal = {
 
     submitBioEdit: function() {
         event.preventDefault();
-        console.log('submit')
 
         let data = {
             id: state.vendor.id,
@@ -83,7 +82,6 @@ let modal = {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', "error");
             });
     }
