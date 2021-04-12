@@ -31,7 +31,11 @@ let modal = {
 
         document.getElementById("vendorBioDescription").innerText = state.vendor.description;
 
-        document.getElementById("vendorBioAddress").value = state.vendor.address;
+        if(state.vendor.address.full === undefined){
+            document.getElementById("vendorBioAddress").value = state.vendor.address;
+            }else{
+                document.getElementById("vendorBioAddress").value = state.vendor.address.full;
+            };
                
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
         document.getElementById('vendorBioCancelBtn').onclick = () => { controller.closeModal() };
