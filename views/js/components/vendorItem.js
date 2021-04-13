@@ -187,6 +187,10 @@ class VendorItem extends HTMLElement{
         this.container.removeChild( this.amountInput );
         this.amountInput = undefined;
 
+        this.container.insertBefore( this.unitGoods, this.unitInput );
+        this.container.removeChild( this.unitInput );
+        this.unitInput = undefined;
+
         this.container.insertBefore( this.price, this.priceGoods );
         this.container.removeChild( this.priceGoods );
         this.priceGoods = undefined;
@@ -198,6 +202,7 @@ class VendorItem extends HTMLElement{
         this.container.insertBefore( this.editButton, this.submitButton );
         this.container.removeChild( this.submitButton );
         this.submitButton = undefined;
+
     }
 
     removeItem( item ){
