@@ -24,19 +24,16 @@ module.exports = {
                 const location = [response.data.results[0].location.lat, response.data.results[0].location.lng];
                 const distance = parseFloat(req.query.distance) * 1609.344;
 
-                return Vendor.find(
-                    {
-                        location: {
-                            $nearSphere: {
-                                $maxDistance: distance,
-                                $geometry: {
-                                    type: "Point",
-                                    coordinates: location
-                                }
-                            }
-                        }
-                    },
-                    {
+                return Vendor.aggregate([
+                    {$geoNear: {
+                        near: {
+                            type: "Point",
+                            coordinates: location
+                        },
+                        distanceField: "distance",
+                        maxDistance: distance,
+                    }},
+                    {$project: {
                         name: 1,
                         description: 1,
                         url: 1,
@@ -44,9 +41,10 @@ module.exports = {
                         ownerName: 1,
                         address: 1,
                         telephone: 1,
-                        email: 1
-                    }
-                );
+                        email: 1,
+                        distance: 1
+                    }}
+                ]);
             })
             .then((vendors)=>{
                 let response = [];
