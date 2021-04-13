@@ -29,7 +29,6 @@ class VendorItem extends HTMLElement{
 
         //unit
         this.unitGoods = document.createElement( "p" );
-        this.unitGoods.innerText = "kg";
         this.unitGoods.classList.add( 'unit-goods' );
         this.container.appendChild( this.unitGoods );
 
@@ -120,11 +119,20 @@ class VendorItem extends HTMLElement{
         this.container.insertBefore( this.amountInput, this.amountGoods );
         this.container.removeChild( this.amountGoods );
 
+        //Edit Unit
+        this.unitInput = document.createElement("input");
+        this.unitInput.classList.add("input-product");
+        this.unitInput.type = "string";
+        this.unitInput.value = this.getAttribute("unit");
+        this.container.insertBefore(this.unitInput, this.unitGoods);
+        this.container.removeChild(this.unitGoods);
+
         //Edit Price
         this.priceGoods = document.createElement( "input" );
         this.priceGoods.classList.add( "goods-price" );
         this.priceGoods.classList.add( "input-product" );
         this.priceGoods.type = "number";
+        this.priceGoods.step = "0.01";
         this.priceGoods.value = this.getAttribute( 'price' );
         this.container.insertBefore( this.priceGoods, this.price );
         this.container.removeChild( this.price );
@@ -204,7 +212,7 @@ class VendorItem extends HTMLElement{
             id: this.getAttribute( "itemid" ),
             name: this.nameInput.value,
             quantity: this.amountInput.value,
-            unit: this.getAttribute( "unit" ),
+            unit: this.unitInput.value,
             price: parseInt( this.priceGoods.value * 100 ),
         };
 
@@ -221,7 +229,7 @@ class VendorItem extends HTMLElement{
                     controller.createToaster(response, "error");
                 }else{
                     state.vendor.removeItem(response._id);
-                    state.vendor.addItem(response);                  
+                    state.vendor.addItem(response);
                 }
             })
             .catch((err) => {
@@ -233,7 +241,7 @@ class VendorItem extends HTMLElement{
         let data = {
             name: this.nameInput.value,
             quantity: this.amountInput.value,
-            unit: 'kg',
+            unit: this.unitInput.value,
             price: parseInt( this.priceGoods.value * 100 )
         };
 
