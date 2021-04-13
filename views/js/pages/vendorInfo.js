@@ -28,6 +28,7 @@ let vendorInfoPage = {
         
         //Add new product
         document.getElementById( 'addNewProduct' ).onclick = () => {
+            document.getElementById("vendorForm").childNodes[3].children[2].style.display = "flex";
             this.addNewProduct();
         };
 

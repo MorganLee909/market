@@ -398,7 +398,7 @@ button{
 .goodsTitle{
     font-weight: 500;
     font-size: 18px;
-    flex-basis: 48%;
+    flex-basis: 71%;
 }
 
 .goodsInput{
@@ -433,7 +433,7 @@ input[type=number] {
 .goods-price{
     font-weight: bold;
     font-size: 22px;
-    flex-basis: 57%;
+    flex-basis: 50%;
 }
 
 .header-vendor-info{
@@ -463,6 +463,11 @@ input[type=number] {
 .unit-goods{
     font-size: 12px;
     flex-basis: 12%;
+}
+
+.unit{
+    height: 23.5px;
+    width: 30px;
 }
 
 .plus_button{
