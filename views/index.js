@@ -2,15 +2,19 @@ const vendorInfoPage = require("./js/pages/vendorInfo.js");
 const landingPage = require("./js/pages/landing.js");
 const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
+const searchResultsPage = require("./js/pages/searchResults.js");
+const vendorAboutPage = require("./js/pages/vendorAbout.js");
+
 const Vendor = require("./js/models/Vendor.js");
 
 const modalWindow = require("./js/modal.js");
 
 // Components //
-require("./js/components.js");
+require("./js/components/vendorItem.js");
+require("./js/components/vSearchResults.js");
 
 controller = {
-    openPage: function( page ) {
+    openPage: function( page, data ) {
         let pages = document.querySelectorAll( '.page' );
 
         for( let i = 0; i < pages.length; i++){
@@ -23,6 +27,10 @@ controller = {
                 vendorInfoPage.display();
                 break;  
 
+            case 'vendorAboutPage':
+                vendorAboutPage.display(data);
+                break; 
+                
             case 'landingPage':
                 landingPage.display();
                 break;    
@@ -35,16 +43,26 @@ controller = {
                 loginPage.display();
                 break;
 
-        }
+            case "searchResultsPage":
+                searchResultsPage.display(data);
+                break;
+
+        }                    
 
         document.getElementById( page ).style.display = "flex";
     },
 
-    openModal: function( modal, data = {} ){
-        document.getElementById("modal").style.display = "flex";
-        document.getElementById( modal ).style.display = "flex";
+    openModal: function( modalString, data = {} ){
 
-        switch( modal ){
+        let modalContainer = document.getElementById("modal");
+        modalContainer.style.display = "flex";
+        modalContainer.onclick = () => {this.closeModal()};
+
+        let modal = document.getElementById( modalString );
+        modal.style.display = "flex";
+        modal.onclick = () => {event.stopPropagation()};
+
+        switch( modalString ){
             case 'confirmationModal':
                 modalWindow.displayRemoveConfirmation( data.item, data.func );
                 break;
@@ -100,6 +118,8 @@ state = {
 
     vendor: null,
 
+    searchRes: null,
+
     vendorInfoPage: {
         isPopulated: false
     },
@@ -113,6 +133,10 @@ state = {
     },
 
     loginPage: {
+        isPopulated: false
+    },
+
+    searchResultsPage: {
         isPopulated: false
     }
 }
@@ -135,11 +159,10 @@ fetch( '/vendors/session' )
                 response.items,
                 response.ownerName,
                 response.address,
-                response.sharesOwnerName,
-                response.sharesAddress
+                response.telephone
             );
             
-            controller.openPage( 'vendorInfoPage' ); 
+            controller.openPage( 'vendorInfoPage', state.vendor ); 
         }
     })
     .catch((err) => {

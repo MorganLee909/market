@@ -6,6 +6,6 @@ module.exports = {
     logout: function(req, res){
         req.session.user = undefined;
         req.session.vendor = undefined;
-        return res.json({});
+        return res.redirect("/");
     }
 }

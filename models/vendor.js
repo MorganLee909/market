@@ -16,7 +16,7 @@ const VendorSchema = new mongoose.Schema({
         }
     },
 
-    //PRIVATE: email address of the vendor
+    //PUBLIC: email address of the vendor
     email: {
         type: String,
         required: [true, "VENDOR EMAIL IS REQUIRED"],
@@ -35,7 +35,7 @@ const VendorSchema = new mongoose.Schema({
     //PUBLIC: string used in url to find a vendor
     url: String,
 
-    //PRIVATE: name of the person that owns the vendor account
+    //PUBLIC: name of the person that owns the vendor account
     ownerName: {
         type: String,
         required: false,
@@ -60,7 +60,7 @@ const VendorSchema = new mongoose.Schema({
     //NOTE: an empty string means status is good
     status: [String],
 
-    //PRIVATE: address of the vendor broken down into components
+    //PRIVATE: address of the vendor broken down into components (city is public)
     address: {
         streetNumber: String,
         road: String,
@@ -72,6 +72,13 @@ const VendorSchema = new mongoose.Schema({
         full: String
     },
 
+    //PUBLIC: phone number of the vendor
+    telephone: {
+        type: String,
+        required: false,
+        minlength: 7
+    },
+
     //PRIVATE: coordinates of the vendor
     location: {
         type: {type: "String"},
@@ -81,20 +88,6 @@ const VendorSchema = new mongoose.Schema({
 
     //PUBLIC: items sold by the vendor
     items: [ItemSchema],
-
-    //PUBLIC: determines whether the vendor shares their address or not
-    sharesAddress: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-
-    //PUBLIC: determines whether the vendor shares their name or not
-    sharesOwnerName: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
 
     //PRIVATE: Used for backend checking whether the vendor is logged in
     session: {

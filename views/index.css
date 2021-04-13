@@ -18,6 +18,14 @@ button{
     color: white !important;
 }
 
+.font-weight-bold{
+    font-weight: bold;
+}
+
+.bottom-line{
+    border-bottom: 1px solid #E0E0E0;
+}
+
 .groupOfbuttons{
     display: flex;
     align-items: center;
@@ -115,6 +123,13 @@ button{
     color: #214530;
 }
 
+.title-landing{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 25px;
+    color: #214530;
+}
+
 .subtitle{
     display: flex;
     font-weight: normal;
@@ -136,7 +151,6 @@ button{
 
 .links:hover{
     text-decoration-line: underline;
-    color: #43825C;
 }
 
 .logo{
@@ -152,11 +166,11 @@ button{
     padding-right: 26px;
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .login:hover{
     text-decoration-line: underline;
-    color: #43825C;
 }
 
 .login-icon{
@@ -164,7 +178,7 @@ button{
 }
 
 .sign-out-icon{
-    margin-top: 4px;
+    margin-top: 2px;
     padding-left: 8px;
 }
 
@@ -219,6 +233,111 @@ button{
     flex-flow: column;
 }
 
+#listOfVendors{
+    margin-top: 10px;
+}
+
+.vendor-search-results{
+    width: 330px;
+    margin-top: 60px;
+    background-color:white;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-color: rgb(236, 234, 234);
+    display: flex;
+    flex-flow: column;
+}
+
+#map {
+    height: 100%;
+  }  
+
+.search-results-container{
+    display: flex;
+    justify-content: center;
+}
+
+.search-vendor-address{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 9px;
+    color: #9D9D9D;
+    margin-left: 11px;
+}
+
+.search-results-item{
+    display: flex;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+    height: 44px;
+    padding-left: 10px;
+}
+
+.search-results-item:hover{
+    background-color: #F7F7F7;
+    cursor: pointer;
+    border-color: white!important
+}
+
+.search-results-item-title{
+    margin-left: 11px;
+}
+
+.search-title-icons{
+    display: flex;
+    flex-direction: row;
+    height: inherit;
+    align-items: center;
+    border-bottom: 1px solid #EEE;
+    width: 272px;
+    padding-left: 0px;
+    margin-left: 10px;
+}
+
+.search-results-header-title{
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #2B583D;
+    margin-right: 8px;
+}
+
+.search-results-header-title{
+    display: flex;
+    flex-flow: row;
+}
+
+.search-results-input{
+    margin-bottom: 23px;
+    margin-top: 46px;
+    padding-left: 8px;
+    height: 38px;
+    width: 272px;
+    border: 2px solid #E0E0E0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #BDBDBD;
+    box-shadow: inset 0px 0px 0px 0px red;
+    box-shadow: none;
+}
+
+.titlePlusAddress{
+    height: 45px;
+    width: 272px;
+    border-bottom: 1px solid #EEE;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+#searchVendorForm{
+    box-shadow: none;
+}
 .vendor-form{
     padding: 6rem;
     padding-top: 6rem;
@@ -256,6 +375,19 @@ button{
 .row-with-icon{
     display: flex;
     align-items: center;
+}
+
+.location-icon{
+    display: flex;
+    width: 32px;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: normal;
+    font-size: 8.20588px;
+    line-height: 10px;
+    align-items: center;
+    text-align: center;
+    color: #808080;
 }
 
 #bioAddress:hover, #bioOwnerName:hover,
@@ -344,6 +476,11 @@ input[type=number] {
     width: 24px;
     height: 24px;
     padding-left: 3rem;
+}
+
+.accordion-button{
+    border-bottom: 1px solid #EEE;
+    height: 45px;
 }
 
 .cta_button{
@@ -623,10 +760,9 @@ form {
     margin-top: 46px;
     padding-left: 8px;
     height: 48px;
-    width: 384px;
+    width: 374px;
     border: 2px solid #E0E0E0;
     border-radius: 4px;
-    font-family: Roboto;
     font-size: 14px;
     color: #BDBDBD;
     box-shadow: inset 0px 0px 0px 0px red;
@@ -635,6 +771,7 @@ form {
 
 .search-input:focus{
     border-color: #2B583D;
+    color: #55595c;
    } 
 
 .search-input:focus-visible{
@@ -645,7 +782,7 @@ form {
     position: fixed;
     left: 37%;
     top: 40px;
-    z-index: 1;
+    z-index: 10;
 }
 
 #toasterText{
@@ -700,3 +837,11 @@ form {
 }
 
 /* Login Page End*/
+
+.vendor-about-footer{    
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    bottom: 8%;
+    width: 60%;
+}
