@@ -2,16 +2,15 @@ const Item = require("./Item.js");
 const vendorInfoPage = require("../pages/vendorInfo.js");
 
 class Vendor {
-    constructor( id, name, email, description, items, ownerName, address, sharesOwnerName, sharesAddress ){
+    constructor( id, name, email, description, items, ownerName, address, phone ){
         this._id = id;
         this._name = name;
         this._email = email;
-        this._ownerName = ownerName;
-        this._description = description;
+        this._ownerName = (ownerName === undefined) ? "" : ownerName;
+        this._description = (description === undefined) ? "" : description;
         this._items = [];
-        this._address = address;
-        this._sharesOwnerName = sharesOwnerName;
-        this._sharesAddress = sharesAddress;
+        this._address = (address === undefined) ? "" : address;
+        this._phone = (phone === undefined) ? "" : phone;
 
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
@@ -51,16 +50,12 @@ class Vendor {
         return this._address;
     }
 
+    get phone(){
+        return this._phone;
+    }
+
     get items(){
         return this._items;
-    }
-
-    get sharesOwnerName(){
-        return this._sharesOwnerName
-    }
-
-    get sharesAddress(){
-        return this._sharesAddress;
     }
 
     addItem( item ){

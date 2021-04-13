@@ -1,73 +1,37 @@
 let vendorInfoPage = {
     display: function(){
-        if(state.vendorInfoPage.isPopulated === false){
-            document.getElementById( 'vendorInfoToLanding' ).addEventListener(
-                'click', 
-                () => {controller.openPage( 'landingPage' )}
-            );
+        
+        document.getElementById( 'vendorInfoToLanding' ).onclick = () => {
+            controller.openPage( 'landingPage' );
+        };
 
-            //Edit VendorBio
-            document.getElementById( "vendorBioBtn" ).onclick = () => {
-                controller.openModal( 'vendorBioEditModal' );
-            }
-
-            let btn = document.getElementById( 'addNewProduct' ).addEventListener(
-                'click',
-                () => { 
-                    let newItem = document.createElement( "vendor-item" );
-                    let goods = document.getElementById( "goods" );
-                    newItem.setAttribute( "isnew", "true" );
-                    goods.insertBefore( newItem, goods.firstChild );
-                }
-            );
-
-            //Add first product
-            document.getElementById("addFirstProduct").addEventListener(
-                "click",
-                () => {
-                    document.getElementById("vendorNoProduct").style.display = "none";
-                    document.getElementById("vendorForm").style.display = "block";
-
-                    document.getElementById("productTableTitle").innerText = "Add Your First Product";
-                    document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
-
-                    let newItem =document.createElement("vendor-item");
-                    let goods = document.getElementById("goods");
-                    newItem.setAttribute("isnew", "true");
-                    goods.insertBefore(newItem, goods.firstChild);
-                }
-            );
-
-            document.getElementById( 'vendorInfoToSignOut' ).addEventListener(
-                'click', 
-                () => {
-                    fetch('/logout')
-                        .then( response => response.json() )
-                        .then((response)=>{
-                            if( typeof(response) === 'string' ){
-                                controller.createToaster( response, "error" );
-                            } else {
-                                state.vendor = null;
-                                controller.openPage( "landingPage" );
-                            }
-                        
-                        })
-                        .catch((err) => {
-                            controller.createToaster( "Something went wrong. Refresh the page.", "error" );
-                        });
-                }
-            ); 
-                        
-            if(state.vendor.items.length === 0){
-                document.getElementById("vendorNoProduct").style.display = "flex";
-            }else{
-                document.getElementById("vendorForm").style.display = "block";
+        //Back to landing or search results
+        if(state.searchRes !== null){
+            document.getElementById("vendorInfoToAllvendors").onclick = () => {
+                controller.openPage("searchResultsPage", state.searchRes);
             };
+        }else{
+            document.getElementById("vendorInfoToAllvendors").onclick = () => {
+                controller.openPage( "landingPage" );
+            }
+        };
+       
+        //Edit VendorBio
+        document.getElementById( "vendorBioBtn" ).onclick = () => {
+            controller.openModal( 'vendorBioEditModal' );
+        };
 
-            state.vendorInfoPage.isPopulated = true;
-        }
-        this.displayItems();
+        let btn = document.getElementById( 'addNewProduct' ).onclick = () => {
+            this.addNewProduct();
+        };
+        
+        //Add first product
+        document.getElementById("addFirstProduct").onclick = () => {
+            this.addFirstProduct();
+        };
+      
         this.displayVendorInfo();
+        this.displayItems();
     },
     
     displayItems: function(){
@@ -84,16 +48,23 @@ let vendorInfoPage = {
             item.setAttribute( 'amount', state.vendor.items[i].quantity );
             item.setAttribute( "unit", state.vendor.items[i].unit );
             item.setAttribute( "price", state.vendor.items[i].price );
+            item.setAttribute("samevendor", "true");
             goods.appendChild(item);
         }
     },
 
     displayVendorInfo: function(){
-
         document.getElementById("bioTitle").innerText = state.vendor.name;
         document.getElementById("bioEmail").innerText = state.vendor.email;
+
+        //Check if vendor has product   
+        if(state.vendor.items.length === 0){
+            document.getElementById("vendorNoProduct").style.display = "flex";
+        }else{
+            document.getElementById("vendorForm").style.display = "block";
+        };
         
-        //Descriptioin
+        //Description
         let descriptionVendor = document.getElementById("bioDescription");
         if(state.vendor.description === ''){
             descriptionVendor.innerText = '+ Add Description';
@@ -107,8 +78,8 @@ let vendorInfoPage = {
 
         //Owner
         let owner = document.getElementById("bioOwnerName");
-        if(state.vendor.ownerName === undefined){
-            owner.innerText = '+ Add';
+        if(state.vendor.ownerName === ""){
+            owner.innerText = '+ Add Owner Name';
             owner.classList.add("links");
             owner.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
@@ -119,8 +90,9 @@ let vendorInfoPage = {
         
         //Address
         let addressField = document.getElementById("bioAddress");
-        if(state.vendor.address === undefined){
-            addressField.innerText = '+ Add';
+
+        if(state.vendor.address === ""){
+            addressField.innerText = '+ Add Address';
             addressField.classList.add("links");
             addressField.onclick = () => { controller.openModal("vendorBioEditModal")};
         }else{
@@ -129,6 +101,37 @@ let vendorInfoPage = {
             addressField.classList.remove("links");
         }
 
+        //Phone
+        let phoneField = document.getElementById("bioPhone");
+        if(state.vendor.phone === ""){
+            phoneField.innerText = '+ Add Phone';
+            phoneField.classList.add("links");
+            phoneField.onclick = () => { controller.openModal("vendorBioEditModal")};
+        }else{
+            phoneField.innerText = state.vendor.phone;
+            phoneField.onclick = undefined;
+            phoneField.classList.remove("links");
+        }
+    },
+
+    addNewProduct: function(){
+        let newItem = document.createElement( "vendor-item" );
+        let goods = document.getElementById( "goods" );
+        newItem.setAttribute( "isnew", "true" );
+        goods.insertBefore( newItem, goods.firstChild );
+    },
+
+    addFirstProduct: function(){
+        document.getElementById("vendorNoProduct").style.display = "none";
+        document.getElementById("vendorForm").style.display = "block";
+
+        document.getElementById("productTableTitle").innerText = "Your Goods";
+        document.getElementById("productTableSubtitle").innerText = "Type name, amount and price of your product";
+
+        let newItem = document.createElement("vendor-item");
+        let goods = document.getElementById("goods");
+        newItem.setAttribute("isnew", "true");
+        goods.insertBefore(newItem, goods.firstChild);
     }
 }
 

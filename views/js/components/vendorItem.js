@@ -1,48 +1,6 @@
-const vendor = require("../../models/vendor.js");
-const vendorInfoPage = require("./pages/vendorInfo.js");
-
-class HomeButton extends HTMLElement{
-    static get observedAttributes(){
-        return ["change", "other", "something", ];
-    }
-
-    constructor(){
-        super();
-        this._shadow = this.attachShadow({mode: "open"});
-
-        let button = document.createElement("button");
-        button.onclick = () => {controller.openPage( 'landingPage' )};
-        button.innerText = "Go to Home Page";
-        button.classList.add('cta_button');
-        
-        // Apply external styles to the shadow dom
-        const linkElem = document.createElement('link');
-        linkElem.setAttribute('rel', 'stylesheet');
-        linkElem.setAttribute('href', 'index.css');
-
-        this._shadow.appendChild(linkElem);
-
-        this._shadow.appendChild(button);
-    }
-
-    attibuteChangedCallback(name, oldValue, newValue){
-        switch(name){
-            case "change":
-                //our code
-                break;
-            case "other":
-                this.doOther();
-                break;
-        }
-    }
-
-}
-
-//Goods Component
-
 class VendorItem extends HTMLElement{
     static get observedAttributes(){
-        return ["product", "amount", "unit", "price", "isnew"];
+        return ["product", "amount", "unit", "price", "isnew", "samevendor"];
     }
     
     constructor(){
@@ -99,9 +57,7 @@ class VendorItem extends HTMLElement{
         `;
 
         this.removeButton.onclick = () => { controller.openModal( "confirmationModal", { item: this, func: this.removeItem } ) };
-        
-        this.container.appendChild( this.removeButton );
-        
+                
         //edit button
         this.editButton = document.createElement( "button" );
         this.editButton.innerHTML = `
@@ -112,12 +68,11 @@ class VendorItem extends HTMLElement{
         `;
         
         this.editButton.onclick = () => { this.editItem() };
-        this.container.appendChild( this.editButton );
     }
 
-    attributeChangedCallback( name, oldValue, newValue ){
-        switch( name ){
-           
+    attributeChangedCallback( nameAttribute, oldValue, newValue ){
+        switch( nameAttribute ){
+
             case 'product':
                 this.itemTitle.innerText = newValue;
                 break;
@@ -132,6 +87,12 @@ class VendorItem extends HTMLElement{
                 break;
             case "isnew":
                 this.editItem();
+                break;
+            case "samevendor":
+                if(newValue === "true"){
+                    this.container.appendChild(this.removeButton);
+                    this.container.appendChild(this.editButton);
+                }
                 break;
         }
     }
@@ -182,8 +143,7 @@ class VendorItem extends HTMLElement{
             this.cancelButton.onclick = () => {this.parentElement.removeChild(this)};
         };
 
-        this.container.insertBefore( this.cancelButton, this.removeButton );
-        this.container.removeChild( this.removeButton );
+        this.container.appendChild( this.cancelButton );
 
         //Save Button
         this.submitButton = document.createElement( "button" );
@@ -198,9 +158,8 @@ class VendorItem extends HTMLElement{
         if(this.getAttribute( "isnew" ) === "true"){
             this.submitButton.onclick = () => { this.submitNew() };
         }
-            
-        this.container.insertBefore( this.submitButton, this.editButton );
-        this.container.removeChild( this.editButton );
+        
+        this.container.appendChild( this.submitButton );
     }
 
     cancelEdit(){
@@ -300,4 +259,3 @@ class VendorItem extends HTMLElement{
 }
 
 customElements.define('vendor-item', VendorItem);
-customElements.define("home-button", HomeButton);

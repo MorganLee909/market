@@ -14,11 +14,8 @@ let loginPage ={
         );
 
         if( state.loginPage.isPopulated === false ){
-
             let form = document.getElementById('vendorLoginForm');
             form.onsubmit = () => {this.submit()};
-
-            state.loginPage.isPopulated = true;
         }
     },
 
@@ -39,6 +36,7 @@ let loginPage ={
         })
             .then(response => response.json())
             .then((response) => {
+
                 if( typeof(response) === 'string'){
                     controller.createToaster( response, 'error' );
                 } else{
@@ -49,7 +47,8 @@ let loginPage ={
                         response.description,
                         response.items,
                         response.ownerName,
-                        response.address
+                        response.address,
+                        response.telephone
                     );
                     
                     controller.openPage('vendorInfoPage');
@@ -62,5 +61,3 @@ let loginPage ={
 }
 
 module.exports = loginPage;
-
-

@@ -43,18 +43,28 @@ module.exports = {
                         items: 1,
                         ownerName: 1,
                         address: 1,
-                        sharesAddress: 1,
-                        sharesOwnerName: 1
+                        telephone: 1,
+                        email: 1
                     }
                 );
             })
             .then((vendors)=>{
+                let response = [];
                 for(let i = 0; i < vendors.length; i++){
-                    if(vendors[i].sharesAddress === false) vendors[i].address = undefined;
-                    if(vendors[i].sharesOwnerName === false) vendors[i].ownerName = undefined;
+                    response.push({
+                        _id: vendors[i]._id,
+                        name: vendors[i].name,
+                        description: vendors[i].description,
+                        url: vendors[i].url,
+                        items: vendors[i].items,
+                        ownerName: vendors[i].ownerName,
+                        address: vendors[i].address.city,
+                        email: vendors[i].email,
+                        telephone: vendors[i].telephone
+                    });
                 }
 
-                return res.json(vendors);
+                return res.json(response);
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO PERFORM SEARCH");
@@ -78,26 +88,24 @@ module.exports = {
     getVendor: function(req, res){
         Vendor.findOne({_id: req.params.id})
             .then((vendor)=>{
-                if(vendor === null){
-                    throw "THIS VENDOR DOES NOT EXIST";
-                }
+                if(vendor === null) throw "THIS VENDOR DOES NOT EXIST";
 
-                if(vendor._id.toString() !== res.locals.vendor._id.toString()){
-                    vendor.email = undefined;
-                    if(vendor.sharesOwnerName === false) vendor.ownerName = undefined;
-                    vendor.status = undefined;
-                    if(vendor.sharesAddress === false) vendor.address = undefined;
-                    vendor.location = undefined;
-                }
+                let address = (res.locals.vendor !== null && vendor._id.toString() === res.locals.vendor._id.toString()) ? vendor.address : vendor.address.city;
 
-                vendor.password = undefined;
-
-                return res.json(vendor);
+                return res.json({
+                    _id: vendor._id,
+                    name: vendor.name,
+                    email: vendor.email,
+                    url: vendor.url,
+                    items: vendor.items,
+                    description: vendor.description,
+                    ownerName: vendor.ownerName,
+                    address: address,
+                    telephone: vendor.telephone
+                });
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
+                if(typeof(err) === "string") return res.json(err);
                 return res.json("ERROR: UNABLE TO FIND VENDOR");
             });
     },
@@ -115,9 +123,7 @@ module.exports = {
     createVendor: async function(req, res){
         const email = req.body.email.toLowerCase();
         const vendor = await Vendor.findOne({email: email});
-        if(vendor !== null){
-            return res.json("VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS");
-        }
+        if(vendor !== null) return res.json("VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS");
 
         let expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 90);
@@ -132,6 +138,7 @@ module.exports = {
                     email: email,
                     password: hash,
                     url: url,
+                    status: [],
                     session: {
                         sessionId: helper.generateId(25),
                         expiration: expirationDate
@@ -141,20 +148,17 @@ module.exports = {
                 return newVendor.save();
             })
             .then((vendor)=>{
+                req.session.vendor = vendor.session.sessionId;
+
                 vendor.status = undefined;
                 vendor.password = undefined;
-
-                req.session.vendor = vendor.session.sessionId;
+                vendor.session = undefined;
 
                 return res.json(vendor);
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
-                if(err instanceof ValidationError){
-                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
-                }
+                if(typeof(err) === "string") return res.json(err);
+                if(err instanceof ValidationError) return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 return res.json("ERROR: VENDOR CREATION FAILED");
             });
     },
@@ -170,9 +174,7 @@ module.exports = {
     vendorLogin: function(req, res){
         Vendor.findOne({email: req.body.email.toLowerCase()})
             .then((vendor)=>{
-                if(vendor === null){
-                    throw "INCORRECT EMAIL OR PASSWORD";
-                }
+                if(vendor === null) throw "INCORRECT EMAIL OR PASSWORD";
 
                 return bcrypt.compare(req.body.password, vendor.password, (err, result)=>{
                     if(result === true){
@@ -184,11 +186,9 @@ module.exports = {
                 }); 
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
+                if(typeof(err) === "string") return res.json(err);
                 return res.json("ERROR: UNABLE TO VALIDATE PASSWORD");
-            })
+            });
     },
 
     /*
@@ -199,24 +199,19 @@ module.exports = {
         email: String,
         ownerName: String,
         description: String,
-        address: String,
-        sharesAddress: Boolean,
-        sharesOwnerName: Boolean
+        address: String
     }
     response = Vendor (returns private data)
     */
     updateVendor: async function(req, res){
-        if(res.locals.vendor._id.toString() !== req.body.id){
-            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
-        }
+        if(res.locals.vendor === null) return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
+        if(res.locals.vendor._id.toString() !== req.body.id) return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
 
         //Validate and update email
         const email = req.body.email.toLowerCase();
         if(email !== res.locals.vendor.email){
             const vendor = await Vendor.findOne({email: email});
-            if(vendor){
-                throw "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
-            }
+            if(vendor !== null) throw "VENDOR WITH THIS EMAIL ADDRESS ALREADY EXISTS";
             res.locals.vendor.email = email;
         }
 
@@ -263,25 +258,21 @@ module.exports = {
             res.locals.vendor.url = await helper.createURL(req.body.name);
         }
 
-        res.locals.vendor.ownerName = req.body.ownerName;
-        res.locals.vendor.description = req.body.description;
-        res.locals.vendor.sharesAddress = req.body.sharesAddress;
-        res.locals.vendor.sharesOwnerName = req.body.sharesOwnerName;
+        if(req.body.ownerName !== "") res.locals.vendor.ownerName = req.body.ownerName;
+        if(req.body.telephone !== "") res.locals.vendor.telephone = req.body.telephone;
+        if(req.body.description !== "") res.locals.vendor.description = req.body.description;
 
         res.locals.vendor.save()
             .then((vendor)=>{
                 vendor.password = undefined;
                 vendor.status = undefined;
+                vendor.session = undefined;
 
                 return res.json(vendor);
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
-                if(err instanceof ValidationError){
-                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
-                }
+                if(typeof(err) === "string") return res.json(err);
+                if(err instanceof ValidationError) return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 return res.json("ERROR: UNABLE TO UPDATE YOUR DATA");
             });
     },
@@ -291,9 +282,7 @@ module.exports = {
     response = {}
     */
     removeVendor: function(req, res){
-        if(req.params.id !== res.locals.vendor._id.toString()){
-            return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
-        }
+        if(req.params.id !== res.locals.vendor._id.toString()) return res.json("YOU DO NOT HAVE PERMISSION TO DO THAT");
 
         Vendor.deleteOne({_id: req.params.id})
             .then((response)=>{

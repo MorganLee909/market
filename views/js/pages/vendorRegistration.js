@@ -49,11 +49,12 @@ let vendorRegistrationPage = {
                     let newVendor = new Vendor(
                         response._id, 
                         response.name, 
-                        response.email, 
-                        "", 
+                        response.email,
+                        response.description,
                         response.items,
                         response.ownerName,
-                        response.address
+                        response.address,
+                        response.telephone 
                     );
 
                     state.vendor = newVendor;
@@ -62,7 +63,6 @@ let vendorRegistrationPage = {
             })
             .catch((err)=>{
                 controller.createToaster("Something went wrong. Refresh the page.", "error");
-
             });
     }
 }

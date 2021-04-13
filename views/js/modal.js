@@ -26,19 +26,17 @@ let modal = {
         
         document.getElementById("vendorName").value = state.vendor.name;
         document.getElementById("vendorBioEmail").value = state.vendor.email;
-        document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName || "";
-        document.getElementById("ownerCheckbox").checked = state.vendor.sharesOwnerName;
+        document.getElementById("vendorBioOwnerName").value = state.vendor.ownerName;
+        document.getElementById("vendorBioPhone").value = state.vendor.phone;
 
-        document.getElementById("vendorBioDescription").innerText = state.vendor.description || "";
+        document.getElementById("vendorBioDescription").innerText = state.vendor.description;
 
-        let addressField = document.getElementById("vendorBioAddress");
-        addressField.value = "";
-        console.log(addressField);
-        if(state.vendor.address !== undefined) addressField.value = state.vendor.address.full;
-        console.log(addressField.value, 'value');
-
-        document.getElementById("addressCheckbox").checked = state.vendor.sharesAddress;
-       
+        if(state.vendor.address.full === undefined){
+            document.getElementById("vendorBioAddress").value = state.vendor.address;
+            }else{
+                document.getElementById("vendorBioAddress").value = state.vendor.address.full;
+            };
+               
         document.getElementById("vendorBioEditForm").onsubmit = () => { this.submitBioEdit() };
         document.getElementById('vendorBioCancelBtn').onclick = () => { controller.closeModal() };
         
@@ -54,11 +52,9 @@ let modal = {
             ownerName: document.getElementById("vendorBioOwnerName").value,
             description: document.getElementById("vendorBioDescription").value,
             address: document.getElementById("vendorBioAddress").value,
-            sharesOwnerName: document.getElementById("ownerCheckbox").checked,
-            sharesAddress: document.getElementById("addressCheckbox").checked
+            telephone: document.getElementById("vendorBioPhone").value
         };
         
-        console.log("something");
         fetch( "/vendors", {
             method: 'PUT',
             headers:{
@@ -79,15 +75,13 @@ let modal = {
                         response.items,
                         response.ownerName,
                         response.address,
-                        response.sharesAddress,
-                        response.sharesOwnerName
+                        response.telephone
                     );
                     vendorInfo.displayVendorInfo();
                     controller.closeModal();
                 }
             })
             .catch((err) => {
-                console.log(err);
                 controller.createToaster('Something went wrong, please refresh the page.', "error");
             });
     }
