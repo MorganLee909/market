@@ -175,18 +175,23 @@ class VendorItem extends HTMLElement{
 
         this.container.insertBefore( this.itemTitle, this.nameInput  );
         this.container.removeChild( this.nameInput );
+        this.nameInput = undefined;
 
         this.container.insertBefore( this.amountGoods, this.amountInput );
         this.container.removeChild( this.amountInput );
+        this.amountInput = undefined;
 
         this.container.insertBefore( this.price, this.priceGoods );
         this.container.removeChild( this.priceGoods );
+        this.priceGoods = undefined;
 
         this.container.insertBefore( this.removeButton, this.cancelButton );
         this.container.removeChild( this.cancelButton );
+        this.cancelButton = undefined;
 
         this.container.insertBefore( this.editButton, this.submitButton );
         this.container.removeChild( this.submitButton );
+        this.submitButton = undefined;
     }
 
     removeItem( item ){
