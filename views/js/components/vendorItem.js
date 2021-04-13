@@ -128,7 +128,13 @@ class VendorItem extends HTMLElement{
         this.priceGoods.value = this.getAttribute( 'price' );
         this.container.insertBefore( this.priceGoods, this.price );
         this.container.removeChild( this.price );
-
+        
+        //Show/hide edit and cancel btn
+        if(this.getAttribute("isnew") !== "true"){
+            this.container.removeChild(this.editButton);
+            this.container.removeChild(this.removeButton);
+        };
+        
         //Cancel Button
         this.cancelButton = document.createElement( 'button' );
         this.cancelButton.innerHTML = `
