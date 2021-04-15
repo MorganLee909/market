@@ -24,7 +24,7 @@ class VendorItem extends HTMLElement{
         
         //amount
         this.amountGoods = document.createElement( "p" );
-        this.amountGoods.classList.add( "goodsInput" );
+        this.amountGoods.classList.add( "goodsAmount" );
         this.container.appendChild( this.amountGoods );
 
         //unit
@@ -102,7 +102,7 @@ class VendorItem extends HTMLElement{
        
         //Edit Goods Title
         this.nameInput = document.createElement( "input" );
-        this.nameInput.classList.add( "goodsTitle" );
+        // this.nameInput.classList.add( "goodsTitle" );
         this.nameInput.classList.add( "input-product" );
         this.nameInput.type = "text";
         this.nameInput.value = this.getAttribute( "product" );
@@ -111,7 +111,7 @@ class VendorItem extends HTMLElement{
         
         //Edit Goods Amount
         this.amountInput = document.createElement( "input" );
-        this.amountInput.classList.add( "goodsInput" );
+        // this.amountInput.classList.add( "goodsInput" );
         this.amountInput.classList.add( "input-product" );
         this.amountInput.type = "number";
         this.amountInput.value = this.getAttribute( "amount" );
@@ -129,7 +129,7 @@ class VendorItem extends HTMLElement{
 
         //Edit Price
         this.priceGoods = document.createElement( "input" );
-        this.priceGoods.classList.add( "goods-price" );
+        // this.priceGoods.classList.add( "goodsInputePrice" );
         this.priceGoods.classList.add( "input-product" );
         this.priceGoods.type = "number";
         this.priceGoods.step = "0.01";
@@ -202,7 +202,6 @@ class VendorItem extends HTMLElement{
         this.container.insertBefore( this.editButton, this.submitButton );
         this.container.removeChild( this.submitButton );
         this.submitButton = undefined;
-
     }
 
     removeItem( item ){
