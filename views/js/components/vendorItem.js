@@ -102,7 +102,6 @@ class VendorItem extends HTMLElement{
        
         //Edit Goods Title
         this.nameInput = document.createElement( "input" );
-        // this.nameInput.classList.add( "goodsTitle" );
         this.nameInput.classList.add( "input-product" );
         this.nameInput.type = "text";
         this.nameInput.value = this.getAttribute( "product" );
@@ -111,7 +110,6 @@ class VendorItem extends HTMLElement{
         
         //Edit Goods Amount
         this.amountInput = document.createElement( "input" );
-        // this.amountInput.classList.add( "goodsInput" );
         this.amountInput.classList.add( "input-product" );
         this.amountInput.type = "number";
         this.amountInput.value = this.getAttribute( "amount" );
