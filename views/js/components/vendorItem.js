@@ -127,7 +127,6 @@ class VendorItem extends HTMLElement{
 
         //Edit Price
         this.priceGoods = document.createElement( "input" );
-        // this.priceGoods.classList.add( "goodsInputePrice" );
         this.priceGoods.classList.add( "input-product" );
         this.priceGoods.type = "number";
         this.priceGoods.step = "0.01";
