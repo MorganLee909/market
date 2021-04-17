@@ -1,6 +1,6 @@
 let vendorInfoPage = {
     display: function(){
-        
+        //Go to landing
         document.getElementById( 'vendorInfoToLanding' ).onclick = () => {
             controller.openPage( 'landingPage' );
         };
@@ -20,16 +20,17 @@ let vendorInfoPage = {
         document.getElementById( "vendorBioBtn" ).onclick = () => {
             controller.openModal( 'vendorBioEditModal' );
         };
-
-        let btn = document.getElementById( 'addNewProduct' ).onclick = () => {
-            this.addNewProduct();
-        };
         
         //Add first product
         document.getElementById("addFirstProduct").onclick = () => {
             this.addFirstProduct();
         };
-      
+        
+        //Add new product
+        document.getElementById( 'addNewProduct' ).onclick = () => {
+            this.addNewProduct();
+        };
+
         this.displayVendorInfo();
         this.displayItems();
     },

@@ -24,12 +24,11 @@ class VendorItem extends HTMLElement{
         
         //amount
         this.amountGoods = document.createElement( "p" );
-        this.amountGoods.classList.add( "goodsInput" );
+        this.amountGoods.classList.add( "goodsAmount" );
         this.container.appendChild( this.amountGoods );
 
         //unit
         this.unitGoods = document.createElement( "p" );
-        this.unitGoods.innerText = "kg";
         this.unitGoods.classList.add( 'unit-goods' );
         this.container.appendChild( this.unitGoods );
 
@@ -103,7 +102,6 @@ class VendorItem extends HTMLElement{
        
         //Edit Goods Title
         this.nameInput = document.createElement( "input" );
-        this.nameInput.classList.add( "goodsTitle" );
         this.nameInput.classList.add( "input-product" );
         this.nameInput.type = "text";
         this.nameInput.value = this.getAttribute( "product" );
@@ -112,7 +110,6 @@ class VendorItem extends HTMLElement{
         
         //Edit Goods Amount
         this.amountInput = document.createElement( "input" );
-        this.amountInput.classList.add( "goodsInput" );
         this.amountInput.classList.add( "input-product" );
         this.amountInput.type = "number";
         this.amountInput.value = this.getAttribute( "amount" );
@@ -120,15 +117,29 @@ class VendorItem extends HTMLElement{
         this.container.insertBefore( this.amountInput, this.amountGoods );
         this.container.removeChild( this.amountGoods );
 
+        //Edit Unit
+        this.unitInput = document.createElement("input");
+        this.unitInput.classList.add("input-product");
+        this.unitInput.type = "string";
+        this.unitInput.value = this.getAttribute("unit");
+        this.container.insertBefore(this.unitInput, this.unitGoods);
+        this.container.removeChild(this.unitGoods);
+
         //Edit Price
         this.priceGoods = document.createElement( "input" );
-        this.priceGoods.classList.add( "goods-price" );
         this.priceGoods.classList.add( "input-product" );
         this.priceGoods.type = "number";
+        this.priceGoods.step = "0.01";
         this.priceGoods.value = this.getAttribute( 'price' );
         this.container.insertBefore( this.priceGoods, this.price );
         this.container.removeChild( this.price );
-
+        
+        //Show/hide edit and cancel btn
+        if(this.getAttribute("isnew") !== "true"){
+            this.container.removeChild(this.editButton);
+            this.container.removeChild(this.removeButton);
+        };
+        
         //Cancel Button
         this.cancelButton = document.createElement( 'button' );
         this.cancelButton.innerHTML = `
@@ -167,18 +178,27 @@ class VendorItem extends HTMLElement{
 
         this.container.insertBefore( this.itemTitle, this.nameInput  );
         this.container.removeChild( this.nameInput );
+        this.nameInput = undefined;
 
         this.container.insertBefore( this.amountGoods, this.amountInput );
         this.container.removeChild( this.amountInput );
+        this.amountInput = undefined;
+
+        this.container.insertBefore( this.unitGoods, this.unitInput );
+        this.container.removeChild( this.unitInput );
+        this.unitInput = undefined;
 
         this.container.insertBefore( this.price, this.priceGoods );
         this.container.removeChild( this.priceGoods );
+        this.priceGoods = undefined;
 
         this.container.insertBefore( this.removeButton, this.cancelButton );
         this.container.removeChild( this.cancelButton );
+        this.cancelButton = undefined;
 
         this.container.insertBefore( this.editButton, this.submitButton );
         this.container.removeChild( this.submitButton );
+        this.submitButton = undefined;
     }
 
     removeItem( item ){
@@ -204,7 +224,7 @@ class VendorItem extends HTMLElement{
             id: this.getAttribute( "itemid" ),
             name: this.nameInput.value,
             quantity: this.amountInput.value,
-            unit: this.getAttribute( "unit" ),
+            unit: this.unitInput.value,
             price: parseInt( this.priceGoods.value * 100 ),
         };
 
@@ -221,7 +241,7 @@ class VendorItem extends HTMLElement{
                     controller.createToaster(response, "error");
                 }else{
                     state.vendor.removeItem(response._id);
-                    state.vendor.addItem(response);                  
+                    state.vendor.addItem(response);
                 }
             })
             .catch((err) => {
@@ -233,7 +253,7 @@ class VendorItem extends HTMLElement{
         let data = {
             name: this.nameInput.value,
             quantity: this.amountInput.value,
-            unit: 'kg',
+            unit: this.unitInput.value,
             price: parseInt( this.priceGoods.value * 100 )
         };
 
