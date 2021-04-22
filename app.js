@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("cookie-session");
 const mongoose = require("mongoose");
 const compression = require("compression");
+const cssmerger = require("cssmerger");
 const https = require("https");
 const fs = require("fs");
 
@@ -9,6 +10,11 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/views"));
+
+let cssOptions = {
+    recursive: true,
+    minimize: false
+};
 
 let mongooseURL = "mongodb://localhost:27017/market";
 let httpsServer = {};
@@ -27,7 +33,10 @@ if(process.env.NODE_ENV === "production"){
     });
 
     mongooseURL = `mongodb://website:${process.env.MARKET_DB_PASS}@127.0.0.1/market`;
+    cssOptions.minimize = true;
 }
+
+cssmerger(["./views/css"], "./views/bundle.css", cssOptions);
 
 mongoose.connect(mongooseURL, {
     useNewUrlParser: true,
