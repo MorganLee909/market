@@ -7,15 +7,10 @@ const fs = require("fs");
 
 const app = express();
 
-mongoose.connect(process.env.MARKET_DB, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
-    useCreateIndex: true
-});
-
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/views"));
 
+let mongooseURL = "mongodb://localhost:27017/market";
 let httpsServer = {};
 if(process.env.NODE_ENV === "production"){
     httpsServer = https.createServer({
@@ -29,12 +24,20 @@ if(process.env.NODE_ENV === "production"){
         }else{
             res.redirect(`https://${req.headers.host}${req.url}`);
         }
-    })
+    });
+
+    mongooseURL = `mongodb://website:${process.env.MARKET_DB_PASS}@127.0.0.1/market`;
 }
+
+mongoose.connect(mongooseURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+});
 
 app.use(compression());
 app.use(session({
-    secret: "marketers marketing market markets",
+    secret: "marketers marketing market markets with markers",
     cookie: {secure: false},
     saveUninitialized: true,
     resave: false

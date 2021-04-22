@@ -39,4 +39,3 @@ module.exports = function(app){
     app.get("/markets/:id", marketData.getMarket);
     app.delete("/markets/:id", verifyVendor, marketData.removeMarket); 
 }
-        
