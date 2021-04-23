@@ -56,9 +56,10 @@ module.exports = {
                         url: vendors[i].url,
                         items: vendors[i].items,
                         ownerName: vendors[i].ownerName,
-                        address: vendors[i].address.city,
+                        address: (vendors[i].address === undefined) ? undefined : vendors[i].address.city,
                         email: vendors[i].email,
-                        telephone: vendors[i].telephone
+                        telephone: vendors[i].telephone,
+                        distance: vendors[i].distance
                     });
                 }
 
