@@ -17,26 +17,26 @@ class VSearchResults extends HTMLElement{
         this.container = document.createElement('div');
         this.container.classList.add("search-results-item");
         
-        //location (cooming soon)
-    //     this.container.innerHTML = `
-    //     <div class="location-icon"> 
-    //         <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
-    //             <path d="M9.11755 8.54808C10.3764 8.54808 11.397 7.52755 11.397 6.26867C11.397 5.00979 10.3764 3.98926 9.11755 3.98926C7.85866 3.98926 6.83813 5.00979 6.83813 6.26867C6.83813 7.52755 7.85866 8.54808 9.11755 8.54808Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
-    //             <path d="M13.6764 8.54774C11.9668 12.5367 9.11756 17.0955 9.11756 17.0955C9.11756 17.0955 6.26829 12.5367 4.55873 8.54774C2.84917 4.55877 5.69844 1.13965 9.11756 1.13965C12.5367 1.13965 15.3859 4.55877 13.6764 8.54774Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
-    //         </svg>
-    //         <p> 0.2 km </p>
-    //     </div>
-    //     <div class="titlePlusAddress">
-    //         <p class="search-results-item-title"></p>
-    //         <p class="search-vendor-address"></p>
-    //     </div>
-    // `;
+        //location
         this.container.innerHTML = `
+            <div class="location-icon"> 
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
+                    <path d="M9.11755 8.54808C10.3764 8.54808 11.397 7.52755 11.397 6.26867C11.397 5.00979 10.3764 3.98926 9.11755 3.98926C7.85866 3.98926 6.83813 5.00979 6.83813 6.26867C6.83813 7.52755 7.85866 8.54808 9.11755 8.54808Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13.6764 8.54774C11.9668 12.5367 9.11756 17.0955 9.11756 17.0955C9.11756 17.0955 6.26829 12.5367 4.55873 8.54774C2.84917 4.55877 5.69844 1.13965 9.11756 1.13965C12.5367 1.13965 15.3859 4.55877 13.6764 8.54774Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p> 0.2 km </p>
+            </div>
             <div class="titlePlusAddress">
                 <p class="search-results-item-title"></p>
                 <p class="search-vendor-address"></p>
             </div>
         `;
+        // this.container.innerHTML = `
+        //     <div class="titlePlusAddress">
+        //         <p class="search-results-item-title"></p>
+        //         <p class="search-vendor-address"></p>
+        //     </div>
+        // `;
 
         this.shadow.appendChild( this.container );
 
@@ -65,11 +65,12 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                this.container.childNodes[1].firstElementChild.innerText = newValue;
+                // console.log(this.container.childNodes);
+                this.container.childNodes[3].firstElementChild.innerText = newValue;
                 break;
 
             case "address":
-                this.container.childNodes[1].lastElementChild.innerText = newValue;
+                this.container.childNodes[3].lastElementChild.innerText = newValue;
                 break;
 
         }

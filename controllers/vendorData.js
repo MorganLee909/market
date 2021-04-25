@@ -47,6 +47,7 @@ module.exports = {
                 ]);
             })
             .then((vendors)=>{
+                console.log("vendors", vendors);
                 let response = [];
                 for(let i = 0; i < vendors.length; i++){
                     response.push({
@@ -58,7 +59,8 @@ module.exports = {
                         ownerName: vendors[i].ownerName,
                         address: vendors[i].address.city,
                         email: vendors[i].email,
-                        telephone: vendors[i].telephone
+                        telephone: vendors[i].telephone,
+                        distance: vendors[i].distance
                     });
                 }
 
