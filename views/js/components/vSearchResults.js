@@ -1,7 +1,7 @@
 class VSearchResults extends HTMLElement{
 
     static get observedAttributes(){
-        return ["vendor", "address"];
+        return ["vendor", "address", "distance"];
     }
     
     constructor(){
@@ -65,12 +65,15 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                // console.log(this.container.childNodes);
                 this.container.childNodes[3].firstElementChild.innerText = newValue;
                 break;
 
             case "address":
                 this.container.childNodes[3].lastElementChild.innerText = newValue;
+                break;
+            
+            case "distance":
+                this.container.childNodes[1].lastElementChild.innerText = newValue;
                 break;
 
         }

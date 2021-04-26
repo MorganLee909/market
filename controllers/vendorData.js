@@ -47,7 +47,6 @@ module.exports = {
                 ]);
             })
             .then((vendors)=>{
-                console.log("vendors", vendors);
                 let response = [];
                 for(let i = 0; i < vendors.length; i++){
                     response.push({

@@ -13,7 +13,7 @@ app.use(express.static(__dirname + "/views"));
 
 let cssOptions = {
     recursive: true,
-    minimize: false
+    minimize: true
 };
 
 let mongooseURL = "mongodb://localhost:27017/market";

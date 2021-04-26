@@ -54,10 +54,7 @@ let landingPage = {
                     controller.createToaster(response, "error");
                 }else{
                     let vendors = [];
-                    console.log("responce", response);
                     for( let i = 0; i < response.length; i++){
-                        console.log(response[i])
-
                         let vendor = new Vendor(
                             response[i]._id,
                             response[i].name,

@@ -71,9 +71,9 @@ let searchResultsPage = {
         for( let i = 0; i < vendors.length; i++ ){
             let item = document.createElement("search-item");
             item.vendor = vendors[i];
-            // console.log(vendors[i]);
             item.setAttribute('vendor', vendors[i].name);
             item.setAttribute('address', vendors[i].address);
+            item.setAttribute('distance', vendors[i].distance);
             container.appendChild(item);
         }
     },
