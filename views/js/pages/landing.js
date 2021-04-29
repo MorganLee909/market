@@ -64,7 +64,8 @@ let landingPage = {
                             response[i].ownerName,
                             response[i].address,
                             response[i].telephone,
-                            response[i].distance                        );
+                            response[i].distance
+                        )
                         
                         vendors.push(vendor);
                     }

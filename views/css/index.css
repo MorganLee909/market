@@ -62,36 +62,6 @@ button{
     margin-bottom: 48px;
 }
 
-.icon{
-    fill: none;
-}
-
-.icon:hover #remove-icon,
-.icon:hover #edit-icon{
-    fill: #828282;
-}
-
-.icon-close:hover #icon-close{
-    fill: #828282;
-}
-
-.icon-close:hover #icon-close-back{
-    fill: #F7F7F7;
-}
-
-.icon:hover #remove-icon-back,
-.icon:hover #edit-icon-back{
-    fill: white;
-}
-
-.icon:hover #icon-save-back{
-    fill: #43825C;
-}
-
-.icon-close{
-    padding-right: 9px;
-}
-
 .contact-edit-icon{
     visibility: hidden;
 }
@@ -257,35 +227,6 @@ button{
     justify-content: center;
 }
 
-.search-vendor-address{
-    font-style: normal;
-    font-weight: normal;
-    font-size: 9px;
-    color: #9D9D9D;
-    margin-left: 11px;
-}
-
-.search-results-item{
-    display: flex;
-    align-items: center;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 14px;
-    height: 44px;
-    padding-left: 10px;
-}
-
-.search-results-item:hover{
-    background-color: #F7F7F7;
-    cursor: pointer;
-    border-color: white!important
-}
-
-.search-results-item-title{
-    margin-left: 11px;
-}
-
 .search-title-icons{
     display: flex;
     flex-direction: row;
@@ -324,15 +265,6 @@ button{
     color: #BDBDBD;
     box-shadow: inset 0px 0px 0px 0px red;
     box-shadow: none;
-}
-
-.titlePlusAddress{
-    height: 45px;
-    width: 272px;
-    border-bottom: 1px solid #EEE;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
 }
 
 #searchVendorForm{
@@ -377,41 +309,15 @@ button{
     align-items: center;
 }
 
-.location-icon{
-    display: flex;
-    width: 32px;
-    flex-direction: column;
-    font-size: 12px;
-    font-weight: normal;
-    font-size: 8.20588px;
-    line-height: 10px;
-    align-items: center;
-    text-align: center;
-    color: #808080;
-}
-
 #bioAddress:hover, #bioOwnerName:hover,
 #bioDescription:hover{
     cursor: text;
-}
-
-.goodsTitle{
-    font-weight: 500;
-    font-size: 18px;
-    flex-basis: 31%;
 }
 
 .goodsInput{
     font-size: 18px;
     font-weight: 600;
     text-align: right;
-}
-
-.goodsAmount{
-    font-size: 18px;
-    font-weight: 600;
-    text-align: right;
-    flex-basis: 27%;
 }
 
 .goodsInput:focus{
@@ -434,14 +340,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.goods-price{
-    font-weight: bold;
-    font-size: 22px;
-    text-align: right;
-    flex-basis: 32%;
-    padding-right: 60px;
-}
-
 .goodsInputePrice{
     font-weight: bold;
     font-size: 22px;
@@ -456,26 +354,6 @@ input[type=number] {
     align-items: center;
     position: absolute;
     top: 0;
-}
-
-.vendor-item{
-    flex-direction: row;
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    height: 54px;
-    padding-left: 19px;
-    padding-right: 19px;
-}
-
-.vendor-item:hover{
-    background-color: #F7F7F7;
-}
-
-.unit-goods{
-    font-size: 12px;
-    flex-basis: 30%;
-    text-align: right;
 }
 
 .unit{
@@ -494,11 +372,6 @@ input[type=number] {
     width: 24px;
     height: 24px;
     padding-left: 3rem;
-}
-
-.accordion-button{
-    border-bottom: 1px solid #EEE;
-    height: 45px;
 }
 
 .cta_button{
@@ -742,27 +615,6 @@ form {
     color: white;
     border-radius: .25rem;
     margin-top: 24px;
-}
-
-.input-product{
-    border-top-width: 0px;
-    border-top-style: solid;
-    border-left-width: 0px;
-    border-left-style: solid;
-    border-right-width: 0px;
-    border-right-style: solid;
-    margin-right: 20px;
-    color: #2B583D;
-    font-weight: 500;
-    font-size: 18px;
-}
-
-.input-product:focus{
-    border-color: #2B583D;
-}
-
-.input-product:focus-visible{
-    outline: none;
 }
 
 .searchbox{
