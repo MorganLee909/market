@@ -33,7 +33,7 @@ if(process.env.NODE_ENV === "production"){
     });
 
     mongooseURL = `mongodb://website:${process.env.MARKET_DB_PASS}@127.0.0.1/market`;
-    cssOptions.minimize = true;
+    cssOptions.minimize = false;
 }
 
 cssmerger(["./views/css"], "./views/bundle.css", cssOptions);
