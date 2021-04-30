@@ -1,37 +1,31 @@
 class VSearchResults extends HTMLElement{
 
     static get observedAttributes(){
-        return ["vendor", "address"];
+        return ["vendor", "address", "distance"];
     }
     
     constructor(){
         super();
         this.shadow = this.attachShadow({ mode:"open" });
 
-        // Apply external styles to the shadow dom
+        // style
         const linkElem = document.createElement( 'link' );
-        linkElem.setAttribute( 'rel', 'stylesheet' );
-        linkElem.setAttribute( 'href', 'index.css' );
-        this.shadow.appendChild( linkElem );
+        let style = document.createElement("style");
+        style.innerText = this.createStyle();
+        this.shadow.appendChild(style);
 
         this.container = document.createElement('div');
         this.container.classList.add("search-results-item");
         
-        //location (cooming soon)
-    //     this.container.innerHTML = `
-    //     <div class="location-icon"> 
-    //         <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
-    //             <path d="M9.11755 8.54808C10.3764 8.54808 11.397 7.52755 11.397 6.26867C11.397 5.00979 10.3764 3.98926 9.11755 3.98926C7.85866 3.98926 6.83813 5.00979 6.83813 6.26867C6.83813 7.52755 7.85866 8.54808 9.11755 8.54808Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
-    //             <path d="M13.6764 8.54774C11.9668 12.5367 9.11756 17.0955 9.11756 17.0955C9.11756 17.0955 6.26829 12.5367 4.55873 8.54774C2.84917 4.55877 5.69844 1.13965 9.11756 1.13965C12.5367 1.13965 15.3859 4.55877 13.6764 8.54774Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
-    //         </svg>
-    //         <p> 0.2 km </p>
-    //     </div>
-    //     <div class="titlePlusAddress">
-    //         <p class="search-results-item-title"></p>
-    //         <p class="search-vendor-address"></p>
-    //     </div>
-    // `;
+        //location
         this.container.innerHTML = `
+            <div class="location-icon"> 
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
+                    <path d="M9.11755 8.54808C10.3764 8.54808 11.397 7.52755 11.397 6.26867C11.397 5.00979 10.3764 3.98926 9.11755 3.98926C7.85866 3.98926 6.83813 5.00979 6.83813 6.26867C6.83813 7.52755 7.85866 8.54808 9.11755 8.54808Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13.6764 8.54774C11.9668 12.5367 9.11756 17.0955 9.11756 17.0955C9.11756 17.0955 6.26829 12.5367 4.55873 8.54774C2.84917 4.55877 5.69844 1.13965 9.11756 1.13965C12.5367 1.13965 15.3859 4.55877 13.6764 8.54774Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p> 0.2 km </p>
+            </div>
             <div class="titlePlusAddress">
                 <p class="search-results-item-title"></p>
                 <p class="search-vendor-address"></p>
@@ -65,14 +59,88 @@ class VSearchResults extends HTMLElement{
         switch( name ){
             
             case "vendor":
-                this.container.childNodes[1].firstElementChild.innerText = newValue;
+                this.container.childNodes[3].firstElementChild.innerText = newValue;
                 break;
 
             case "address":
+                this.container.childNodes[3].lastElementChild.innerText = newValue;
+                break;
+            
+            case "distance":
                 this.container.childNodes[1].lastElementChild.innerText = newValue;
                 break;
 
         }
+    }
+
+    createStyle(){
+        return `
+            button{
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            .search-results-item{
+                display: flex;
+                align-items: center;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 14px;
+                height: 44px;
+                padding-left: 10px;
+            }
+            
+            .search-results-item:hover{
+                background-color: #F7F7F7;
+                cursor: pointer;
+                border-color: white!important
+            }
+            
+            .search-results-item-title{
+                margin-left: 11px;
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+            
+            .accordion-button{
+                border-bottom: 1px solid #EEE;
+                height: 45px;
+            }
+
+            .location-icon{
+                display: flex;
+                width: 32px;
+                flex-direction: column;
+                font-size: 12px;
+                font-weight: normal;
+                font-size: 8.20588px;
+                line-height: 10px;
+                align-items: center;
+                text-align: center;
+                color: #808080;
+            }
+
+            .titlePlusAddress{
+                height: 45px;
+                width: 272px;
+                border-bottom: 1px solid #EEE;
+                display: flex;
+                flex-flow: column;
+                justify-content: center;
+            }     
+            
+            .search-vendor-address{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 9px;
+                color: #9D9D9D;
+                margin-left: 11px;
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+        `
     }
 
 } 

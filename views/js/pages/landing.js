@@ -54,9 +54,7 @@ let landingPage = {
                     controller.createToaster(response, "error");
                 }else{
                     let vendors = [];
-
                     for( let i = 0; i < response.length; i++){
-        
                         let vendor = new Vendor(
                             response[i]._id,
                             response[i].name,
@@ -65,8 +63,10 @@ let landingPage = {
                             response[i].items,
                             response[i].ownerName,
                             response[i].address,
-                            response[i].telephone
-                        );
+                            response[i].telephone,
+                            response[i].distance
+                        )
+                        
                         vendors.push(vendor);
                     }
                     

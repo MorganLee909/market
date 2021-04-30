@@ -59,7 +59,7 @@ module.exports = {
                         address: (vendors[i].address === undefined) ? undefined : vendors[i].address.city,
                         email: vendors[i].email,
                         telephone: vendors[i].telephone,
-                        distance: vendors[i].distance
+                        distance: vendors[i].distance / 1609.344
                     });
                 }
 
