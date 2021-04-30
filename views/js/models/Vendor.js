@@ -11,7 +11,7 @@ class Vendor {
         this._items = [];
         this._address = (address === undefined) ? "" : address;
         this._phone = (phone === undefined) ? "" : phone;
-        this._distance = `${(distance * 0.001).toFixed(1)} mi`;
+        this._distance = distance;
 
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
@@ -60,7 +60,7 @@ class Vendor {
     }
 
     get distance(){
-        return this._distance
+        return this._distance;
     }
 
     addItem( item ){
