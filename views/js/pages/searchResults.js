@@ -73,7 +73,7 @@ let searchResultsPage = {
             item.vendor = vendors[i];
             item.setAttribute('vendor', vendors[i].name);
             item.setAttribute('address', vendors[i].address);
-            item.setAttribute('distance', `${(vendors[i].distance * 0.001).toFixed(1)} mi` );
+            item.setAttribute('distance', `${vendors[i].distance} mi` );
             container.appendChild(item);
         }
     },
