@@ -75,73 +75,71 @@ class VSearchResults extends HTMLElement{
 
     createStyle(){
         return `
+            button{
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
 
-        button{
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+            .search-results-item{
+                display: flex;
+                align-items: center;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 14px;
+                height: 44px;
+                padding-left: 10px;
+            }
+            
+            .search-results-item:hover{
+                background-color: #F7F7F7;
+                cursor: pointer;
+                border-color: white!important
+            }
+            
+            .search-results-item-title{
+                margin-left: 11px;
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+            
+            .accordion-button{
+                border-bottom: 1px solid #EEE;
+                height: 45px;
+            }
 
-        .search-results-item{
-            display: flex;
-            align-items: center;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 12px;
-            line-height: 14px;
-            height: 44px;
-            padding-left: 10px;
-        }
-        
-        .search-results-item:hover{
-            background-color: #F7F7F7;
-            cursor: pointer;
-            border-color: white!important
-        }
-        
-        .search-results-item-title{
-            margin-left: 11px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-        }
-        
-        .accordion-button{
-            border-bottom: 1px solid #EEE;
-            height: 45px;
-        }
+            .location-icon{
+                display: flex;
+                width: 32px;
+                flex-direction: column;
+                font-size: 12px;
+                font-weight: normal;
+                font-size: 8.20588px;
+                line-height: 10px;
+                align-items: center;
+                text-align: center;
+                color: #808080;
+            }
 
-        .location-icon{
-            display: flex;
-            width: 32px;
-            flex-direction: column;
-            font-size: 12px;
-            font-weight: normal;
-            font-size: 8.20588px;
-            line-height: 10px;
-            align-items: center;
-            text-align: center;
-            color: #808080;
-        }
-
-        .titlePlusAddress{
-            height: 45px;
-            width: 272px;
-            border-bottom: 1px solid #EEE;
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-        }     
-        
-        .search-vendor-address{
-            font-style: normal;
-            font-weight: normal;
-            font-size: 9px;
-            color: #9D9D9D;
-            margin-left: 11px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-        }
-
+            .titlePlusAddress{
+                height: 45px;
+                width: 272px;
+                border-bottom: 1px solid #EEE;
+                display: flex;
+                flex-flow: column;
+                justify-content: center;
+            }     
+            
+            .search-vendor-address{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 9px;
+                color: #9D9D9D;
+                margin-left: 11px;
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
         `
     }
 

@@ -278,107 +278,107 @@ class VendorItem extends HTMLElement{
 
     createStyle(){
         return `
-        .vendor-item{
-            flex-direction: row;
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-            height: 54px;
-            padding-left: 19px;
-            padding-right: 19px;
-        }
-        
-        .vendor-item:hover{
-            background-color: #F7F7F7;
-        }
+            .vendor-item{
+                flex-direction: row;
+                align-items: center;
+                display: flex;
+                justify-content: space-between;
+                height: 54px;
+                padding-left: 19px;
+                padding-right: 19px;
+            }
+            
+            .vendor-item:hover{
+                background-color: #F7F7F7;
+            }
 
-        .goodsTitle{
-            font-weight: 500;
-            font-size: 18px;
-            flex-basis: 31%;
-        }
+            .goodsTitle{
+                font-weight: 500;
+                font-size: 18px;
+                flex-basis: 31%;
+            }
 
-        .goodsAmount{
-            font-size: 18px;
-            font-weight: 600;
-            text-align: right;
-            flex-basis: 27%;
-        }
+            .goodsAmount{
+                font-size: 18px;
+                font-weight: 600;
+                text-align: right;
+                flex-basis: 27%;
+            }
 
-        .unit-goods{
-            font-size: 12px;
-            flex-basis: 30%;
-            text-align: right;
-        }
+            .unit-goods{
+                font-size: 12px;
+                flex-basis: 30%;
+                text-align: right;
+            }
 
-        .goods-price{
-            font-weight: bold;
-            font-size: 22px;
-            text-align: right;
-            flex-basis: 32%;
-            padding-right: 60px;
-        }
+            .goods-price{
+                font-weight: bold;
+                font-size: 22px;
+                text-align: right;
+                flex-basis: 32%;
+                padding-right: 60px;
+            }
 
-        .icon{
-            fill: none;
-        }
-        
-        .icon:hover #remove-icon,
-        .icon:hover #edit-icon{
-            fill: #828282;
-        }
-        
-        .icon-close:hover #icon-close{
-            fill: #828282;
-        }
-        
-        .icon-close:hover #icon-close-back{
-            fill: #F7F7F7;
-        }
-        
-        .icon:hover #remove-icon-back,
-        .icon:hover #edit-icon-back{
-            fill: white;
-        }
+            .icon{
+                fill: none;
+            }
+            
+            .icon:hover #remove-icon,
+            .icon:hover #edit-icon{
+                fill: #828282;
+            }
+            
+            .icon-close:hover #icon-close{
+                fill: #828282;
+            }
+            
+            .icon-close:hover #icon-close-back{
+                fill: #F7F7F7;
+            }
+            
+            .icon:hover #remove-icon-back,
+            .icon:hover #edit-icon-back{
+                fill: white;
+            }
 
-        button{
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+            button{
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
 
-        .input-product{
-            border-top-width: 0px;
-            border-top-style: solid;
-            border-left-width: 0px;
-            border-left-style: solid;
-            border-right-width: 0px;
-            border-right-style: solid;
-            margin-right: 20px;
-            color: #2B583D;
-            font-weight: 500;
-            font-size: 18px;
-        }
-        
-        .input-product:focus{
-            border-color: #2B583D;
-        }
-        
-        .input-product:focus-visible{
-            outline: none;
-        }
+            .input-product{
+                border-top-width: 0px;
+                border-top-style: solid;
+                border-left-width: 0px;
+                border-left-style: solid;
+                border-right-width: 0px;
+                border-right-style: solid;
+                margin-right: 20px;
+                color: #2B583D;
+                font-weight: 500;
+                font-size: 18px;
+            }
+            
+            .input-product:focus{
+                border-color: #2B583D;
+            }
+            
+            .input-product:focus-visible{
+                outline: none;
+            }
 
-        /* Chrome, Safari, Edge, Opera  */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-        }
+            /* Chrome, Safari, Edge, Opera  */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
 
-        /* Firefox */
-        input[type=number] {
-        -moz-appearance: textfield;
-        }
+            /* Firefox */
+            input[type=number] {
+            -moz-appearance: textfield;
+            }
         `;
     }
 }

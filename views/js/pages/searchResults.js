@@ -73,7 +73,7 @@ let searchResultsPage = {
             item.vendor = vendors[i];
             item.setAttribute('vendor', vendors[i].name);
             item.setAttribute('address', vendors[i].address);
-            item.setAttribute('distance', `${vendors[i].distance} mi` );
+            item.setAttribute('distance', `${vendors[i].distance.toFixed(1)} mi` );
             container.appendChild(item);
         }
     },
@@ -88,7 +88,7 @@ let searchResultsPage = {
                 continue;
             }
             
-            for( let x = 0; x < this.vendors[i].items.length; x++ ){                
+            for( let x = 0; x < this.vendors[i].items.length; x++ ){
                 if(this.vendors[i].items[x].name.toLowerCase().includes(searchvalue.toLowerCase())){
                     result.push(this.vendors[i]);
                     break;
