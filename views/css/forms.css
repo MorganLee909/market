@@ -1,0 +1,91 @@
+
+form {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    transform: translateY(-50%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30rem;
+    border-radius: 0.1875rem;
+    box-shadow: 0px 0.1875rem 0.4375rem rgba(0, 0, 0, 0.25);
+    padding: 2rem;
+    background-color: white;
+}
+
+    form h1{ 
+        font-style: normal;
+        font-weight: 900;
+        font-size: 25px;
+        line-height: 29px;
+        text-align: center;
+        color: #214530;
+        margin-bottom: 24px;
+    }
+
+    form label {
+        color: #807c7c;
+        margin-bottom: 15px;
+        width: 80%;
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+    }
+
+    form input, textarea{
+        font-family: 'Roboto', sans-serif;
+        width: 372px;
+        resize: vertical;
+        font-size: 14px;
+        height: 44px;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        border: 2px solid #E0E0E0;
+        border-radius: 4px;
+        padding-left: 8px;
+        margin-top: 7px;
+        margin-bottom: 4px;
+        box-shadow: inset 0px 0px 0px 0px red;
+    }
+
+    form textarea{
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+
+    form textarea:focus, input:focus{
+        border-color: #2B583D;
+       }  
+
+    form textarea:focus-visible, input:focus-visible{
+        outline: none;
+    } 
+
+    #searchVendorForm{
+        box-shadow: none;
+    }
+
+    .vendor-form{
+        padding: 6rem;
+        padding-top: 6rem;
+        width: 60%;
+    }
+    
+    .vendor-form-header{
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: #D0D9D4;
+        padding-bottom: 26px;
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        padding-left: 19px;
+        padding-right: 19px;
+    }

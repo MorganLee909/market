@@ -1,0 +1,54 @@
+.goodsInput{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.goodsInput:focus{
+    border-color: #2B583D;
+}
+
+.goodsInput:focus-visible{
+    outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.goodsInputePrice{
+    font-weight: bold;
+    font-size: 22px;
+    text-align: right;
+}
+
+.search-input{
+    margin-bottom: 23px;
+    margin-top: 46px;
+    padding-left: 8px;
+    height: 48px;
+    width: 374px;
+    border: 2px solid #E0E0E0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #BDBDBD;
+    box-shadow: inset 0px 0px 0px 0px red;
+    box-shadow: none;
+}
+
+.search-input:focus{
+    border-color: #2B583D;
+    color: #55595c;
+   } 
+
+.search-input:focus-visible{
+    outline: none;
+} 
