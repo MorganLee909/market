@@ -64,7 +64,10 @@ const MarketSchema = new mongoose.Schema({
     },
 
     //PUBLIC: list of dates/times that the market will meet
-    meetings: [Date]
+    meetings: [{
+        from: Date,
+        to: Date
+    }]
 });
 
 MarketSchema.index({location: "2dsphere"});

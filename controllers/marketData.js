@@ -107,7 +107,52 @@ module.exports = {
             });
     },
 
-    
+    /*
+    PUT: Updates the list of meetings for the market
+    req.body = {
+        merchant: String (id)
+        remove: [String (id of meeting)]
+        add: [{
+            from: Date,
+            to: Date
+        }]
+    }
+    response = [{
+        _id: String,
+        from: Date,
+        to: Date
+    }]
+    */
+    updateMeetings: function(req, res){
+        Market.findOne({_id: req.body.market})
+            .then((market)=>{
+                if(market.owner.toString() !== res.locals.vendor._id.toString()){
+                    throw "YOU DO NOT HAVE PERMISSION TO DO THAT";
+                }
+
+                for(let i = 0; i < req.body.remove.length; i++){
+                    market.meetings.id(req.body.remove[i]).remove();
+                }
+
+                for(let i = 0; i < req.body.add.length; i++){
+                    market.meetings.push({
+                        from: new Date(req.body.add[i].from),
+                        to: new Date(req.body.add[i].to)
+                    });
+                }
+
+                return market.save()
+            })
+            .then((market)=>{
+                return res.json(market.meetings);
+            })
+            .catch((err)=>{
+                if(err instanceof ValidationError){
+                    return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
+                }
+                return res.json("ERROR: UNABLE TO UPDATE YOUR MARKET TIMES");
+            });
+    },
 
     /*
     GET: Gets a list of all markets in the area

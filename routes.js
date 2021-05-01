@@ -34,6 +34,7 @@ module.exports = function(app){
     //Markets
     app.post("/markets", verifyVendor, marketData.createMarket);
     app.put("/markets", verifyVendor, marketData.updateMarket);
+    app.put("/markets/meetings", verifyVendor, marketData.updateMeetings);
     app.get("/markets/search?*", marketData.getMarkets);
     app.post("/markets/:id/vendors", verifyVendor, marketData.addVendors);
     app.get("/markets/:id", marketData.getMarket);
