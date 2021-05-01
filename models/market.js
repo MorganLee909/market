@@ -61,7 +61,10 @@ const MarketSchema = new mongoose.Schema({
             validator: validation.isSanitary,
             message: "MARKET DESCRIPTION CONTAINS ILLEGAL CHARACTERS"
         }
-    }
+    },
+
+    //PUBLIC: list of dates/times that the market will meet
+    meetings: [Date]
 });
 
 MarketSchema.index({location: "2dsphere"});
