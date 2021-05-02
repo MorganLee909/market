@@ -1,0 +1,116 @@
+button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.cta_button{
+    width: 384px;
+    height: 50px;
+    background:#2B583D;
+    border: medium none;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    border-radius: .25rem;
+    margin-top: 24px;
+}
+
+.cta_button:hover,
+.button-medium:hover,
+.form-cta_button:hover
+{
+    cursor: pointer;
+    background-color: #43825C;
+}
+
+.cancel-button{
+    width: 170px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B583D;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+.cancel-button:hover,
+.form-cancel-button:hover{
+    background: #F6F6F6;
+    border-radius: 6px;
+}
+
+#confirmConfirmButton{
+    width: 260px;
+}
+
+.edit-button{
+    width: 170px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+.button-medium{
+    width: 120px;
+    height: 32px;
+    background: #2B583D;
+    border-radius: 4px;
+    font-size: 13px;
+    color: white;
+}
+
+.form-cancel-button {
+    width: 108px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B583D;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-right: 14px;
+    cursor: pointer;
+}  
+
+.form-cta_button {
+    width: 265px;
+    height: 50px;
+    background: #2B583D;
+    border: medium none;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    border-radius: .25rem;
+    margin-top: 24px;
+}
+
+.plus_button{
+    width: 2rem;
+    height: 2rem;
+    align-self: center;
+    margin-left: 4rem;
+}
+
+.groupOfbuttons{
+    display: flex;
+    align-items: center;
+    margin-bottom: -20px;
+}
+
+.shadowButton{
+    background-color: grey;
+    width: 400px;
+}
+
+#btnGoToLanding{
+    background: none;
+    cursor: pointer;
+    border: none;
+}

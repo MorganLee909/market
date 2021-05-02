@@ -1,0 +1,27 @@
+#toasterContainer{
+    position: fixed;
+    left: 37%;
+    top: 40px;
+    z-index: 10;
+}
+
+#toasterText{
+    color: white;
+    font-size: 13px;
+}
+
+#toasterCanvas{
+    width: 380px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toasterError{
+    background-color: #C55;
+}
+
+.toasterSuccess{
+    background-color: rgb(67, 119, 57);
+}
