@@ -3,6 +3,7 @@ const session = require("cookie-session");
 const mongoose = require("mongoose");
 const compression = require("compression");
 const cssmerger = require("cssmerger");
+const esbuild = require("esbuild");
 const https = require("https");
 const fs = require("fs");
 
@@ -14,6 +15,13 @@ app.use(express.static(__dirname + "/views"));
 let cssOptions = {
     recursive: true,
     minimize: false
+};
+
+let esbuildOptions = {
+    entryPoints: ["./views/index.js"],
+    bundle: true,
+    minify: false,
+    outfile: "./views/bundle.js"
 };
 
 let mongooseURL = "mongodb://localhost:27017/market";
@@ -34,15 +42,16 @@ if(process.env.NODE_ENV === "production"){
 
     mongooseURL = `mongodb://website:${process.env.MARKET_DB_PASS}@127.0.0.1/market`;
     cssOptions.minimize = true;
+    esbuildOptions.minify = true;
 }
-
-cssmerger(["./views/css"], "./views/bundle.css", cssOptions);
 
 mongoose.connect(mongooseURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
 });
+cssmerger(["./views/css"], "./views/bundle.css", cssOptions);
+esbuild.buildSync(esbuildOptions);
 
 app.use(compression());
 app.use(session({
