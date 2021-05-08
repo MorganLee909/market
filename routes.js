@@ -30,6 +30,7 @@ module.exports = function(app){
     app.post("/users/login", userData.userLogin);
     app.delete("/users/:id", userData.removeUser);
     app.get("/users/:id", userData.getUser);
+    app.post("users/feedback", userData.leaveFeedback);
 
     //Markets
     app.post("/markets", verifyVendor, marketData.createMarket);
