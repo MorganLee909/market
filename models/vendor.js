@@ -20,6 +20,7 @@ const VendorSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "VENDOR EMAIL IS REQUIRED"],
+        index: true,
         validate: {
             validator: validation.validEmail,
             message: "MUST ENTER A VALID EMAIL ADDRESS"

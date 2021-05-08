@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "USER EMAIL IS REQUIRED"],
+        index: true,
         validate: {
             validator: validation.validEmail,
             message: "MUST ENTER A VALID EMAIL ADDRESS"
