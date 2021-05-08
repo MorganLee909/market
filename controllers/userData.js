@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Feedback = require("../models/feedback.js");
 
 const bcrypt = require("bcryptjs");
 const ValidationError = require("mongoose").Error.ValidationError;
@@ -178,6 +179,34 @@ module.exports = {
             })
             .catch((err)=>{
                 return res.json("ERROR: UNABLE TO RETRIEVE USER DATA");
+            });
+    },
+
+    /*
+    POST: leaves feedback from any user
+        req.body = {
+            date: Date
+            title: String
+            content: String
+            user: String (id of user, optional),
+            vendor: String (id of vendor, optional)
+        }
+    */
+    leaveFeedback: function(req, res){
+        let feedback = new Feedback({
+            date: new Date(req.body.date),
+            title: req.body.title,
+            content: req.body.content,
+            user: req.body.user,
+            vendor: req.body.vendor
+        });
+
+        feedback.save()
+            .then((feedback)=>{
+                return res.json({});
+            })
+            .catch((err)=>{
+                return res.json("ERROR: UNABLE TO SAVE FEEDBACK");
             });
     }
 }
