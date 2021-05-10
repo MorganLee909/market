@@ -66,7 +66,9 @@ let vendorAboutPage = {
         //Check if vendor has product
         if(vendor.items.length === 0){
             document.getElementById("vendorNoProduct").style.display = "flex";
+            document.getElementById("vendorAboutForm").style.display = "none";
         }else{
+            document.getElementById("vendorNoProduct").style.display = "none";
             document.getElementById("vendorAboutForm").style.display = "block";
         };
         
