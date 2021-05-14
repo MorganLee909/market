@@ -429,7 +429,14 @@ html, body {
     justify-content: center;
     bottom: 8%;
     width: 60%;
-}.goodsInput{
+}
+.vendor-footer{
+    display: flex;
+    justify-content: center;
+    bottom: 8%;
+    margin-top: 60px;
+}
+.goodsInput{
     font-size: 18px;
     font-weight: 600;
     text-align: right;

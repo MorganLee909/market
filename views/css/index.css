@@ -225,3 +225,9 @@ html, body {
     bottom: 8%;
     width: 60%;
 }
+.vendor-footer{
+    display: flex;
+    justify-content: center;
+    bottom: 8%;
+    margin-top: 60px;
+}

@@ -1,3 +1,5 @@
+const Vendor = require("./Vendor");
+
 class Market{
     constructor( id, name, owner, vendors, address, description ){
         this._id = id;

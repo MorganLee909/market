@@ -170,8 +170,10 @@ module.exports = {
             .then((response)=>{
                 const location = [response.data.results[0].location.lat, response.data.results[0].location.lng];
                 const distance = parseFloat(req.query.distance) * 1609.344;
+                console.log('get_market');
 
                 return Market.find({
+                    
                     location: {
                         $nearSphere: {
                             $maxDistance: distance,
@@ -179,7 +181,7 @@ module.exports = {
                                 type: "Point",
                                 coordinates: location
                             }
-                        }
+                        },
                     }
                 });
             })

@@ -4,6 +4,7 @@ const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
 const searchResultsPage = require("./js/pages/searchResults.js");
 const vendorAboutPage = require("./js/pages/vendorAbout.js");
+const marketCreationPage = require("./js/pages/marketCreation.js");
 
 const Vendor = require("./js/models/Vendor.js");
 
@@ -46,6 +47,9 @@ controller = {
             case "searchResultsPage":
                 searchResultsPage.display(data);
                 break;
+
+            case 'marketCreationPage':
+                marketCreationPage.display();
 
         }                    
 
@@ -117,6 +121,8 @@ controller = {
 state = {
 
     vendor: null,
+
+    market: null,
 
     searchRes: null,
 

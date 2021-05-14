@@ -31,6 +31,11 @@ let vendorInfoPage = {
             this.addNewProduct();
         };
 
+        //Create Market
+        document.getElementById( 'openCreateMarket').onclick = () => {
+            controller.openPage( 'marketCreationPage');
+        };
+
         this.displayVendorInfo();
         this.displayItems();
     },
