@@ -1,5 +1,4 @@
 
-const Market = require("../models/Market.js");
 
 let marketCreationPage = {
 
@@ -29,21 +28,20 @@ let marketCreationPage = {
             .then(response => response.json())
             .then((response) => {
                 if( typeof(response) === "string"){
-
                     controller.createToaster(response, "error");
                 } else{
-                    console.log(response, 'res2');
-                    let newMarket = new Market(
-                        response._id,
-                        response.name,
-                        response.owner,
-                        response.vendors,
-                        response.address,
-                        response.description
-                    );
+                    // console.log(response, 'res2');
+                    // let newMarket = new Market(
+                    //     response._id,
+                    //     response.name,
+                    //     response.owner,
+                    //     response.vendors,
+                    //     response.address,
+                    //     response.description
+                    // );
+                    // console.log(response);
+                    state.vendor.addMarket( response );
                     
-                    console.log(newMarket, 'newMarket');
-                    state.market = newMarket;
                     controller.openPage('vendorInfoPage');
                 }
             })
@@ -58,7 +56,6 @@ let marketCreationPage = {
         address = address.replaceAll(' ', '+');
 
         url = `${url}address=${address}&distance=20`;
-        console.log(url, 'url');
 
         fetch( url )
         .then(response => response.json() )
@@ -66,7 +63,7 @@ let marketCreationPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    console.log(response, 'else');   
+                    // console.log(response, 'else');   
                 }
             })
             .catch((err) => {

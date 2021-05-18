@@ -1,8 +1,9 @@
 const Item = require("./Item.js");
 const vendorInfoPage = require("../pages/vendorInfo.js");
+const Market = require("../models/Market.js");
 
 class Vendor {
-    constructor( id, name, email, description, items, ownerName, address, phone, distance ){
+    constructor( id, name, email, description, items, ownerName, address, phone, distance, markets ){
         this._id = id;
         this._name = name;
         this._email = email;
@@ -12,6 +13,7 @@ class Vendor {
         this._address = (address === undefined) ? "" : address;
         this._phone = (phone === undefined) ? "" : phone;
         this._distance = distance;
+        this._markets = markets;
 
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
@@ -89,6 +91,28 @@ class Vendor {
 
         vendorInfoPage.displayItems();
 
+    }
+
+    addMarket( market ){
+        console.log(market, market._id,
+            market.name,
+            market.owner,
+            market.vendors,
+            market.address,
+            market.description, 'market');
+
+        let newMarket = new Market(
+            market._id,
+            market.name,
+            market.owner,
+            market.vendors,
+            market.address,
+            market.description
+        );
+
+        this._markets.push( newMarket );
+
+        vendorInfoPage.displayItems();
     }
 
 }
