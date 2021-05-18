@@ -66,8 +66,7 @@ let marketCreationPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                console.log(response, 'else');
-                    
+                    console.log(response, 'else');   
                 }
             })
             .catch((err) => {
