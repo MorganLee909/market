@@ -149,6 +149,20 @@ class VendorItem extends HTMLElement{
         `;
         this.cancelButton.onclick = () => { this.cancelEdit() };
 
+        //event listener for Escape
+
+        this.container.addEventListener("keyup", function(event) {
+            
+            if(event.keyCode === 27) {
+                event.preventDefault();
+                // this.cancelEdit();
+
+                this.cancelButton.click = () => { this.cancelEdit() };
+
+                console.log("escape");
+            };
+        });
+
         if(this.getAttribute("isnew") === "true"){
             this.cancelButton.onclick = () => {this.parentElement.removeChild(this)};
         };
@@ -164,6 +178,22 @@ class VendorItem extends HTMLElement{
             </svg>
         `;
         this.submitButton.onclick = () => { this.submitEdit() };
+
+        //add eventLestener for Enter button
+
+        let btn = this.submitButton;
+
+        this.priceGoods.addEventListener("keyup", function(event) {
+            
+            if(event.keyCode === 13) {
+                event.preventDefault();
+                // this.submitEdit();
+
+                // this.submitButton.click = () => { this.submitEdit() };
+
+                console.log("keyup2");
+            }
+        })
 
         if(this.getAttribute( "isnew" ) === "true"){
             this.submitButton.onclick = () => { this.submitNew() };
