@@ -106,6 +106,12 @@ class VendorItem extends HTMLElement{
         this.nameInput.value = this.getAttribute( "product" );
         this.container.insertBefore( this.nameInput, this.itemTitle );
         this.container.removeChild( this.itemTitle );
+        //add eventLestener
+        this.nameInput.onkeyup = (e) => { 
+            if(e.code === "Enter"){
+                this.submitEdit()
+            } 
+        };
         
         //Edit Goods Amount
         this.amountInput = document.createElement( "input" );
@@ -115,6 +121,12 @@ class VendorItem extends HTMLElement{
         this.amountInput.step = "0.01";
         this.container.insertBefore( this.amountInput, this.amountGoods );
         this.container.removeChild( this.amountGoods );
+        //add eventLestener
+        this.amountInput.onkeyup = (e) => { 
+            if(e.code === "Enter"){
+                this.submitEdit()
+            } 
+        };
 
         //Edit Unit
         this.unitInput = document.createElement("input");
@@ -123,6 +135,12 @@ class VendorItem extends HTMLElement{
         this.unitInput.value = this.getAttribute("unit");
         this.container.insertBefore(this.unitInput, this.unitGoods);
         this.container.removeChild(this.unitGoods);
+        //add eventLestener
+        this.unitInput.onkeyup = (e) => { 
+            if(e.code === "Enter"){
+                this.submitEdit()
+            } 
+        };
 
         //Edit Price
         this.priceGoods = document.createElement( "input" );
@@ -132,6 +150,12 @@ class VendorItem extends HTMLElement{
         this.priceGoods.value = this.getAttribute( 'price' );
         this.container.insertBefore( this.priceGoods, this.price );
         this.container.removeChild( this.price );
+        //add eventLestener
+        this.priceGoods.onkeyup = (e) => { 
+            if(e.code === "Enter"){
+                this.submitEdit()
+            } 
+        };
         
         //Show/hide edit and cancel btn
         if(this.getAttribute("isnew") !== "true"){
@@ -148,6 +172,14 @@ class VendorItem extends HTMLElement{
             </svg>
         `;
         this.cancelButton.onclick = () => { this.cancelEdit() };
+
+        //event listener for Escape
+        // document.getElementById('goods').onkeyup = (e) => { 
+        this.container.onkeyup = (e) => { 
+            if(e.code === "Escape"){
+                this.cancelEdit()
+            } 
+        };
 
         if(this.getAttribute("isnew") === "true"){
             this.cancelButton.onclick = () => {this.parentElement.removeChild(this)};
