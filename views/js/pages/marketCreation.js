@@ -1,3 +1,5 @@
+const Market = require("../models/Market.js");
+
 let marketCreationPage = {
     display: function(){
         let form = document.getElementById("createMarketForm");
@@ -10,8 +12,9 @@ let marketCreationPage = {
         event.preventDefault();
 
         let data = {
-            name: document.getElementById('marketName').value
-        }
+            name: document.getElementById('marketName').value,
+            address: document.getElementById('marketLocation').value
+        };
 
         let fetchOptions = {
             method: "POST",
@@ -19,7 +22,7 @@ let marketCreationPage = {
                 "Content-Type": "application/json;charset=utf-8"
             },
             body: JSON.stringify(data)
-        }
+        };
 
         fetch('/markets', fetchOptions)
             .then(response => response.json())
@@ -27,16 +30,16 @@ let marketCreationPage = {
                 if( typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 } else{
-                    // let newMarket = new Market(
-                    //     response._id,
-                    //     response.name,
-                    //     response.owner,
-                    //     response.vendors,
-                    //     response.address,
-                    //     response.description
-                    // );
-                    state.vendor.addMarket( response );
+                    let newMarket = new Market(
+                        response._id,
+                        response.name,
+                        response.owner,
+                        response.vendors,
+                        response.address,
+                        response.description
+                    );
                     
+                    state.vendor.addMarket(newMarket);
                     controller.openPage('vendorInfoPage');
                 }
             })
