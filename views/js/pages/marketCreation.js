@@ -1,7 +1,4 @@
-
-
 let marketCreationPage = {
-
     display: function(){
         let form = document.getElementById("createMarketForm");
         form.onsubmit = () => { this.submitForm() };
@@ -30,7 +27,6 @@ let marketCreationPage = {
                 if( typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 } else{
-                    // console.log(response, 'res2');
                     // let newMarket = new Market(
                     //     response._id,
                     //     response.name,
@@ -39,7 +35,6 @@ let marketCreationPage = {
                     //     response.address,
                     //     response.description
                     // );
-                    // console.log(response);
                     state.vendor.addMarket( response );
                     
                     controller.openPage('vendorInfoPage');
@@ -63,7 +58,6 @@ let marketCreationPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    // console.log(response, 'else');   
                 }
             })
             .catch((err) => {

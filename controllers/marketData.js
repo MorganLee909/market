@@ -10,6 +10,7 @@ module.exports = {
     POST - Creates a new market
     req.body = {
         name: String //name of the new market,
+        address: 
     }
     response = Market
     */
@@ -24,14 +25,42 @@ module.exports = {
             url: await helper.createMarketURL(req.body.name)
         });
 
+        let apiUrl = "https://api.geocod.io/v1.6/geocode";
+        let address = req.body.address.replace(/ /g, "+");
+        let fullUrl = `${apiUrl}?q=${address}&api_key=${process.env.MARKET_GEOENCODE_KEY}&limit=1`;
+
+        try{
+            let geoData = await axios.get(fullUrl);
+            let result = geoData.data.results[0];
+            let lat = result.location.lat;
+            let lng = result.location.lng;
+
+            market.location = {
+                type: "Point",
+                coordinates: [lat, lng]
+            }
+
+            let comps = result.address_components;
+            market.address = {
+                streetNumber: comps.number,
+                road: comps.formatted_street,
+                city: comps.city,
+                county: comps.county,
+                state: comps.state,
+                country: comps.country,
+                zipCode: comps.zip,
+                full: result.formatted_address
+            };
+        }catch(err){
+            return res.json("COULD NOT FIND THAT ADDRESS");
+        }
+        
         market.save()
             .then((market)=>{
                 return res.json(market);
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
+                if(typeof(err) === "string") return res.json(err);
                 if(err instanceof ValidationError){
                     return res.json(err.errors[Object.keys(err.errors)[0]].properties.message);
                 }
@@ -170,7 +199,6 @@ module.exports = {
             .then((response)=>{
                 const location = [response.data.results[0].location.lat, response.data.results[0].location.lng];
                 const distance = parseFloat(req.query.distance) * 1609.344;
-                console.log('get_market');
 
                 return Market.find({
                     
