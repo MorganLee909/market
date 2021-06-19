@@ -38,6 +38,6 @@ module.exports = function(app){
     app.put("/markets/meetings", verifyVendor, marketData.updateMeetings);
     app.get("/markets/search?*", marketData.getMarkets);
     app.post("/markets/:id/vendors", verifyVendor, marketData.addVendors);
-    app.get("/markets/:id", marketData.getMarket);
+    app.get("/markets/:id", marketData.getVendorMarkets);
     app.delete("/markets/:id", verifyVendor, marketData.removeMarket); 
 }

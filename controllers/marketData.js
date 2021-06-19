@@ -228,25 +228,17 @@ module.exports = {
     },
 
     /*
-    GET - get the data for a single market
-    params: Market id
-    response = Market (owner/vendors populated)
+    GET: get all the markets of a single vendor
+    params: Vendor id
+    response = [Market] (vendors populated)
     */
-    getMarket: function(req, res){
-        Market.findOne({_id: req.params.id})
-            .populate("vendor", "name url description items")
+    getVendorMarkets: function(req, res){
+        Market.find({owner: req.params.id})
             .populate("vendors", "name url description items")
-            .then((market)=>{
-                if(market === null){
-                    throw "UNABLE TO FIND THAT MARKET";
-                }
-
-                return res.json(market);
+            .then((markets)=>{
+                return res.json(markets);
             })
             .catch((err)=>{
-                if(typeof(err) === "string"){
-                    return res.json(err);
-                }
                 return res.json("ERROR: UNABLE TO SEARCH FOR THE MARKET");
             });
     },
