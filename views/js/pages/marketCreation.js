@@ -1,9 +1,11 @@
 const Market = require("../models/Market.js");
+const Vendor = require("../models/Vendor.js");
 
 let marketCreationPage = {
     display: function(){
         let form = document.getElementById("createMarketForm");
         form.onsubmit = () => { this.submitForm() };
+        console.log('searchMarket');
 
         this.searchMarket();
     },
@@ -61,6 +63,7 @@ let marketCreationPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
+                    console.log(response, 'searchMarket');
                 }
             })
             .catch((err) => {
@@ -71,5 +74,3 @@ let marketCreationPage = {
 
 module.exports = marketCreationPage;
 
-// app.post("/markets", verifyVendor, marketData.createMarket);
-//app.get("/markets/search?*", marketData.getMarkets);

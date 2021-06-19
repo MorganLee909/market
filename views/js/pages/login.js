@@ -40,6 +40,7 @@ let loginPage ={
                 if( typeof(response) === 'string'){
                     controller.createToaster( response, 'error' );
                 } else{
+                    console.log(response);
                     state.vendor = new Vendor(
                         response._id,
                         response.name,
