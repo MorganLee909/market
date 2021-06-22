@@ -2,7 +2,7 @@ const Item = require("./Item.js");
 const vendorInfoPage = require("../pages/vendorInfo.js");
 
 class Vendor {
-    constructor( id, name, email, description, items, ownerName, address, phone, distance ){
+    constructor( id, name, email, description, items, ownerName, address, phone, distance){
         this._id = id;
         this._name = name;
         this._email = email;
@@ -12,6 +12,7 @@ class Vendor {
         this._address = (address === undefined) ? "" : address;
         this._phone = (phone === undefined) ? "" : phone;
         this._distance = distance;
+        this._markets = [];
 
         for( let i = 0; i < items.length; i++ ){
             let item = new Item ( 
@@ -89,6 +90,12 @@ class Vendor {
 
         vendorInfoPage.displayItems();
 
+    }
+
+    addMarket( market ){
+        this._markets.push( market );
+
+        vendorInfoPage.displayItems();
     }
 
 }

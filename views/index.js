@@ -4,6 +4,7 @@ const vendorRegistrationPage = require("./js/pages/vendorRegistration.js");
 const loginPage = require('./js/pages/login.js');
 const searchResultsPage = require("./js/pages/searchResults.js");
 const vendorAboutPage = require("./js/pages/vendorAbout.js");
+const marketCreationPage = require("./js/pages/marketCreation.js");
 
 const Vendor = require("./js/models/Vendor.js");
 
@@ -46,6 +47,9 @@ controller = {
             case "searchResultsPage":
                 searchResultsPage.display(data);
                 break;
+
+            case 'marketCreationPage':
+                marketCreationPage.display();
 
         }                    
 
@@ -109,14 +113,37 @@ controller = {
             toasterContainer.style.display = "none";
             toasterCanvas.classList = '';
         }, 
-        4000);
-        
+        4000);      
     }
+
+    // getVendorMarkets: function () {
+    //     let url = 'markets/';
+    //     let vendorID = state.vendor._id;
+
+    //     url = `${url}${vendorID}`;
+    //     console.log(url, 'ulr');
+
+    //     fetch( url )
+    //     .then( response => response.json() )
+    //         .then( (response) => {
+    //             if(typeof(response) === 'string'){
+    //                 controller.createToaster(response, "error");
+    //             }else{
+    //                 console.log(response, 'getVendorMarkets');
+
+    //             }
+    //         })
+    //     .catch((err) => {
+    //         controller.createToaster('Something went wrong, please refresh the page.', 'error');
+    //     });         
+    // }
 };
 
 state = {
 
     vendor: null,
+
+    market: null,
 
     searchRes: null,
 
@@ -141,6 +168,7 @@ state = {
     }
 }
 
+
 fetch( '/vendors/session' )
     .then( response => response.json() )
     .then( (response) => {
@@ -159,7 +187,8 @@ fetch( '/vendors/session' )
                 response.items,
                 response.ownerName,
                 response.address,
-                response.telephone
+                response.telephone,
+                response.distance,
             );
             
             controller.openPage( 'vendorInfoPage', state.vendor ); 

@@ -1,0 +1,13 @@
+.tab{
+    width: 180px;
+    height: 42px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-buttom-line{
+    display: none;
+    height: 6px;
+    background: #2B583D;
+    border-radius: 6px;
+}

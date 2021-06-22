@@ -1,3 +1,5 @@
+const Vendor = require("../models/Vendor.js");
+
 let vendorInfoPage = {
     display: function(){
         //Go to landing
@@ -31,8 +33,15 @@ let vendorInfoPage = {
             this.addNewProduct();
         };
 
+        //Create Market
+        document.getElementById( 'openCreateMarket').onclick = () => {
+            controller.openPage( 'marketCreationPage');
+        };
+
         this.displayVendorInfo();
         this.displayItems();
+        this.displayTabs();
+        this.getVendorMarkets();
     },
     
     displayItems: function(){
@@ -117,6 +126,26 @@ let vendorInfoPage = {
         }
     },
 
+    displayTabs: function () {
+
+        if(state.vendor._markets.length >= 1){
+            console.log('has at least on market')
+        }
+        
+        let tabProducts = document.getElementById('tab-products');
+        let tabMarkets = document.getElementById('tab-markets');
+
+        tabProducts.onclick = () => { 
+            tabProducts.childNodes[3].style.display = 'block',
+            tabMarkets.childNodes[3].style.display = 'none'
+         }; 
+
+        tabMarkets.onclick = () => { 
+            tabMarkets.childNodes[3].style.display = 'block',
+            tabProducts.childNodes[3].style.display = 'none'
+         };     
+    },
+
     addNewProduct: function(){
         let newItem = document.createElement( "vendor-item" );
         let goods = document.getElementById( "goods" );
@@ -135,6 +164,28 @@ let vendorInfoPage = {
         let goods = document.getElementById("goods");
         newItem.setAttribute("isnew", "true");
         goods.insertBefore(newItem, goods.firstChild);
+    },
+
+    getVendorMarkets: function () {
+        let url = 'markets/';
+        let vendorID = state.vendor._id;
+
+        url = `${url}${vendorID}`;
+        console.log(url, 'ulr');
+
+        fetch( url )
+        .then( response => response.json() )
+            .then( (response) => {
+                if(typeof(response) === 'string'){
+                    controller.createToaster(response, "error");
+                }else{
+                    console.log(response, 'getVendorMarkets');
+                    state.market = response;
+                }
+            })
+        .catch((err) => {
+            controller.createToaster('Something went wrong, please refresh the page.', 'error');
+        });         
     }
 }
 

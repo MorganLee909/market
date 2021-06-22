@@ -114,14 +114,36 @@
                 <button id="addFirstProduct" class="cta_button margin-top"> + Add Your First Product </button>
 
         </div>
+
+
             
         <div id="vendorForm" class="vendor-form" style="display: none;">
+
+        <div class="vendor-form-header">
+            <div id="vendorHasMarket" style="display: flex;">
+                
+                <div id="tab-products" class="tab">
+                    <h1> Products </h1>
+                    <div class="tab-buttom-line" style="display: block;"></div>
+                </div>
+                <div id="tab-markets" class="tab">
+                    <h1> Markets </h1>
+                    <div class="tab-buttom-line" style="display: none;"></div>
+                </div>
+                <h4 id="productTableSubtitle" class="subtitle text-left"> Your currently available products </h4>
+
+            </div>
+            
+            <button id="addNewProduct" class="button-medium"> + Add More </button>
+        </div>
+
+
             <div class="vendor-form-header">
                 <div>
                     <h1 id="productTableTitle"> Your Goods </h1>
                     <h4 id="productTableSubtitle" class="subtitle text-left"> Your currently available products </h4>
                 </div>
-                    <button id="addNewProduct" class="button-medium"> + Add More </button>
+                <button id="addNewProduct" class="button-medium"> + Add More </button>
             </div>
             
             <div class="vendor-table-header"> 
@@ -132,9 +154,14 @@
             </div>
 
             <div id="goods"></div>
+
+            <div id="vendorInfoFooter" class="vendor-footer" style="display: flex;">
+                <p class="subtitle"> Want to create own Market? </p>
+                <button id="openCreateMarket" class="links">  Create </button>    
+            </div>
             
         </div>
-
+                
     </div> 
 
 </div>

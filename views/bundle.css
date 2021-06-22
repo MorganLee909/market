@@ -429,7 +429,14 @@ html, body {
     justify-content: center;
     bottom: 8%;
     width: 60%;
-}.goodsInput{
+}
+.vendor-footer{
+    display: flex;
+    justify-content: center;
+    bottom: 8%;
+    margin-top: 60px;
+}
+.goodsInput{
     font-size: 18px;
     font-weight: 600;
     text-align: right;
@@ -567,7 +574,19 @@ input[type=number] {
 
     .row-checkbox input:checked ~.checkbox{
         background-color:#2b583d;
-    }.font-weight-bold{
+    }.tab{
+    width: 180px;
+    height: 42px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-buttom-line{
+    display: none;
+    height: 6px;
+    background: #2B583D;
+    border-radius: 6px;
+}.font-weight-bold{
     font-weight: bold;
 }
 
