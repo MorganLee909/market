@@ -9,10 +9,12 @@ const marketCreationPage = require("./js/pages/marketCreation.js");
 const Vendor = require("./js/models/Vendor.js");
 
 const modalWindow = require("./js/modal.js");
+const { response } = require("express");
 
 // Components //
 require("./js/components/vendorItem.js");
 require("./js/components/vSearchResults.js");
+require("./js/components/marketItem.js");
 
 controller = {
     openPage: function( page, data ) {
@@ -116,34 +118,13 @@ controller = {
         4000);      
     }
 
-    // getVendorMarkets: function () {
-    //     let url = 'markets/';
-    //     let vendorID = state.vendor._id;
-
-    //     url = `${url}${vendorID}`;
-    //     console.log(url, 'ulr');
-
-    //     fetch( url )
-    //     .then( response => response.json() )
-    //         .then( (response) => {
-    //             if(typeof(response) === 'string'){
-    //                 controller.createToaster(response, "error");
-    //             }else{
-    //                 console.log(response, 'getVendorMarkets');
-
-    //             }
-    //         })
-    //     .catch((err) => {
-    //         controller.createToaster('Something went wrong, please refresh the page.', 'error');
-    //     });         
-    // }
 };
 
 state = {
 
     vendor: null,
 
-    market: null,
+    markets: null,
 
     searchRes: null,
 
@@ -167,7 +148,6 @@ state = {
         isPopulated: false
     }
 }
-
 
 fetch( '/vendors/session' )
     .then( response => response.json() )

@@ -1,3 +1,7 @@
+.tabs-container{
+    display: flex;
+}
+
 .tab{
     width: 180px;
     height: 42px;

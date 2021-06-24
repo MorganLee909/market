@@ -239,6 +239,10 @@ html, body {
     padding-left: 8px;
 }
 
+.padding-top-6{
+    padding-top: 6px;
+}
+
 .padding-top-22{
     padding-top: 22px;
 }
@@ -574,7 +578,11 @@ input[type=number] {
 
     .row-checkbox input:checked ~.checkbox{
         background-color:#2b583d;
-    }.tab{
+    }.tabs-container{
+    display: flex;
+}
+
+.tab{
     width: 180px;
     height: 42px;
     text-align: center;

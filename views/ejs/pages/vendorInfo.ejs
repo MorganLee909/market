@@ -115,13 +115,10 @@
 
         </div>
 
-
-            
         <div id="vendorForm" class="vendor-form" style="display: none;">
 
-        <div class="vendor-form-header">
-            <div id="vendorHasMarket" style="display: flex;">
-                
+        <div id="vendorHasMarket" class="vendor-form-header" style="display: none;">
+            <div class="tabs-container">
                 <div id="tab-products" class="tab">
                     <h1> Products </h1>
                     <div class="tab-buttom-line" style="display: block;"></div>
@@ -130,15 +127,23 @@
                     <h1> Markets </h1>
                     <div class="tab-buttom-line" style="display: none;"></div>
                 </div>
-                <h4 id="productTableSubtitle" class="subtitle text-left"> Your currently available products </h4>
-
+                <h4 id="productTableSubtitle" class="subtitle text-left padding-top-6 padding-left-8"> Your Markets </h4>
             </div>
             
             <button id="addNewProduct" class="button-medium"> + Add More </button>
         </div>
 
+        <div id="tableMarkets" style="display: block;">
+            <div class="vendor-table-header"> 
+                <p style="flex-basis: 34%;"> Name </p>
+                <p style="flex-basis: 8%;text-align: right;"> Location </p>
+                <p style="flex-basis: 22%; /*! display: flex; */text-align: right;"> When Occur </p>
+            </div>
 
-            <div class="vendor-form-header">
+            <div id="markets"></div>
+        </div>
+
+            <div id="headerNoMarket" class="vendor-form-header">
                 <div>
                     <h1 id="productTableTitle"> Your Goods </h1>
                     <h4 id="productTableSubtitle" class="subtitle text-left"> Your currently available products </h4>
@@ -146,14 +151,16 @@
                 <button id="addNewProduct" class="button-medium"> + Add More </button>
             </div>
             
-            <div class="vendor-table-header"> 
-                <p style="flex-basis: 34%;"> Product </p>
-                <p style="flex-basis: 8%;text-align: right;"> Amount </p>
-                <p style="flex-basis: 22%; /*! display: flex; */text-align: right;"> Unit </p> 
-                <p style="flex-basis: 23%;text-align: right;"> Price/Unit </p>
+            <div id="tableProducts" style="display: block;">
+                <div class="vendor-table-header"> 
+                    <p style="flex-basis: 34%;"> Product </p>
+                    <p style="flex-basis: 8%;text-align: right;"> Amount </p>
+                    <p style="flex-basis: 22%; /*! display: flex; */text-align: right;"> Unit </p> 
+                    <p style="flex-basis: 23%;text-align: right;"> Price/Unit </p>
+                </div>
+    
+                <div id="goods"></div>
             </div>
-
-            <div id="goods"></div>
 
             <div id="vendorInfoFooter" class="vendor-footer" style="display: flex;">
                 <p class="subtitle"> Want to create own Market? </p>

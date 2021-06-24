@@ -39,9 +39,8 @@ let vendorInfoPage = {
         };
 
         this.displayVendorInfo();
-        this.displayItems();
-        this.displayTabs();
         this.getVendorMarkets();
+        this.displayItems();
     },
     
     displayItems: function(){
@@ -60,6 +59,25 @@ let vendorInfoPage = {
             item.setAttribute( "price", state.vendor.items[i].price );
             item.setAttribute("samevendor", "true");
             goods.appendChild(item);
+        }
+    },
+
+    displayMarkets: function(){
+        console.log('displayMarkets', state.vendor._markets.length);
+        let markets = document.getElementById('markets');
+
+        while(markets.children.length > 0){
+            markets.removeChild(markets.firstChild);
+        }
+
+        for (let i = 0; i < state.vendor._markets.length; i++) {
+            console.log('incide loop of markets', state.vendor._markets[i].name, state.vendor._markets[i]);
+
+            let market = document.createElement( 'market-item' );
+
+            market.setAttribute( 'marketid', state.vendor._markets[i]._id );
+            market.setAttribute( 'name', state.vendor._markets[i].name );
+            markets.appendChild( market );
         }
     },
 
@@ -127,22 +145,38 @@ let vendorInfoPage = {
     },
 
     displayTabs: function () {
-
-        if(state.vendor._markets.length >= 1){
-            console.log('has at least on market')
-        }
         
+        let tabs = document.getElementById('vendorHasMarket');
+        let footer = document.getElementById('vendorInfoFooter');
+        let headerNoMarket = document.getElementById('headerNoMarket');
+        let tableProducts = document.getElementById('tableProducts');
+        let tableMarkets = document.getElementById('tableMarkets');
+
+        console.log(state.vendor)
+        console.log(document.getElementById('productTableSubtitle').firstChild);
+        
+        tabs.style.display = 'flex';
+        footer.style.display = 'none';
+        headerNoMarket.style.display = 'none';
+
         let tabProducts = document.getElementById('tab-products');
         let tabMarkets = document.getElementById('tab-markets');
 
         tabProducts.onclick = () => { 
-            tabProducts.childNodes[3].style.display = 'block',
-            tabMarkets.childNodes[3].style.display = 'none'
+            tabProducts.childNodes[3].style.display = 'block';
+            tabMarkets.childNodes[3].style.display = 'none';
+            tableProducts.style.display = 'block';
+            tableMarkets.style.display = 'none';
+            document.getElementById('productTableSubtitle').firstChild.textContent = 'Your currently available products';
+
          }; 
 
         tabMarkets.onclick = () => { 
-            tabMarkets.childNodes[3].style.display = 'block',
-            tabProducts.childNodes[3].style.display = 'none'
+            tabMarkets.childNodes[3].style.display = 'block';
+            tabProducts.childNodes[3].style.display = 'none';
+            tableProducts.style.display = 'none';
+            tableMarkets.style.display = 'block';
+            document.getElementById('productTableSubtitle').firstChild.textContent = 'Your Markets';
          };     
     },
 
@@ -171,7 +205,6 @@ let vendorInfoPage = {
         let vendorID = state.vendor._id;
 
         url = `${url}${vendorID}`;
-        console.log(url, 'ulr');
 
         fetch( url )
         .then( response => response.json() )
@@ -179,8 +212,13 @@ let vendorInfoPage = {
                 if(typeof(response) === 'string'){
                     controller.createToaster(response, "error");
                 }else{
-                    console.log(response, 'getVendorMarkets');
-                    state.market = response;
+                    console.log(response);
+                    state.vendor._markets = response;
+                    if(response.length >= 1){
+                        // this.displayTabs();
+                        // this.displayMarkets();
+                    }
+                    // state.markets = response;
                 }
             })
         .catch((err) => {
