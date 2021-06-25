@@ -34,8 +34,12 @@ let vendorInfoPage = {
         };
 
         //Create Market
-        document.getElementById( 'openCreateMarket').onclick = () => {
-            controller.openPage( 'marketCreationPage');
+        document.getElementById( 'openCreateMarket' ).onclick = () => {
+            controller.openPage( 'marketCreationPage' );
+        };
+
+        document.getElementById( 'addNewMarket' ).onclick = () => {
+            controller.openPage( 'marketCreationPage' );
         };
 
         this.displayVendorInfo();
@@ -63,7 +67,6 @@ let vendorInfoPage = {
     },
 
     displayMarkets: function(){
-        console.log('displayMarkets', state.vendor._markets.length);
         let markets = document.getElementById('markets');
 
         while(markets.children.length > 0){
@@ -71,12 +74,12 @@ let vendorInfoPage = {
         }
 
         for (let i = 0; i < state.vendor._markets.length; i++) {
-            console.log('incide loop of markets', state.vendor._markets[i].name, state.vendor._markets[i]);
 
             let market = document.createElement( 'market-item' );
 
             market.setAttribute( 'marketid', state.vendor._markets[i]._id );
             market.setAttribute( 'name', state.vendor._markets[i].name );
+            market.setAttribute( "samevendor", "true");
             markets.appendChild( market );
         }
     },
@@ -151,9 +154,9 @@ let vendorInfoPage = {
         let headerNoMarket = document.getElementById('headerNoMarket');
         let tableProducts = document.getElementById('tableProducts');
         let tableMarkets = document.getElementById('tableMarkets');
+        let addNewProduct = document.getElementById('addNewProduct');
+        let addNewMarket = document.getElementById('addNewMarket');
 
-        console.log(state.vendor)
-        console.log(document.getElementById('productTableSubtitle').firstChild);
         
         tabs.style.display = 'flex';
         footer.style.display = 'none';
@@ -167,6 +170,8 @@ let vendorInfoPage = {
             tabMarkets.childNodes[3].style.display = 'none';
             tableProducts.style.display = 'block';
             tableMarkets.style.display = 'none';
+            addNewMarket.style.display = 'none';
+            addNewProduct.style.display = 'block';
             document.getElementById('productTableSubtitle').firstChild.textContent = 'Your currently available products';
 
          }; 
@@ -176,7 +181,11 @@ let vendorInfoPage = {
             tabProducts.childNodes[3].style.display = 'none';
             tableProducts.style.display = 'none';
             tableMarkets.style.display = 'block';
+            addNewProduct.style.display = 'none';
+            addNewMarket.style.display = 'block';
             document.getElementById('productTableSubtitle').firstChild.textContent = 'Your Markets';
+            let markets = document.getElementById('markets');
+            markets.style.display = 'block';
          };     
     },
 
@@ -212,11 +221,10 @@ let vendorInfoPage = {
                 if(typeof(response) === 'string'){
                     controller.createToaster(response, "error");
                 }else{
-                    console.log(response);
                     state.vendor._markets = response;
                     if(response.length >= 1){
-                        // this.displayTabs();
-                        // this.displayMarkets();
+                        this.displayTabs();
+                        this.displayMarkets();
                     }
                     // state.markets = response;
                 }

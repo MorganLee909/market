@@ -53,7 +53,7 @@ class VendorItem extends HTMLElement{
                 </defs>
             </svg>
         `;
-
+        
         this.removeButton.onclick = () => { controller.openModal( "confirmationModal", { item: this, func: this.removeItem } ) };
                 
         //edit button
@@ -174,7 +174,6 @@ class VendorItem extends HTMLElement{
         this.cancelButton.onclick = () => { this.cancelEdit() };
 
         //event listener for Escape
-        // document.getElementById('goods').onkeyup = (e) => { 
         this.container.onkeyup = (e) => { 
             if(e.code === "Escape"){
                 this.cancelEdit()

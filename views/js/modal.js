@@ -4,7 +4,7 @@ const vendorInfo = require("./pages/vendorInfo.js");
 let modal = {
     
     displayRemoveConfirmation: function ( item, removeFunction ) {
-       
+
         var cancelBtn = document.getElementById("confirmationCancelBtn");
         var confBtn = document.getElementById("confirmationConfirmBtn");
 
@@ -20,6 +20,24 @@ let modal = {
             controller.closeModal();
         };
 
+    },
+
+    displayRemoveMarket: function( market, removeMarket ){
+        ('displayRemoveMarketModal', market)
+        var cancelBtn = document.getElementById("removeMarketCancelBtn");
+        var confBtn = document.getElementById("removeMarketConfirmBtn");
+
+        let subTitle = document.getElementById("removeMarketSubtitleModal");
+        subTitle.innerText = `Market: ${market.getAttribute('name')} ${"will be removed"}`;
+
+        cancelBtn.onclick = function () {
+            controller.closeModal();
+        };
+
+        confBtn.onclick = () => {
+            removeMarket( market );
+            controller.closeModal();
+        };
     },
 
     displayEditVendorBio: function () {

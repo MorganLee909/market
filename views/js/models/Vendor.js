@@ -95,7 +95,7 @@ class Vendor {
     addMarket( market ){
         this._markets.push( market );
 
-        vendorInfoPage.displayItems();
+        vendorInfoPage.displayMarkets();
     }
 
 }

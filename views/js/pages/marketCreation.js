@@ -5,7 +5,6 @@ let marketCreationPage = {
     display: function(){
         let form = document.getElementById("createMarketForm");
         form.onsubmit = () => { this.submitForm() };
-        console.log('searchMarket');
 
         this.searchMarket();
     },
@@ -63,7 +62,6 @@ let marketCreationPage = {
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    console.log(response, 'searchMarket');
                 }
             })
             .catch((err) => {

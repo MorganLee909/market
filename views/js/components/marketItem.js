@@ -1,6 +1,8 @@
+const { getVendorMarkets } = require("../pages/vendorInfo");
+
 class MarketItem extends HTMLElement{
     static get observedAttributes(){
-        return ["marketid", "name", "samevendor", "isnew"];
+        return ["marketid", "name", "isnew", "samevendor" ];
     }
     
     constructor(){
@@ -48,7 +50,7 @@ class MarketItem extends HTMLElement{
             </svg>
         `;
 
-        this.removeButton.onclick = () => { controller.openModal( "confirmationModal", { item: this, func: this.removeItem } ) };
+        this.removeButton.onclick = () => { controller.openModal( "removeMarketModal", { market: this, func: this.removeMarket } ) };
                 
         //edit button
         this.editButton = document.createElement( "button" );
@@ -59,7 +61,7 @@ class MarketItem extends HTMLElement{
             </svg>
         `;
         
-        this.editButton.onclick = () => { this.editItem() };
+        this.editButton.onclick = () => { this.editMarket() };
     }
 
     attributeChangedCallback( nameAttribute, oldValue, newValue ){
@@ -86,15 +88,15 @@ class MarketItem extends HTMLElement{
         }
     }
     
-    editItem(){
+    editMarket(){
         //change hover color
         this.container.style.backgroundColor = 'white';
        
         //Edit Market Title
-        this.marketTitle = document.createElement( "input" );
-        this.marketTitle.classList.add( "input-product" );
-        this.marketTitle.type = "text";
-        this.marketTitle.value = this.getAttribute( "name" );
+        this.marketInput = document.createElement( "input" );
+        this.marketInput.classList.add( "input-product" );
+        this.marketInput.type = "text";
+        this.marketInput.value = this.getAttribute( "name" );
         this.container.insertBefore( this.marketInput, this.marketTitle );
         this.container.removeChild( this.marketTitle );
         //add eventLestener
@@ -105,10 +107,10 @@ class MarketItem extends HTMLElement{
         };
         
         //Edit Location
-        this.location = document.createElement( "input" );
-        this.location.classList.add( "input-product" );
-        this.location.type = "text";
-        this.location.value = this.getAttribute( "location" );
+        this.locationInput = document.createElement( "input" );
+        this.locationInput.classList.add( "input-product" );
+        this.locationInput.type = "text";
+        this.locationInput.value = this.getAttribute( "location" );
         this.container.insertBefore( this.locationInput, this.location );
         this.container.removeChild( this.location );
         //add eventLestener
@@ -119,10 +121,10 @@ class MarketItem extends HTMLElement{
         };
 
         //Edit when occur
-        this.unitInput = document.createElement("input");
-        this.unitInput.classList.add("input-product");
-        this.unitInput.type = "string";
-        this.unitInput.value = this.getAttribute("occur");
+        this.whenOccurInput = document.createElement("input");
+        this.whenOccurInput.classList.add("input-product");
+        this.whenOccurInput.type = "string";
+        this.whenOccurInput.value = this.getAttribute("occur");
         this.container.insertBefore(this.whenOccurInput, this.whenOccur);
         this.container.removeChild(this.whenOccur);
         //add eventLestener
@@ -183,15 +185,15 @@ class MarketItem extends HTMLElement{
         this.container.style.backgroundColor = '';
 
         this.container.insertBefore( this.marketTitle, this.marketInput  );
-        this.container.removeChild( this.nameInput );
+        this.container.removeChild( this.marketInput );
         this.nameInput = undefined;
 
         this.container.insertBefore( this.location, this.locationInput );
-        this.container.removeChild( this.amountInput );
+        this.container.removeChild( this.locationInput );
         this.amountInput = undefined;
 
         this.container.insertBefore( this.whenOccur, this.whenOccurInput );
-        this.container.removeChild( this.unitInput );
+        this.container.removeChild( this.whenOccurInput );
         this.unitInput = undefined;
 
         this.container.insertBefore( this.removeButton, this.cancelButton );
@@ -203,16 +205,20 @@ class MarketItem extends HTMLElement{
         this.submitButton = undefined;
     }
 
-    removeItem( item ){
-        let id = item.getAttribute( "itemid" );
+    removeMarket( market ){
+        let url = 'markets/';
+        let marketid = market.getAttribute( "marketid" );
 
-        fetch(`/vendors/items/${id}`, {method: "delete"})
+        url = `${url}${marketid}`;
+
+        fetch(`/markets/${marketid}`, {method: "delete"})
             .then(response => response.json())
             .then((response)=>{
                 if(typeof(response) === "string"){
                     controller.createToaster(response, "error");
                 }else{
-                    state.vendor.removeItem(id);
+                    controller.openPage( 'vendorInfoPage');
+                    // state.vendor.removeMarket(marketid);
                 }
             })
             .catch((err)=>{
@@ -223,14 +229,13 @@ class MarketItem extends HTMLElement{
 
     submitEdit(){
         let data = {
-            id: this.getAttribute( "itemid" ),
-            name: this.nameInput.value,
-            quantity: this.amountInput.value,
-            unit: this.unitInput.value,
-            price: parseInt( this.priceGoods.value * 100 ),
+            id: this.getAttribute( "marketid" ),
+            name: this.marketInput.value,
+            address: this.locationInput.value,
+            description: this.whenOccurInput.value
         };
 
-        fetch( "/vendors/items", {
+        fetch( "/markets", {
             method: 'PUT',
             headers:{
                 "Content-Type": "application/json;charset=utf-8"
@@ -239,10 +244,12 @@ class MarketItem extends HTMLElement{
         })
             .then(response => response.json())
             .then((response) => {
+                console.log(response);
                 if(typeof(response) === "string") {
                     controller.createToaster(response, "error");
                 }else{
-                    state.vendor.removeItem(response._id);
+                    console.log(response, 'response');
+                    state.vendor.removeMarket(response._id);
                     state.vendor.addItem(response);
                 }
             })
@@ -253,10 +260,9 @@ class MarketItem extends HTMLElement{
 
     submitNew(){
         let data = {
-            name: this.nameInput.value,
-            quantity: this.amountInput.value,
-            unit: this.unitInput.value,
-            price: parseInt( this.priceGoods.value * 100 )
+            name: this.marketInput.value,
+            location: this.locationInput.value,
+            whenoccur: this.whenOccurInput.value
         };
 
         fetch( "/vendors/items", {

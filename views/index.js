@@ -9,7 +9,6 @@ const marketCreationPage = require("./js/pages/marketCreation.js");
 const Vendor = require("./js/models/Vendor.js");
 
 const modalWindow = require("./js/modal.js");
-const { response } = require("express");
 
 // Components //
 require("./js/components/vendorItem.js");
@@ -65,6 +64,7 @@ controller = {
         modalContainer.onclick = () => {this.closeModal()};
 
         let modal = document.getElementById( modalString );
+        
         modal.style.display = "flex";
         modal.onclick = () => {event.stopPropagation()};
 
@@ -74,6 +74,9 @@ controller = {
                 break;
             case 'vendorBioEditModal':
                 modalWindow.displayEditVendorBio();
+                break;
+            case 'removeMarketModal':
+                modalWindow.displayRemoveMarket( data.market, data.func);
                 break;
         }
     },
