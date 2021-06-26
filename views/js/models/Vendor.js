@@ -64,6 +64,10 @@ class Vendor {
         return this._distance;
     }
 
+    get markets(){
+        return this._markets;
+    }
+
     addItem( item ){
         let newItem = new Item(
             item._id,
